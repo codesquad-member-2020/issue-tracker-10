@@ -5,8 +5,6 @@ export const TableWrap = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  border: 1px solid #d1d5da;
-  border-radius: 3px;
   background-color: #fff;
   width: 980px;
 `;
