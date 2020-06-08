@@ -5,8 +5,14 @@ import Table from "@component/table/Table";
 import LabelTopMenu from "./LabelTopMenu";
 import LabelItem from "./LabelItem";
 
+import { useSelector } from "react-redux";
+
 const Label = () => {
-  const _test_items = [<LabelItem />, <LabelItem />, <LabelItem />, <LabelItem />, <LabelItem />, <LabelItem />];
+  const { labels } = useSelector((state) => state.label);
+
+  const _test_items = labels.map((labelOption) => {
+    return <LabelItem {...labelOption} />;
+  });
 
   return (
     <LabelWrap>
