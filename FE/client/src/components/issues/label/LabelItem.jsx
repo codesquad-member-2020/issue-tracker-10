@@ -12,7 +12,10 @@ const LabelItem = ({ textColor, backgroundColor, description, MutedLink, labelNa
       </LabelTab>
       <DescriptionTab>{description && description}</DescriptionTab>
       <MutedLinkTab>{MutedLink && MutedLink}</MutedLinkTab>
-      <ButtonTab></ButtonTab>
+      <ButtonTab>
+        <Button>Edit</Button>
+        <Button>Delete</Button>
+      </ButtonTab>
     </TableItem>
   );
 };
@@ -45,9 +48,20 @@ const MutedLinkTab = styled.div`
 `;
 
 const ButtonTab = styled.div`
+  display: flex;
+  justify-content: flex-end;
   font-size: 12px;
   color: #586069 !important;
   width: 16.66667%;
+`;
+
+const Button = styled.button`
+  display: inline-block;
+  outline: none;
+  font-size: 12px;
+  margin-left: 16px !important;
+  color: #586069 !important;
+  cursor: pointer;
 `;
 
 export default LabelItem;
