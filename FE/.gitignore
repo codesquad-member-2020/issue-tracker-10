@@ -1,0 +1,8 @@
+# package-lock
+package-lock.json
+
+# dependencies
+/node_modules
+
+# temp-server
+/server/node_modules
