@@ -17,4 +17,12 @@ ${variables}
     font-family: 'Noto Sans KR', sans-serif;
   }
 
+  button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  background: transparent;
+ }
+
 `;
