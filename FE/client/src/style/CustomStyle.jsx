@@ -23,6 +23,8 @@ export const TableTopMenu = styled.div`
 `;
 
 export const TableItem = styled.div`
+  display: flex;
+  align-items: center;
   width: 100%;
   padding: 16px;
   background-color: #fff;
