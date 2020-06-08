@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import label from "./label/labelReducer";
 
-export default combineReducers({
-  label,
-});
+const rootReducers = combineReducers({ label });
+
+export default rootReducers;
