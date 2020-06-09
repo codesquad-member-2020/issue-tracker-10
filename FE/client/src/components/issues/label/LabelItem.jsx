@@ -33,6 +33,7 @@ const Label = styled.div`
   border-radius: 3px;
   color: ${(props) => `${props.textColor}`};
   background-color: ${(props) => `${props.backgroundColor}`};
+  line-height: 1.25;
 `;
 
 const DescriptionTab = styled.div`
@@ -60,8 +61,13 @@ const Button = styled.button`
   outline: none;
   font-size: 12px;
   margin-left: 16px !important;
-  color: #586069 !important;
+  color: #586069;
   cursor: pointer;
+
+  :hover {
+    color: #0366d6;
+    text-decoration: underline;
+  }
 `;
 
 export default LabelItem;
