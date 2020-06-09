@@ -10,8 +10,8 @@ import { useSelector } from "react-redux";
 const Label = () => {
   const { labels } = useSelector((state) => state.label);
 
-  const _test_items = labels.map((labelOption) => {
-    return <LabelItem {...labelOption} />;
+  const _test_items = labels.map((labelOption, idx) => {
+    return <LabelItem key={idx} {...labelOption} />;
   });
 
   return (
