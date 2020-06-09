@@ -4,13 +4,15 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { deleteLabel } from "@modules/label/labelAction";
 
+const DELETE_CONFIRM_MESSAGE = '"Are you sure? Deleting a label will remove it from all issues and pull requests."';
+
 const LabelItem = ({ id, textColor, backgroundColor, description, MutedLink, labelName }) => {
   const dispatch = useDispatch();
 
   const onClickEdit = () => {};
 
   const onClickDelete = () => {
-    dispatch(deleteLabel(id));
+    if (window.confirm(DELETE_CONFIRM_MESSAGE)) dispatch(deleteLabel(id));
   };
 
   return (
