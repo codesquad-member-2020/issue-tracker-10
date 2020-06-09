@@ -1,10 +1,8 @@
 const _ = {
   debounce: (func) => {
-    let debounce;
-
     clearTimeout(debounce);
 
-    debounce = setTimeout(() => {
+    const debounce = setTimeout(() => {
       func();
     }, 1000);
   },
@@ -13,7 +11,6 @@ const _ = {
 
   createRandomHexColor: () => {
     const randomHexColor = "#" + ((Math.random() * 0xffffff) << 0).toString(16);
-
     return randomHexColor;
   },
 
@@ -25,7 +22,11 @@ const _ = {
           g: parseInt(result[2], 16),
           b: parseInt(result[3], 16),
         }
-      : null;
+      : {
+          r: 100,
+          g: 120,
+          b: 20,
+        };
   },
 
   isDarkColorText: ({ r, g, b }) => {
