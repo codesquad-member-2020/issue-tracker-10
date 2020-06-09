@@ -11,15 +11,15 @@ const Milestones = () => {
   const { milestonesList } = useSelector(({ milestones }) => milestones);
 
   let openMilestonesCount = 0;
-  const milestones = milestonesList.map((milestone) => {
-    if (!milestone.bOpen) return;
+  const _milestonesList = milestonesList.map((milestones) => {
+    if (!milestones.bOpen) return;
     openMilestonesCount++;
-    return <MilestonesItem key={milestone.id} {...{ milestone }} />;
+    return <MilestonesItem key={milestones.id} {...{ milestones }} />;
   });
 
   return (
     <MilestonesWrap>
-      <Table renderTableTopMenu={<MilestonesTopMenu open={openMilestonesCount} closed={milestones.length - openMilestonesCount} />} renderTableList={milestones} />
+      <Table renderTableTopMenu={<MilestonesTopMenu open={openMilestonesCount} closed={_milestonesList.length - openMilestonesCount} />} renderTableList={_milestonesList} />
     </MilestonesWrap>
   );
 };

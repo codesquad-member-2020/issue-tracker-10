@@ -2,8 +2,8 @@ import React from "react";
 import { TableItem } from "@style/CustomStyle";
 import styled from "styled-components";
 
-const MilestonesItem = ({ milestone }) => {
-  const { title, dueDate, description, linkIssues } = milestone;
+const MilestonesItem = ({ milestones }) => {
+  const { title, dueDate, description, linkIssues } = milestones;
 
   let openLinkIssuesCount = 0;
   let closedLinkIssuesCount = 0;
@@ -59,12 +59,14 @@ const MilestonesItemWrap = styled.div`
     }
     .due-date {
       margin-bottom: 8px;
+      letter-spacing: -0.02rem;
     }
     .description {
       width: 400px;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      letter-spacing: -0.02rem;
     }
   }
   .right-info {
@@ -76,6 +78,7 @@ const MilestonesItemWrap = styled.div`
     }
     .progress-text {
       margin-bottom: 10px;
+      letter-spacing: -0.03rem;
       b {
         font-weight: 600;
       }
@@ -96,6 +99,7 @@ const MilestonesItemWrap = styled.div`
         outline: none;
         font-family: "Noto Sans KR", sans-serif;
         font-size: 15px;
+        letter-spacing: -0.03rem;
         cursor: pointer;
       }
     }

@@ -24,6 +24,7 @@ const MilestonesTopMenuWrap = styled.div`
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
   font-size: 14px;
+  letter-spacing: -0.02rem;
   & > * {
     margin-right: 20px;
   }
