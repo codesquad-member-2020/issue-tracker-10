@@ -1,8 +1,18 @@
 import React from "react";
 import { TableItem } from "@style/CustomStyle";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { deleteLabel } from "@modules/label/labelAction";
 
-const LabelItem = ({ textColor, backgroundColor, description, MutedLink, labelName }) => {
+const LabelItem = ({ id, textColor, backgroundColor, description, MutedLink, labelName }) => {
+  const dispatch = useDispatch();
+
+  const onClickEdit = () => {};
+
+  const onClickDelete = () => {
+    dispatch(deleteLabel(id));
+  };
+
   return (
     <TableItem>
       <LabelTab>
@@ -14,7 +24,7 @@ const LabelItem = ({ textColor, backgroundColor, description, MutedLink, labelNa
       <MutedLinkTab>{MutedLink && MutedLink}</MutedLinkTab>
       <ButtonTab>
         <Button>Edit</Button>
-        <Button>Delete</Button>
+        <Button onClick={onClickDelete}>Delete</Button>
       </ButtonTab>
     </TableItem>
   );
