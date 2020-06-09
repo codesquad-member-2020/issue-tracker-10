@@ -1,4 +1,4 @@
-export const issueList = {
+const issueList = {
     "issueList": [
         {
             "id": 1,
@@ -71,3 +71,5 @@ export const issueList = {
         }
     ]
 }
+
+module.exports = issueList;
