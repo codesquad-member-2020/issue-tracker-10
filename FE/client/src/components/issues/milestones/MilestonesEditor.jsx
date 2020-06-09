@@ -75,8 +75,8 @@ const MilestonesEditorInner = styled.div`
     }
   }
   #milestones-description {
-    width: 700px;
-    height: 270px;
+    width: 550px;
+    min-height: 200px;
   }
   .MuiInput-underline {
     &::before,
