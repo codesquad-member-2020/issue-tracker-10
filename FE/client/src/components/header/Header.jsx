@@ -1,16 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import githubLogo from "@assets/images/github-logo.png";
+
+import HeaderMenuList from "./HeaderMenuList";
 
 const Header = () => {
   return (
     <HeaderWrap>
-      <img src={githubLogo} alt="github-logo" />
-      <HeaderMenuList>
-        <div>Issues</div>
-        <div>Labels</div>
-        <div>Milestones</div>
-      </HeaderMenuList>
+      <Link to="/">
+        <img src={githubLogo} alt="github-logo" />
+      </Link>
+      <HeaderMenuList />
     </HeaderWrap>
   );
 };
@@ -33,20 +34,6 @@ const HeaderWrap = styled.div`
     height: 32px;
     :hover {
       opacity: 0.7;
-    }
-  }
-`;
-
-const HeaderMenuList = styled.div`
-  display: flex;
-  & > * {
-    cursor: pointer;
-    margin-right: 15px;
-    :last-child {
-      margin: 0;
-    }
-    :hover {
-      color: hsla(0, 0%, 100%, 0.7);
     }
   }
 `;

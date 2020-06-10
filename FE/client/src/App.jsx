@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Header from "@component/header/Header";
 import Label from "@component/issues/label/Label";
@@ -9,13 +10,13 @@ import { GlobalStyle } from "@style/GlobalStyle";
 
 function App() {
   return (
-    <div>
+    <Router>
       <GlobalStyle />
       <Header />
-      <MilestonesEditor />
-      <Milestones />
-      <Label />
-    </div>
+      <Route exact path="/labels" component={Label} />
+      <Route exact path="/milestones" component={Milestones} />
+      <Route exact path="/milestones/edit" component={MilestonesEditor} />
+    </Router>
   );
 }
 
