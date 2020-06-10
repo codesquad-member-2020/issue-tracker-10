@@ -49,6 +49,9 @@ export const LabelSetWrap = styled.div`
     background-color: #fafbfc;
     min-height: 32px;
   }
+  .colorInput {
+    /* text-decoration: wavy; */
+  }
 `;
 
 export const Title = styled.div`
