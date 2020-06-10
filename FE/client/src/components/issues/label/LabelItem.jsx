@@ -35,11 +35,11 @@ const LabelItem = (props) => {
         <DescriptionTab>{!editIsOpen && description}</DescriptionTab>
         <MutedLinkTab>{!editIsOpen && MutedLink}</MutedLinkTab>
         <ButtonTab>
-          <Button onClick={onClickEdit}>Edit</Button>
+          <Button onClick={onClickEdit}> {!editIsOpen && "Edit"}</Button>
           <Button onClick={onClickDelete}>Delete</Button>
         </ButtonTab>
       </Info>
-      {editIsOpen && <Edit format={format} setFormat={setFormat} snapshot={snapshot} setSnapShot={setSnapShot} />}
+      {editIsOpen && <Edit format={format} setFormat={setFormat} snapshot={snapshot} setSnapShot={setSnapShot} onCloseEdit={onClickEdit} />}
     </TableItemLabel>
   );
 };

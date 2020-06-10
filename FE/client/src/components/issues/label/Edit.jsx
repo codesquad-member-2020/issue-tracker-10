@@ -4,7 +4,7 @@ import { LabelSetWrap, Title, LabelName, Description, ColorPiker, RandomColorBut
 import _ from "@util";
 import { BsArrowRepeat } from "react-icons/bs";
 
-const Edit = ({ format, setFormat, snapshot, setSnapShot }) => {
+const Edit = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit }) => {
   const { id, textColor, backgroundColor, description, labelName } = format;
 
   const onChangeLabelName = (e) => {
@@ -24,6 +24,10 @@ const Edit = ({ format, setFormat, snapshot, setSnapShot }) => {
     const bgColor = "rgb(" + r + "," + g + "," + b + ")";
 
     setFormat({ ...format, textColor: textColor, backgroundColor: bgColor });
+  };
+
+  const onClickCancel = () => {
+    onCloseEdit();
   };
 
   return (
@@ -47,7 +51,7 @@ const Edit = ({ format, setFormat, snapshot, setSnapShot }) => {
       </ColorPiker>
       <LabelSetButtons>
         <SetButtons>
-          <CancelButton>Cancel</CancelButton>
+          <CancelButton onClick={onClickCancel}>Cancel</CancelButton>
           <SaveButton>Save changes</SaveButton>
         </SetButtons>
       </LabelSetButtons>
