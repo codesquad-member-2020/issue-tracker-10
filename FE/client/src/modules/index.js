@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import label from "./label/labelReducer";
+import labels from "./labels";
 import milestones from "./milestones";
 
 const rootReducers = combineReducers({
-    label,
-    milestones,
+  labels,
+  milestones,
 });
 
 export default rootReducers;
