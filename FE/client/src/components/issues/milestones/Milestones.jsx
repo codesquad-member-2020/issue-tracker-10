@@ -30,7 +30,6 @@ const MilestonesWrap = styled.div`
   justify-content: center;
   width: 100%;
   background-color: #fff;
-  margin-top: 10px;
 `;
 
 export default Milestones;
