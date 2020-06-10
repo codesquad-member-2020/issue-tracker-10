@@ -1,14 +1,19 @@
 import React from "react";
+
 import styled from "styled-components";
 import { LabelSetWrap, Title, LabelName, Description, ColorPiker, RandomColorButton, ColorSelectTab, LabelSetButtons, SetButtons, CancelButton, SaveButton } from "@style/CustomStyle";
-import _ from "@util";
 import { BsArrowRepeat } from "react-icons/bs";
+
+import debounce from "lodash.debounce";
+import _ from "@util";
 
 const Edit = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit }) => {
   const { id, textColor, backgroundColor, description, labelName } = format;
 
-  const onChangeLabelName = (e) => (e.target.value ? setFormat({ ...format, labelName: e.target.value }) : setFormat({ ...format, labelName: snapshot.labelName }));
+  const debounceLabelName = debounce((value) => updateLabelName(value), 500);
+
   const onClickRandomColor = () => _.pipe(_.createRandomRGBColor, _.isDarkColor, updateLabelColors)();
+  const onChangeLabelName = (e) => _.pipe(setLabelName, debounceLabelName)(e.target.value);
   const onClickCancel = () => onCloseEdit();
 
   const updateLabelColors = (labelColors) => {
@@ -17,6 +22,9 @@ const Edit = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit }) => {
 
     setFormat({ ...format, textColor: textColor, backgroundColor: bgColor });
   };
+
+  const setLabelName = (value) => (value !== "" ? value : snapshot.labelName);
+  const updateLabelName = (value) => setFormat({ ...format, labelName: setLabelName(value) });
 
   return (
     <LabelSetWrap>
@@ -31,7 +39,7 @@ const Edit = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit }) => {
       <ColorPiker>
         <Title>Color</Title>
         <ColorSelectTab>
-          <RandomColorButton backgroundColor={backgroundColor} color={textColor} onClick={onClickRandomColor}>
+          <RandomColorButton backgroundColor={backgroundColor} color={textColor} onClick={() => debounce(onClickRandomColor, 200)()}>
             <BsArrowRepeat />
           </RandomColorButton>
           <input type="text" placeholder={backgroundColor} />
