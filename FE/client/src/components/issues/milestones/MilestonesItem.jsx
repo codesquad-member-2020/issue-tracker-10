@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { TableItem } from "@style/CustomStyle";
 import styled from "styled-components";
 
 const MilestonesItem = ({ milestones }) => {
-  const { title, dueDate, description, linkIssues } = milestones;
+  const { id, title, dueDate, description, linkIssues } = milestones;
 
   let openLinkIssuesCount = 0;
   let closedLinkIssuesCount = 0;
@@ -34,7 +35,9 @@ const MilestonesItem = ({ milestones }) => {
             </span>
           </div>
           <div className="buttons-wrap">
-            <button className="edit-btn">Edit</button>
+            <Link to={`/milestones/edit/${id}`} className="edit-btn">
+              Edit
+            </Link>
             <button className="close-btn">Close</button>
             <button className="delete-btn">Delete</button>
           </div>
@@ -87,6 +90,9 @@ const MilestonesItemWrap = styled.div`
       }
     }
     .buttons-wrap {
+      a {
+        text-decoration: none;
+      }
       .edit-btn,
       .close-btn {
         color: #00a8ff;

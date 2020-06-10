@@ -17,7 +17,7 @@ const Milestones = () => {
   const { milestonesList } = useSelector(({ milestones }) => milestones);
 
   const rightSideComponent = (
-    <Link to="/milestones/edit">
+    <Link to="/milestones/create">
       <TableHeaderButton>{MILESTONES_TEXT}</TableHeaderButton>
     </Link>
   );
@@ -29,12 +29,13 @@ const Milestones = () => {
     openMilestonesCount++;
     return <MilestonesItem key={milestones.id} {...{ milestones }} />;
   });
+  const closedMilestonesCount = _milestonesList.length - openMilestonesCount;
 
   return (
     <>
       <TableHeader leftSideComponent={leftSideComponent} rightSideComponent={rightSideComponent} />
       <MilestonesWrap>
-        <Table renderTableTopMenu={<MilestonesTopMenu open={openMilestonesCount} closed={_milestonesList.length - openMilestonesCount} />} renderTableList={_milestonesList} />
+        <Table renderTableTopMenu={<MilestonesTopMenu open={openMilestonesCount} closed={closedMilestonesCount} />} renderTableList={_milestonesList} />
       </MilestonesWrap>
     </>
   );

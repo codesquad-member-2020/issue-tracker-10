@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Header from "@component/header/Header";
 import Label from "@component/issues/label/Label";
@@ -13,9 +13,12 @@ function App() {
     <Router>
       <GlobalStyle />
       <Header />
-      <Route exact path="/labels" component={Label} />
-      <Route exact path="/milestones" component={Milestones} />
-      <Route exact path="/milestones/edit" component={MilestonesEditor} />
+      <Switch>
+        <Route exact path="/labels" component={Label} />
+        <Route exact path="/milestones" component={Milestones} />
+        <Route path="/milestones/create" component={MilestonesEditor} />
+        <Route path="/milestones/edit/:id" component={MilestonesEditor} />
+      </Switch>
     </Router>
   );
 }

@@ -1,8 +1,15 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import TextField from "@material-ui/core/TextField";
 
+import { useSelector } from "react-redux";
+
 const MilestonesEditor = () => {
+  const { id } = useParams();
+  const { milestonesList } = useSelector(({ milestones }) => milestones);
+  const [milestone] = milestonesList.filter((milestone) => milestone.id === +id);
+
   return (
     <MilestonesEditorWrap>
       <MilestonesEditorInner>
@@ -11,19 +18,19 @@ const MilestonesEditor = () => {
             <label className="editor-item-label" htmlFor="milestones-title">
               Title
             </label>
-            <input type="text" id="milestones-title" placeholder="Title" />
+            <input type="text" id="milestones-title" placeholder="Title" defaultValue={milestone && milestone.title} />
           </div>
           <div className="editor-item-wrap">
             <label className="editor-item-label" htmlFor="milestones-due-date">
               Due Date (optional)
             </label>
-            <TextField id="milestones-due-date" type="date" />
+            <TextField id="milestones-due-date" type="date" defaultValue={milestone && milestone.dueDate} />
           </div>
           <div className="editor-item-wrap">
             <label className="editor-item-label" htmlFor="milestones-description">
               Description (optional)
             </label>
-            <textarea id="milestones-description" />
+            <textarea id="milestones-description" defaultValue={milestone && milestone.description} />
           </div>
         </form>
       </MilestonesEditorInner>
