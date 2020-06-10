@@ -137,3 +137,22 @@ export const SaveButton = styled.button`
   background-color: #28a745;
   background-image: linear-gradient(-180deg, #34d058, #28a745 90%);
 `;
+
+export const TableHeaderButton = styled.button`
+  height: 32px;
+  border-radius: 3px;
+  padding: 7px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid rgba(27, 31, 35, 0.2);
+  outline: none;
+  color: #fff;
+  background-color: #28a745;
+  background-image: linear-gradient(-180deg, #34d058, #28a745 90%);
+
+  :hover {
+    text-decoration: none;
+    background-repeat: repeat-x;
+    opacity: 0.7;
+  }
+`;

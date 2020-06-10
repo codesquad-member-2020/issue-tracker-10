@@ -28,6 +28,7 @@ const HeaderWrap = styled.div`
   padding-left: 26px;
   font-size: 14px;
   font-weight: 600;
+  margin-bottom: 30px;
   img {
     cursor: pointer;
     width: 32px;
