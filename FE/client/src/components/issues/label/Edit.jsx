@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 
-import { LabelSetWrap, Title, LabelName, Description, ColorPiker, RandomColorButton, ColorSelectTab, LabelSetButtons, SetButtons, CancelButton, SaveButton } from "@style/CustomStyle";
+import { LabelSetWrap, Title, LabelName, Description, ColorPiker, RandomColorButton, ColorSelectTab, LabelSetButtons, SetButtons, CancelButton, SaveButton, ColorError } from "@style/CustomStyle";
 import { BsArrowRepeat } from "react-icons/bs";
 
 import debounce from "lodash.debounce";
@@ -28,6 +28,8 @@ const Edit = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit }) => {
   const setLabelName = (value) => (value !== "" ? value : snapshot.labelName);
   const updateLabelName = (value) => setFormat({ ...format, labelName: setLabelName(value) });
 
+  // Color Select input
+
   // Cancel Button
   const returnToFormatState = (snapshotState) => setFormat({ ...snapshotState });
 
@@ -47,7 +49,7 @@ const Edit = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit }) => {
           <RandomColorButton backgroundColor={backgroundColor} color={textColor} onClick={() => debounce(onClickRandomColor, 200)()}>
             <BsArrowRepeat />
           </RandomColorButton>
-          <input type="text" placeholder={backgroundColor} maxlength="33" />
+          <input type="text" className="colorInput" placeholder={backgroundColor} maxLength={7} />
         </ColorSelectTab>
       </ColorPiker>
       <LabelSetButtons>
