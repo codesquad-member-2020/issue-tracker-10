@@ -7,7 +7,7 @@ const HeaderMenuList = () => {
     <HeaderMenuListWrap>
       <Link to="/">Issues</Link>
       <Link to="/labels">Labels</Link>
-      <Link to="milestones">Milestones</Link>
+      <Link to="/milestones">Milestones</Link>
     </HeaderMenuListWrap>
   );
 };
@@ -18,7 +18,7 @@ const HeaderMenuListWrap = styled.div`
     color: #fff;
     text-decoration: none;
     cursor: pointer;
-    margin-right: 15px;
+    margin-right: 25px;
     :last-child {
       margin: 0;
     }

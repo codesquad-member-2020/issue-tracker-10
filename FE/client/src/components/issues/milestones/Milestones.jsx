@@ -1,14 +1,27 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Table from "@component/table/Table";
+import { TableHeaderButton } from "@style/CustomStyle";
 
+import Table from "@component/table/Table";
+import TableHeader from "@component/table/TableHeader";
+import SwitchButtons from "@component/table/SwitchButtons";
 import MilestonesTopMenu from "./MilestonesTopMenu";
 import MilestonesItem from "./MilestonesItem";
 
 import { useSelector } from "react-redux";
 
+const MILESTONES_TEXT = "New Milestones";
+
 const Milestones = () => {
   const { milestonesList } = useSelector(({ milestones }) => milestones);
+
+  const rightSideComponent = (
+    <Link to="/milestones/edit">
+      <TableHeaderButton>{MILESTONES_TEXT}</TableHeaderButton>
+    </Link>
+  );
+  const leftSideComponent = <SwitchButtons type="milestones" />;
 
   let openMilestonesCount = 0;
   const _milestonesList = milestonesList.map((milestones) => {
@@ -18,9 +31,12 @@ const Milestones = () => {
   });
 
   return (
-    <MilestonesWrap>
-      <Table renderTableTopMenu={<MilestonesTopMenu open={openMilestonesCount} closed={_milestonesList.length - openMilestonesCount} />} renderTableList={_milestonesList} />
-    </MilestonesWrap>
+    <>
+      <TableHeader leftSideComponent={leftSideComponent} rightSideComponent={rightSideComponent} />
+      <MilestonesWrap>
+        <Table renderTableTopMenu={<MilestonesTopMenu open={openMilestonesCount} closed={_milestonesList.length - openMilestonesCount} />} renderTableList={_milestonesList} />
+      </MilestonesWrap>
+    </>
   );
 };
 

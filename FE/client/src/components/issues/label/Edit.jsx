@@ -7,27 +7,15 @@ import { BsArrowRepeat } from "react-icons/bs";
 const Edit = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit }) => {
   const { id, textColor, backgroundColor, description, labelName } = format;
 
-  const onChangeLabelName = (e) => {
-    if (!e.target.value) {
-      setFormat({ ...format, labelName: snapshot.labelName });
-    } else {
-      setFormat({ ...format, labelName: e.target.value });
-    }
-  };
-
-  const onClickRandomColor = () => {
-    _.pipe(_.createRandomRGBColor, _.isDarkColor, updateLabelColors)();
-  };
+  const onChangeLabelName = (e) => (e.target.value ? setFormat({ ...format, labelName: e.target.value }) : setFormat({ ...format, labelName: snapshot.labelName }));
+  const onClickRandomColor = () => _.pipe(_.createRandomRGBColor, _.isDarkColor, updateLabelColors)();
+  const onClickCancel = () => onCloseEdit();
 
   const updateLabelColors = (labelColors) => {
     const { r, g, b, textColor } = labelColors;
     const bgColor = "rgb(" + r + "," + g + "," + b + ")";
 
     setFormat({ ...format, textColor: textColor, backgroundColor: bgColor });
-  };
-
-  const onClickCancel = () => {
-    onCloseEdit();
   };
 
   return (

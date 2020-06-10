@@ -15,7 +15,7 @@ const LABEL_TEXT = "New Label";
 const Label = () => {
   const { labels } = useSelector((state) => state.label);
   const rightSideComponent = <TableHeaderButton>{LABEL_TEXT}</TableHeaderButton>;
-  const leftSideComponent = <SwitchButtons />;
+  const leftSideComponent = <SwitchButtons type="labels" />;
 
   const _test_items = labels.map((labelOption, idx) => {
     return <LabelItem key={idx} {...labelOption} />;
