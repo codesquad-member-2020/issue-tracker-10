@@ -16,32 +16,25 @@ const Edit = ({ format, setFormat, snapshot, setSnapShot }) => {
   };
 
   const onClickRandomColor = () => {
-    _.pipe(_.createRandomHexColor, updateBackgroundColor, _.changeHexToRgb, _.isDarkColorText)();
+    _.pipe(_.createRandomRGBColor, _.isDarkColor, updateLabelColors)();
   };
 
-  const updateBackgroundColor = (hexColor) => {
-    setFormat({ ...format, backgroundColor: hexColor });
-    return hexColor;
-  };
+  const updateLabelColors = (labelColors) => {
+    const { r, g, b, textColor } = labelColors;
+    const bgColor = "rgb(" + r + "," + g + "," + b + ")";
 
-  const updateLabelColors = (colors) => {
-    if (colors.isDark) {
-      setFormat({ ...format, textColor: "#000", backgroundColor: colors.hex });
-    } else {
-      setFormat({ ...format, textColor: "#fff", backgroundColor: colors.hex });
-    }
-    return;
+    setFormat({ ...format, textColor: textColor, backgroundColor: bgColor });
   };
 
   return (
     <LabelSetWrap>
       <LabelName>
         <Title>Label name</Title>
-        <input type="text" placeholder="Label name" onChange={onChangeLabelName} />
+        <input type="text" placeholder="Label name" onChange={onChangeLabelName} defaultValue={labelName} />
       </LabelName>
       <Description>
         <Title>Description</Title>
-        <input type="text" placeholder="Description (optional)" />
+        <input type="text" placeholder="Description (optional)" defaultValue={description} />
       </Description>
       <ColorPiker>
         <Title>Color</Title>
