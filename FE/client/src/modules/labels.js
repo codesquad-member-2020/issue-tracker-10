@@ -1,5 +1,9 @@
-import { ADD_LABEL, DELETE_LABEL } from "./labelAction";
-import { act } from "react-dom/test-utils";
+const ADD_LABEL = "label/ADD_LABEL";
+const DELETE_LABEL = "label/DELETE_LABEL";
+
+export const addLabel = (labelItems) => ({ type: ADD_LABEL, payload: labelItems });
+
+export const deleteLabel = (labelId) => ({ type: DELETE_LABEL, payload: labelId });
 
 const initialState = {
   labels: [

@@ -67,6 +67,7 @@ const MilestonesEditorInner = styled.div`
     height: 25px;
     font-size: 15px;
     font-family: "Noto Sans KR", sans-serif;
+    box-sizing: content-box;
     :focus {
       background-color: #fff;
       border-color: #2188ff;
@@ -77,6 +78,7 @@ const MilestonesEditorInner = styled.div`
   #milestones-description {
     width: 550px;
     min-height: 200px;
+    max-width: 980px;
   }
   .MuiInput-underline {
     &::before,

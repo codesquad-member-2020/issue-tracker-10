@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TableItem } from "@style/CustomStyle";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { deleteLabel } from "@modules/label/labelAction";
+import { deleteLabel } from "@modules/labels";
 import Edit from "./Edit";
 
 const DELETE_CONFIRM_MESSAGE = '"Are you sure? Deleting a label will remove it from all issues and pull requests."';

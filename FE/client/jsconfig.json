@@ -6,7 +6,8 @@
       "@style/*": ["./src/style/*"],
       "@component/*": ["./src/components/*"],
       "@modules/*": ["./src/modules/*"],
-      "@util/*": ["./src/util/util/*"]
+      "@util/*": ["./src/util/util/*"],
+      "@assets/*": ["./src/assets/*"]
     }
   }
 }
