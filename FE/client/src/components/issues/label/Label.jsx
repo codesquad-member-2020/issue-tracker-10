@@ -28,6 +28,8 @@ const LabelWrap = styled.div`
   width: 100%;
   background-color: #fff;
   margin-top: 10px;
+  font-size: 12px;
+  color: #586069;
 `;
 
 export default Label;
