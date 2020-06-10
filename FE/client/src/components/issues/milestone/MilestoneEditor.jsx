@@ -5,14 +5,14 @@ import TextField from "@material-ui/core/TextField";
 
 import { useSelector } from "react-redux";
 
-const MilestonesEditor = () => {
+const MilestoneEditor = () => {
   const { id } = useParams();
   const { milestonesList } = useSelector(({ milestones }) => milestones);
   const [milestone] = milestonesList.filter((milestone) => milestone.id === +id);
 
   return (
-    <MilestonesEditorWrap>
-      <MilestonesEditorInner>
+    <MilestoneEditorWrap>
+      <MilestoneEditorInner>
         <form>
           <div className="editor-item-wrap">
             <label className="editor-item-label" htmlFor="milestones-title">
@@ -33,12 +33,12 @@ const MilestonesEditor = () => {
             <textarea id="milestones-description" defaultValue={milestone && milestone.description} />
           </div>
         </form>
-      </MilestonesEditorInner>
-    </MilestonesEditorWrap>
+      </MilestoneEditorInner>
+    </MilestoneEditorWrap>
   );
 };
 
-const MilestonesEditorWrap = styled.div`
+const MilestoneEditorWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,7 +47,7 @@ const MilestonesEditorWrap = styled.div`
   margin-top: 10px;
 `;
 
-const MilestonesEditorInner = styled.div`
+const MilestoneEditorInner = styled.div`
   box-sizing: border-box;
   background-color: #fff;
   width: 980px;
@@ -95,4 +95,4 @@ const MilestonesEditorInner = styled.div`
   }
 `;
 
-export default MilestonesEditor;
+export default MilestoneEditor;

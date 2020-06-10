@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Header from "@component/header/Header";
 import Label from "@component/issues/label/Label";
-import Milestones from "@component/issues/milestones/Milestones";
-import MilestonesEditor from "@component/issues/milestones/MilestonesEditor";
+import Milestone from "@component/issues/milestone/Milestone";
+import MilestoneEditor from "@component/issues/milestone/MilestoneEditor";
 
 import { GlobalStyle } from "@style/GlobalStyle";
 
@@ -15,9 +15,9 @@ function App() {
       <Header />
       <Switch>
         <Route exact path="/labels" component={Label} />
-        <Route exact path="/milestones" component={Milestones} />
-        <Route path="/milestones/create" component={MilestonesEditor} />
-        <Route path="/milestones/edit/:id" component={MilestonesEditor} />
+        <Route exact path="/milestones" component={Milestone} />
+        <Route path="/milestone/create" component={MilestoneEditor} />
+        <Route path="/milestone/edit/:id" component={MilestoneEditor} />
       </Switch>
     </Router>
   );

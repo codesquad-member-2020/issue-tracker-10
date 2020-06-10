@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { TableItem } from "@style/CustomStyle";
 import styled from "styled-components";
 
-const MilestonesItem = ({ milestones }) => {
+const MilestoneItem = ({ milestones }) => {
   const { id, title, dueDate, description, linkIssues } = milestones;
 
   let openLinkIssuesCount = 0;
@@ -13,7 +13,7 @@ const MilestonesItem = ({ milestones }) => {
 
   return (
     <TableItem>
-      <MilestonesItemWrap>
+      <MilestoneItemWrap>
         <div className="left-info">
           <div className="title">{title}</div>
           <div className="due-date">📅 Due by {dueDate}</div>
@@ -35,19 +35,19 @@ const MilestonesItem = ({ milestones }) => {
             </span>
           </div>
           <div className="buttons-wrap">
-            <Link to={`/milestones/edit/${id}`} className="edit-btn">
+            <Link to={`/milestone/edit/${id}`} className="edit-btn">
               Edit
             </Link>
             <button className="close-btn">Close</button>
             <button className="delete-btn">Delete</button>
           </div>
         </div>
-      </MilestonesItemWrap>
+      </MilestoneItemWrap>
     </TableItem>
   );
 };
 
-const MilestonesItemWrap = styled.div`
+const MilestoneItemWrap = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -130,4 +130,4 @@ const ProgressBar = styled.div`
   left: 0;
 `;
 
-export default MilestonesItem;
+export default MilestoneItem;
