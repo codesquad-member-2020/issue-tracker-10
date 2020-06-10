@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useCallback } from "react";
 
-import styled from "styled-components";
 import { LabelSetWrap, Title, LabelName, Description, ColorPiker, RandomColorButton, ColorSelectTab, LabelSetButtons, SetButtons, CancelButton, SaveButton } from "@style/CustomStyle";
 import { BsArrowRepeat } from "react-icons/bs";
 
@@ -10,21 +9,27 @@ import _ from "@util";
 const Edit = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit }) => {
   const { id, textColor, backgroundColor, description, labelName } = format;
 
+  // debounce
   const debounceLabelName = debounce((value) => updateLabelName(value), 500);
 
-  const onClickRandomColor = () => _.pipe(_.createRandomRGBColor, _.isDarkColor, updateLabelColors)();
+  // pipeline
+  const onClickCancel = () => _.pipe(returnToFormatState, onCloseEdit)(snapshot);
   const onChangeLabelName = (e) => _.pipe(setLabelName, debounceLabelName)(e.target.value);
-  const onClickCancel = () => onCloseEdit();
+  const onClickRandomColor = () => _.pipe(_.createRandomRGBColor, _.isDarkColor, updateLabelColors)();
 
+  // randomColorPiker Button
   const updateLabelColors = (labelColors) => {
     const { r, g, b, textColor } = labelColors;
     const bgColor = "rgb(" + r + "," + g + "," + b + ")";
-
     setFormat({ ...format, textColor: textColor, backgroundColor: bgColor });
   };
 
+  // LabelName input
   const setLabelName = (value) => (value !== "" ? value : snapshot.labelName);
   const updateLabelName = (value) => setFormat({ ...format, labelName: setLabelName(value) });
+
+  // Cancel Button
+  const returnToFormatState = (snapshotState) => setFormat({ ...snapshotState });
 
   return (
     <LabelSetWrap>
@@ -42,7 +47,7 @@ const Edit = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit }) => {
           <RandomColorButton backgroundColor={backgroundColor} color={textColor} onClick={() => debounce(onClickRandomColor, 200)()}>
             <BsArrowRepeat />
           </RandomColorButton>
-          <input type="text" placeholder={backgroundColor} />
+          <input type="text" placeholder={backgroundColor} maxlength="33" />
         </ColorSelectTab>
       </ColorPiker>
       <LabelSetButtons>
