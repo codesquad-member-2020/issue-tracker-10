@@ -6,7 +6,7 @@ import { BsArrowRepeat } from "react-icons/bs";
 import debounce from "lodash.debounce";
 import _ from "@util";
 
-const LabelEditor = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit }) => {
+const LabelEditor = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit, type }) => {
   const { id, textColor, backgroundColor, description, labelName } = format;
   const [colorPickerValue, setColorPickerValue] = useState(_.changeRgbToHex(backgroundColor));
   const [colorPickerValueError, setColorPickerValueError] = useState(false);
@@ -82,7 +82,7 @@ const LabelEditor = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit }) 
         <SetButtons>
           <CancelButton onClick={onClickCancel}>Cancel</CancelButton>
           <SaveButton disabled={judgeActiveButton()} blockButton={judgeActiveButton()}>
-            Save changes
+            {type === "Edit" ? "Save changes" : "Create label"}
           </SaveButton>
         </SetButtons>
       </LabelSetButtons>
