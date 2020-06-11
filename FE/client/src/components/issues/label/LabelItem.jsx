@@ -16,13 +16,9 @@ const LabelItem = (props) => {
 
   const { id, textColor, backgroundColor, description, MutedLink, labelName } = format;
 
-  const onClickEdit = () => {
-    setEditIsOpen(!editIsOpen);
-  };
-
-  const onClickDelete = () => {
-    if (window.confirm(DELETE_CONFIRM_MESSAGE)) dispatch(deleteLabel(id));
-  };
+  const onClickEdit = () => setEditIsOpen(!editIsOpen);
+  const onClickDelete = () => window.confirm(DELETE_CONFIRM_MESSAGE) && dispatch(deleteLabel(id));
+  const returnToFormat = (snapshotState) => setFormat({ ...snapshotState });
 
   return (
     <TableItemLabel>
@@ -39,7 +35,7 @@ const LabelItem = (props) => {
           <Button onClick={onClickDelete}>Delete</Button>
         </ButtonTab>
       </Info>
-      {editIsOpen && <LabelEditor type="Edit" format={format} setFormat={setFormat} snapshot={snapshot} setSnapShot={setSnapShot} onCloseEdit={onClickEdit} />}
+      {editIsOpen && <LabelEditor type="Edit" format={format} setFormat={setFormat} snapshot={snapshot} setSnapShot={setSnapShot} onCloseEditor={onClickEdit} returnToFormat={returnToFormat} />}
     </TableItemLabel>
   );
 };
