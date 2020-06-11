@@ -6,7 +6,7 @@ import { BsArrowRepeat } from "react-icons/bs";
 import debounce from "lodash.debounce";
 import _ from "@util";
 
-const LabelEditor = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit, type }) => {
+const LabelEditor = ({ type, format, setFormat, snapshot, setSnapShot, onCloseEditor, returnToFormat, onClickEditor }) => {
   const { id, textColor, backgroundColor, description, labelName } = format;
   const [colorPickerValue, setColorPickerValue] = useState(_.changeRgbToHex(backgroundColor));
   const [colorPickerValueError, setColorPickerValueError] = useState(false);
@@ -16,7 +16,7 @@ const LabelEditor = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit, ty
   const debounceLabelColors = debounce((labelColors) => updateLabelColors(labelColors), 300);
 
   // pipeline
-  const onClickCancel = () => _.pipe(returnToFormatState, onCloseEdit)(snapshot);
+  const onClickCancel = () => _.pipe(returnToFormat, onCloseEditor)(snapshot);
   const onClickRandomColor = () => _.pipe(_.createRandomRGBColor, _.isDarkColor, updateLabelColors)();
   const onChangeLabelName = (e) => _.pipe(setLabelName, debounceLabelName)(e.target.value);
   const onChangeLabelColors = (e) => _.pipe(setColorPickerInputValue, updateColorPickerInputValue, _.changeHexToRgb, _.isDarkColor, debounceLabelColors)(e.target.value);
@@ -52,7 +52,6 @@ const LabelEditor = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit, ty
   };
 
   // Cancel Button
-  const returnToFormatState = (snapshotState) => setFormat({ ...snapshotState });
 
   // Save Button
 
@@ -79,7 +78,7 @@ const LabelEditor = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit, ty
         </ColorSelectTab>
       </ColorPiker>
       <LabelSetButtons>
-        <SetButtons>
+        <SetButtons className="edit_buttons">
           <CancelButton onClick={onClickCancel}>Cancel</CancelButton>
           <SaveButton disabled={judgeActiveButton()} blockButton={judgeActiveButton()}>
             {type === "Edit" ? "Save changes" : "Create label"}
