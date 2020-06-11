@@ -22,26 +22,28 @@ const Label = () => {
   const [format, setFormat] = useState({ ...CREATE_LABEL_INFO });
   const [snapshot, setSnapShot] = useState({ ...CREATE_LABEL_INFO });
 
-  const rightSideComponent = <TableHeaderButton>{LABEL_TEXT}</TableHeaderButton>;
-  const leftSideComponent = <SwitchButtons type="labels" />;
-
   const _test_items = labels.map((labelOption, idx) => {
     return <LabelItem key={idx} {...labelOption} />;
   });
 
   const onClickEdit = () => setCreateIsOpen(!createIsOpen);
 
+  const rightSideComponent = <TableHeaderButton onClick={onClickEdit}>{LABEL_TEXT}</TableHeaderButton>;
+  const leftSideComponent = <SwitchButtons type="labels" />;
+
   return (
     <>
       <TableHeader leftSideComponent={leftSideComponent} rightSideComponent={rightSideComponent} />
-      <CreateLabelWrap>
-        <CreateLabelInner>
-          <LabelBox backgroundColor={format.backgroundColor} textColor={format.textColor}>
-            {format.labelName}
-          </LabelBox>
-          <LabelEditor type="Create" format={format} setFormat={setFormat} snapshot={snapshot} setSnapShot={setSnapShot} onClickEdit={onClickEdit} />
-        </CreateLabelInner>
-      </CreateLabelWrap>
+      {createIsOpen && (
+        <CreateLabelWrap>
+          <CreateLabelInner>
+            <LabelBox backgroundColor={format.backgroundColor} textColor={format.textColor}>
+              {format.labelName}
+            </LabelBox>
+            <LabelEditor type="Create" format={format} setFormat={setFormat} snapshot={snapshot} setSnapShot={setSnapShot} onClickEdit={onClickEdit} />
+          </CreateLabelInner>
+        </CreateLabelWrap>
+      )}
       <LabelWrap>
         <Table renderTableTopMenu={<LabelTopMenu />} renderTableList={_test_items} />
       </LabelWrap>
