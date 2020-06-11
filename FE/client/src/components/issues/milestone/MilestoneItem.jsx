@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { TableItem } from "@style/CustomStyle";
 import styled from "styled-components";
 
+import MilestoneItemProgress from "./MilestoneItemProgress";
+import MilestoneItemButtons from "./MilestoneItemButtons";
+
 const MilestoneItem = ({ milestones }) => {
   const { id, title, dueDate, description, linkIssues } = milestones;
 
@@ -20,27 +23,8 @@ const MilestoneItem = ({ milestones }) => {
           <div className="description">{description}</div>
         </div>
         <div className="right-info">
-          <ProgressBarBackround className="progress-bar">
-            <ProgressBar {...{ completeRatio }} />
-          </ProgressBarBackround>
-          <div className="progress-text">
-            <span>
-              <b>{completeRatio}%</b> complete
-            </span>
-            <span>
-              <b>{openLinkIssuesCount}</b> open
-            </span>
-            <span>
-              <b>{closedLinkIssuesCount}</b> closed
-            </span>
-          </div>
-          <div className="buttons-wrap">
-            <Link to={`/milestone/edit/${id}`} className="edit-btn">
-              Edit
-            </Link>
-            <button className="close-btn">Close</button>
-            <button className="delete-btn">Delete</button>
-          </div>
+          <MilestoneItemProgress {...{ completeRatio, openLinkIssuesCount, closedLinkIssuesCount }} />
+          <MilestoneItemButtons {...{ id }} />
         </div>
       </MilestoneItemWrap>
     </TableItem>
@@ -76,58 +60,7 @@ const MilestoneItemWrap = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    .progress-bar {
-      margin-bottom: 10px;
-    }
-    .progress-text {
-      margin-bottom: 10px;
-      letter-spacing: -0.03rem;
-      b {
-        font-weight: 600;
-      }
-      & > * {
-        margin-right: 20px;
-      }
-    }
-    .buttons-wrap {
-      a {
-        text-decoration: none;
-      }
-      .edit-btn,
-      .close-btn {
-        color: #00a8ff;
-      }
-      .delete-btn {
-        color: #e84118;
-      }
-      & > * {
-        margin-right: 20px;
-        outline: none;
-        font-family: "Noto Sans KR", sans-serif;
-        font-size: 15px;
-        letter-spacing: -0.03rem;
-        cursor: pointer;
-      }
-    }
   }
-`;
-
-const ProgressBarBackround = styled.div`
-  width: 400px;
-  height: 13px;
-  border-radius: 5px;
-  background-color: #ecf0f1;
-  position: relative;
-`;
-
-const ProgressBar = styled.div`
-  width: ${(props) => props.completeRatio}%;
-  height: 100%;
-  border-radius: 5px;
-  background-color: #2ecc71;
-  position: absolute;
-  top: 0;
-  left: 0;
 `;
 
 export default MilestoneItem;
