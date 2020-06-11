@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useState, useCallback } from "react";
 
 import { LabelSetWrap, Title, LabelName, Description, ColorPiker, RandomColorButton, ColorSelectTab, LabelSetButtons, SetButtons, CancelButton, SaveButton, ColorError } from "@style/CustomStyle";
 import { BsArrowRepeat } from "react-icons/bs";
@@ -8,30 +8,55 @@ import _ from "@util";
 
 const Edit = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit }) => {
   const { id, textColor, backgroundColor, description, labelName } = format;
+  const [colorPickerValue, setColorPickerValue] = useState(_.changeRgbToHex(backgroundColor));
+  const [colorPickerValueError, setColorPickerValueError] = useState(false);
 
   // debounce
   const debounceLabelName = debounce((value) => updateLabelName(value), 500);
+  const debounceLabelColors = debounce((labelColors) => updateLabelColors(labelColors), 300);
 
   // pipeline
   const onClickCancel = () => _.pipe(returnToFormatState, onCloseEdit)(snapshot);
-  const onChangeLabelName = (e) => _.pipe(setLabelName, debounceLabelName)(e.target.value);
   const onClickRandomColor = () => _.pipe(_.createRandomRGBColor, _.isDarkColor, updateLabelColors)();
+  const onChangeLabelName = (e) => _.pipe(setLabelName, debounceLabelName)(e.target.value);
+  const onChangeLabelColors = (e) => _.pipe(setColorPickerInputValue, updateColorPickerInputValue, _.changeHexToRgb, _.isDarkColor, debounceLabelColors)(e.target.value);
 
   // randomColorPiker Button
   const updateLabelColors = (labelColors) => {
-    const { r, g, b, textColor } = labelColors;
-    const bgColor = "rgb(" + r + "," + g + "," + b + ")";
-    setFormat({ ...format, textColor: textColor, backgroundColor: bgColor });
+    if (!labelColors) {
+      setColorPickerValueError(true);
+      setFormat({ ...format, textColor: snapshot.textColor, backgroundColor: snapshot.backgroundColor });
+    } else {
+      const { r, g, b, textColor } = labelColors;
+      const bgColor = "rgb(" + r + "," + g + "," + b + ")";
+      setColorPickerValueError(false);
+      setFormat({ ...format, textColor: textColor, backgroundColor: bgColor });
+    }
   };
 
   // LabelName input
-  const setLabelName = (value) => (value !== "" ? value : snapshot.labelName);
+  const setLabelName = (value) => (value ? value : snapshot.labelName);
   const updateLabelName = (value) => setFormat({ ...format, labelName: setLabelName(value) });
 
-  // Color Select input
+  // Color Picker input
+
+  const setColorPickerInputValue = (value) => (value ? value : "#");
+  const updateColorPickerInputValue = (value) => {
+    if (value !== "#") {
+      setColorPickerValue(value);
+      return value;
+    } else {
+      setColorPickerValue(value);
+      return null;
+    }
+  };
 
   // Cancel Button
   const returnToFormatState = (snapshotState) => setFormat({ ...snapshotState });
+
+  // Save Button
+
+  const judgeActiveButton = () => (colorPickerValueError ? true : false);
 
   return (
     <LabelSetWrap>
@@ -49,13 +74,16 @@ const Edit = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit }) => {
           <RandomColorButton backgroundColor={backgroundColor} color={textColor} onClick={() => debounce(onClickRandomColor, 200)()}>
             <BsArrowRepeat />
           </RandomColorButton>
-          <input type="text" className="colorInput" placeholder={backgroundColor} maxLength={7} />
+          {colorPickerValueError && <span>Unavailable Color</span>}
+          <input type="text" className="colorInput" onChange={onChangeLabelColors} value={colorPickerValue} maxLength={7} />
         </ColorSelectTab>
       </ColorPiker>
       <LabelSetButtons>
         <SetButtons>
           <CancelButton onClick={onClickCancel}>Cancel</CancelButton>
-          <SaveButton>Save changes</SaveButton>
+          <SaveButton disabled={judgeActiveButton()} blockButton={judgeActiveButton()}>
+            Save changes
+          </SaveButton>
         </SetButtons>
       </LabelSetButtons>
     </LabelSetWrap>
