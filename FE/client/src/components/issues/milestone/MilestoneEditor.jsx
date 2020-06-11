@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import TextField from "@material-ui/core/TextField";
 
+import TableHeader from "@component/table/TableHeader";
+import MilestoneEditorHeader from "./MilestoneEditorHeader";
+
 import { useSelector } from "react-redux";
 
 const MilestoneEditor = () => {
@@ -10,9 +13,12 @@ const MilestoneEditor = () => {
   const { milestonesList } = useSelector(({ milestones }) => milestones);
   const [milestone] = milestonesList.filter((milestone) => milestone.id === +id);
 
+  const leftSideComponent = <MilestoneEditorHeader {...{ milestone }} />;
+
   return (
     <MilestoneEditorWrap>
       <MilestoneEditorInner>
+        <TableHeader leftSideComponent={leftSideComponent} />
         <form>
           <div className="editor-item-wrap">
             <label className="editor-item-label" htmlFor="milestones-title">
@@ -51,6 +57,23 @@ const MilestoneEditorInner = styled.div`
   box-sizing: border-box;
   background-color: #fff;
   width: 980px;
+  .page-title {
+    font-weight: 600;
+    font-size: 25px;
+    margin-bottom: 8px;
+  }
+  .page-description {
+    font-size: 13px;
+    > a {
+      color: #0366d6;
+      text-decoration: none;
+    }
+  }
+  form {
+    padding-top: 20px;
+    border-top: 1px solid #c2c2c2;
+    border-bottom: 1px solid #c2c2c2;
+  }
   .editor-item-label {
     letter-spacing: -0.03rem;
     font-weight: 600;
@@ -84,6 +107,7 @@ const MilestoneEditorInner = styled.div`
   }
   #milestones-description {
     width: 550px;
+    margin: 0;
     min-height: 200px;
     max-width: 980px;
   }
