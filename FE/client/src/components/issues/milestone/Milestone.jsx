@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { TableHeaderButton } from "@style/CustomStyle";
@@ -9,16 +10,12 @@ import SwitchButtons from "@component/table/SwitchButtons";
 import MilestoneTopMenu from "./MilestoneTopMenu";
 import MilestoneItem from "./MilestoneItem";
 
-import { useSelector } from "react-redux";
-
-const NEW_MILESTONE_BTN_TEXT = "New Milestone";
-
 const Milestone = () => {
   const { milestonesList } = useSelector(({ milestones }) => milestones);
 
   const rightSideComponent = (
     <Link to="/milestone/create">
-      <TableHeaderButton>{NEW_MILESTONE_BTN_TEXT}</TableHeaderButton>
+      <TableHeaderButton>New Milestone</TableHeaderButton>
     </Link>
   );
   const leftSideComponent = <SwitchButtons type="milestones" />;

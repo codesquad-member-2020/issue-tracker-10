@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { TableItem } from "@style/CustomStyle";
 import styled from "styled-components";
 

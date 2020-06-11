@@ -1,12 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import TextField from "@material-ui/core/TextField";
 
 import TableHeader from "@component/table/TableHeader";
 import MilestoneEditorHeader from "./MilestoneEditorHeader";
-
-import { useSelector } from "react-redux";
 
 const MilestoneEditor = () => {
   const { id } = useParams();
