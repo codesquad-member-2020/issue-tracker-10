@@ -56,6 +56,24 @@ const _ = {
       : "";
   },
 
+  setCookie: (key, value, days) => {
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + days);
+
+    var cookie_value = escape(value) + ((days == null) ? '' : ';    expires=' + exdate.toUTCString());
+    document.cookie = key + '=' + cookie_value;
+  },
+
+  getCookie: (key) => {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + key + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+  },
+
+  deleteCookie: (key) => {
+    document.cookie = key + "=; expires=Thu, 01 Jan 1999 00:00:10 GMT;";
+  },
+
   //   createRandomHexColor: () => {
   //     const randomHexColor = "#" + ((Math.random() * 0xffffff) << 0).toString(16);
   //     return randomHexColor;

@@ -1,6 +1,7 @@
 import React from "react";
 import { TableItem } from "@style/CustomStyle";
 import styled from "styled-components";
+import moment from "moment";
 
 import MilestoneItemProgress from "./MilestoneItemProgress";
 import MilestoneItemButtons from "./MilestoneItemButtons";
@@ -18,7 +19,7 @@ const MilestoneItem = ({ milestones }) => {
       <MilestoneItemWrap>
         <div className="left-info">
           <div className="title">{title}</div>
-          <div className="due-date">📅 Due by {dueDate}</div>
+          <div className="due-date">📅 Due by {moment(dueDate).format("LL")}</div>
           <div className="description">{description}</div>
         </div>
         <div className="right-info">

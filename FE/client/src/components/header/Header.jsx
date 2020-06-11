@@ -8,7 +8,7 @@ import HeaderMenuList from "./HeaderMenuList";
 const Header = () => {
   return (
     <HeaderWrap>
-      <Link to="/">
+      <Link to="/issues">
         <img src={githubLogo} alt="github-logo" />
       </Link>
       <HeaderMenuList />

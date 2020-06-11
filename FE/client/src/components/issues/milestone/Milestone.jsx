@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { TableHeaderButton } from "@style/CustomStyle";
 
-import Table from "@component/table/Table";
-import TableHeader from "@component/table/TableHeader";
-import SwitchButtons from "@component/table/SwitchButtons";
+import Table from "@components/table/Table";
+import TableHeader from "@components/table/TableHeader";
+import SwitchButtons from "@components/table/SwitchButtons";
 import MilestoneTopMenu from "./MilestoneTopMenu";
 import MilestoneItem from "./MilestoneItem";
 

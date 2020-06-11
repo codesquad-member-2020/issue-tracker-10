@@ -12,6 +12,7 @@ const MilestoneEditorButtons = ({ milestone }) => {
             <CancelButton className="button">
               <Link to="/milestones">Cancel</Link>
             </CancelButton>
+            <CancelButton className="button">Close milestone</CancelButton>
             <SaveButton className="button">Save changes</SaveButton>
           </SetButtons>
         </LabelSetButtons>
@@ -30,6 +31,7 @@ const MilestoneEditorButtonsWrap = styled.div`
   display: flex;
   justify-content: flex-end;
   .button-wrap {
+    width: 100%;
     margin-top: 0;
   }
   .button {
