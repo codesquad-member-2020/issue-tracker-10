@@ -6,6 +6,7 @@ import TextField from "@material-ui/core/TextField";
 
 import TableHeader from "@component/table/TableHeader";
 import MilestoneEditorHeader from "./MilestoneEditorHeader";
+import MilestoneEditorButtons from "./MilestoneEditorButtons";
 
 const MilestoneEditor = () => {
   const { id } = useParams();
@@ -38,6 +39,7 @@ const MilestoneEditor = () => {
             <textarea id="milestones-description" defaultValue={milestone && milestone.description} />
           </div>
         </form>
+        <MilestoneEditorButtons {...{ milestone }} />
       </MilestoneEditorInner>
     </MilestoneEditorWrap>
   );
