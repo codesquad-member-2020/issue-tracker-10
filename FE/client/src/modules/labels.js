@@ -1,9 +1,10 @@
 const ADD_LABEL = "label/ADD_LABEL";
 const DELETE_LABEL = "label/DELETE_LABEL";
+const EDIT_LABEL = "label/EDIT_LABEL";
 
 export const addLabel = (labelItems) => ({ type: ADD_LABEL, payload: labelItems });
-
 export const deleteLabel = (labelId) => ({ type: DELETE_LABEL, payload: labelId });
+export const editLabel = (labelItems) => ({ type: EDIT_LABEL, payload: labelItems });
 
 const initialState = {
   labels: [
@@ -18,9 +19,11 @@ const initialState = {
 const labelReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_LABEL:
-      return { ...state };
+      return { ...state, labels: [...state.labels, { ...action.payload, id: Math.floor(Math.random() * 50) }] };
     case DELETE_LABEL:
       return { ...state, labels: state.labels.filter((label) => action.payload !== label.id) };
+    case EDIT_LABEL:
+      return { ...state, labels: state.labels.map((label) => (label.id === action.payload.id ? (label = action.payload) : label)) };
     default:
       return state;
   }
