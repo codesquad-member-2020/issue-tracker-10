@@ -27,6 +27,7 @@ const Label = () => {
   });
 
   const onClickEdit = () => setCreateIsOpen(!createIsOpen);
+  const returnToFormat = (snapshotState) => setFormat({ ...snapshotState });
 
   const rightSideComponent = <TableHeaderButton onClick={onClickEdit}>{LABEL_TEXT}</TableHeaderButton>;
   const leftSideComponent = <SwitchButtons type="labels" />;
@@ -40,7 +41,7 @@ const Label = () => {
             <LabelBox backgroundColor={format.backgroundColor} textColor={format.textColor}>
               {format.labelName}
             </LabelBox>
-            <LabelEditor type="Create" format={format} setFormat={setFormat} snapshot={snapshot} setSnapShot={setSnapShot} onClickEdit={onClickEdit} />
+            <LabelEditor type="Create" format={format} setFormat={setFormat} snapshot={snapshot} setSnapShot={setSnapShot} onCloseEditor={onClickEdit} returnToFormat={returnToFormat} />
           </CreateLabelInner>
         </CreateLabelWrap>
       )}
@@ -74,6 +75,10 @@ const CreateLabelInner = styled.div`
   background-color: #f6f8fa;
   margin-bottom: 16px;
   padding: 16px;
+  font-size: 12px;
+  .edit_buttons {
+    margin-top: 29px;
+  }
 `;
 
 export default Label;
