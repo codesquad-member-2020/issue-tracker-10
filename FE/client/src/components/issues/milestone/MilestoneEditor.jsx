@@ -58,18 +58,6 @@ const MilestoneEditorInner = styled.div`
   box-sizing: border-box;
   background-color: #fff;
   width: 980px;
-  .page-title {
-    font-weight: 600;
-    font-size: 25px;
-    margin-bottom: 8px;
-  }
-  .page-description {
-    font-size: 13px;
-    > a {
-      color: #0366d6;
-      text-decoration: none;
-    }
-  }
   form {
     padding-top: 20px;
     border-top: 1px solid #c2c2c2;
