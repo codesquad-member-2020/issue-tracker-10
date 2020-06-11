@@ -8,11 +8,12 @@ import LabelItem from "./LabelItem";
 import LabelEditor from "./LabelEditor";
 import TableHeader from "@components/table/TableHeader";
 import SwitchButtons from "@components/table/SwitchButtons";
+import InfoMessage from "@components/infoMessage/InfoMessage";
 
 import { useSelector, useDispatch } from "react-redux";
 import { addLabel } from "@modules/labels";
 
-import { CREATE_LABEL_INFO } from "./labelConstanst";
+import { CREATE_LABEL_INFO } from "./labelConstant";
 
 const LABEL_TEXT = "New Label";
 
@@ -58,7 +59,7 @@ const Label = () => {
         </CreateLabelWrap>
       )}
       <LabelWrap>
-        <Table renderTableTopMenu={<LabelTopMenu />} renderTableList={_test_items} />
+        <Table renderTableTopMenu={<LabelTopMenu />} renderTableList={_test_items.length ? _test_items : <InfoMessage />} />
       </LabelWrap>
     </>
   );
