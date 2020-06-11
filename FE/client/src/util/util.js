@@ -18,11 +18,42 @@ const _ = {
   },
 
   isDarkColor: (RGBColors) => {
-    const { r, g, b } = RGBColors;
-    const yiq = (r * 299 + g * 587 + b * 114) / 1000;
-    const textColor = yiq < 150 ? "#fff" : "#000";
+    if (!RGBColors) {
+      return null;
+    } else {
+      const { r, g, b } = RGBColors;
+      const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+      const textColor = yiq < 150 ? "#fff" : "#000";
 
-    return { r, g, b, textColor };
+      return { r, g, b, textColor };
+    }
+  },
+
+  changeHexToRgb: (hex) => {
+    if (!hex) {
+      return null;
+    } else {
+      var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+      hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+        return r + r + g + g + b + b;
+      });
+
+      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result
+        ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16),
+            hex,
+          }
+        : null;
+    }
+  },
+  changeRgbToHex: (rgb) => {
+    rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+    return rgb && rgb.length === 4
+      ? "#" + ("0" + parseInt(rgb[1], 10).toString(16)).slice(-2) + ("0" + parseInt(rgb[2], 10).toString(16)).slice(-2) + ("0" + parseInt(rgb[3], 10).toString(16)).slice(-2)
+      : "";
   },
 
   setCookie: (key, value, days) => {
@@ -63,24 +94,6 @@ const _ = {
   //           b: 20,
   //           hex,
   //         };
-  //   },
-
-  //   changeHexToRgb_2: (hex) => {
-  //     // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-  //     var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-  //     hex = hex.replace(shorthandRegex, function (m, r, g, b) {
-  //       return r + r + g + g + b + b;
-  //     });
-
-  //     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  //     return result
-  //       ? {
-  //           r: parseInt(result[1], 16),
-  //           g: parseInt(result[2], 16),
-  //           b: parseInt(result[3], 16),
-  //           hex,
-  //         }
-  //       : null;
   //   },
 
   //   isDarkColor_1: (colors) => {

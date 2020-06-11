@@ -7,11 +7,11 @@ export const deleteLabel = (labelId) => ({ type: DELETE_LABEL, payload: labelId 
 
 const initialState = {
   labels: [
-    { id: 1, textColor: "#fff", backgroundColor: "#1E90FF", description: "testing label", labelName: "duplicate" },
-    { id: 2, textColor: "#fff", backgroundColor: "#80E12A", description: "testing label", labelName: "FE" },
-    { id: 3, textColor: "#fff", backgroundColor: "#52E4DC", description: "testing label", labelName: "good first issue" },
-    { id: 4, textColor: "#fff", backgroundColor: "#FFACB7", description: "testing label", labelName: "help wanted" },
-    { id: 5, textColor: "#fff", backgroundColor: "#FFB400", description: "testing label", labelName: "question" },
+    { id: 1, textColor: "#fff", backgroundColor: "rgb(203,92,208)", description: "testing label", labelName: "duplicate" },
+    { id: 2, textColor: "#fff", backgroundColor: "rgb(254,40,119)", description: "testing label", labelName: "FE" },
+    { id: 3, textColor: "#fff", backgroundColor: "rgb(86,185,42)", description: "testing label", labelName: "good first issue" },
+    { id: 4, textColor: "#fff", backgroundColor: "rgb(118,148,231)", description: "testing label", labelName: "help wanted" },
+    { id: 5, textColor: "#000", backgroundColor: "rgb(128,177,104)", description: "testing label", labelName: "question" },
   ],
 };
 

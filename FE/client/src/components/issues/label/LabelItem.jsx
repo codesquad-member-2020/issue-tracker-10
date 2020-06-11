@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { TableItem } from "@style/CustomStyle";
+import { TableItem, LabelBox } from "@style/CustomStyle";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { deleteLabel } from "@modules/labels";
-import Edit from "./Edit";
+import LabelEditor from "./LabelEditor";
 
 const DELETE_CONFIRM_MESSAGE = '"Are you sure? Deleting a label will remove it from all issues and pull requests."';
 
@@ -16,21 +16,17 @@ const LabelItem = (props) => {
 
   const { id, textColor, backgroundColor, description, MutedLink, labelName } = format;
 
-  const onClickEdit = () => {
-    setEditIsOpen(!editIsOpen);
-  };
-
-  const onClickDelete = () => {
-    if (window.confirm(DELETE_CONFIRM_MESSAGE)) dispatch(deleteLabel(id));
-  };
+  const onClickEdit = () => setEditIsOpen(!editIsOpen);
+  const onClickDelete = () => window.confirm(DELETE_CONFIRM_MESSAGE) && dispatch(deleteLabel(id));
+  const returnToFormat = (snapshotState) => setFormat({ ...snapshotState });
 
   return (
     <TableItemLabel>
       <Info>
         <LabelTab>
-          <Label textColor={textColor} backgroundColor={backgroundColor}>
+          <LabelBox textColor={textColor} backgroundColor={backgroundColor}>
             {labelName}
-          </Label>
+          </LabelBox>
         </LabelTab>
         <DescriptionTab>{!editIsOpen && description}</DescriptionTab>
         <MutedLinkTab>{!editIsOpen && MutedLink}</MutedLinkTab>
@@ -39,7 +35,7 @@ const LabelItem = (props) => {
           <Button onClick={onClickDelete}>Delete</Button>
         </ButtonTab>
       </Info>
-      {editIsOpen && <Edit format={format} setFormat={setFormat} snapshot={snapshot} setSnapShot={setSnapShot} onCloseEdit={onClickEdit} />}
+      {editIsOpen && <LabelEditor type="Edit" format={format} setFormat={setFormat} snapshot={snapshot} setSnapShot={setSnapShot} onCloseEditor={onClickEdit} returnToFormat={returnToFormat} />}
     </TableItemLabel>
   );
 };
@@ -56,17 +52,6 @@ const Info = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-`;
-
-const Label = styled.div`
-  display: inline-block;
-  box-sizing: border-box;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 4px 8px;
-  border-radius: 3px;
-  color: ${(props) => `${props.textColor}`};
-  background-color: ${(props) => `${props.backgroundColor}`};
 `;
 
 const DescriptionTab = styled.div`
