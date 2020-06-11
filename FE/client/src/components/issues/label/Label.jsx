@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { TableHeaderButton } from "@style/CustomStyle";
 
-import Table from "@component/table/Table";
+import Table from "@components/table/Table";
 import LabelTopMenu from "./LabelTopMenu";
 import LabelItem from "./LabelItem";
-import TableHeader from "@component/table/TableHeader";
-import SwitchButtons from "@component/table/SwitchButtons";
+import TableHeader from "@components/table/TableHeader";
+import SwitchButtons from "@components/table/SwitchButtons";
 
 import { useSelector } from "react-redux";
 
