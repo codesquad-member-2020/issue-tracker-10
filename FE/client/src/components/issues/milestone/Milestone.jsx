@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { TableHeaderButton } from "@style/CustomStyle";
@@ -6,19 +7,15 @@ import { TableHeaderButton } from "@style/CustomStyle";
 import Table from "@component/table/Table";
 import TableHeader from "@component/table/TableHeader";
 import SwitchButtons from "@component/table/SwitchButtons";
-import MilestonesTopMenu from "./MilestonesTopMenu";
-import MilestonesItem from "./MilestonesItem";
+import MilestoneTopMenu from "./MilestoneTopMenu";
+import MilestoneItem from "./MilestoneItem";
 
-import { useSelector } from "react-redux";
-
-const MILESTONES_TEXT = "New Milestones";
-
-const Milestones = () => {
+const Milestone = () => {
   const { milestonesList } = useSelector(({ milestones }) => milestones);
 
   const rightSideComponent = (
-    <Link to="/milestones/edit">
-      <TableHeaderButton>{MILESTONES_TEXT}</TableHeaderButton>
+    <Link to="/milestone/create">
+      <TableHeaderButton>New Milestone</TableHeaderButton>
     </Link>
   );
   const leftSideComponent = <SwitchButtons type="milestones" />;
@@ -27,20 +24,21 @@ const Milestones = () => {
   const _milestonesList = milestonesList.map((milestones) => {
     if (!milestones.bOpen) return;
     openMilestonesCount++;
-    return <MilestonesItem key={milestones.id} {...{ milestones }} />;
+    return <MilestoneItem key={milestones.id} {...{ milestones }} />;
   });
+  const closedMilestonesCount = _milestonesList.length - openMilestonesCount;
 
   return (
     <>
       <TableHeader leftSideComponent={leftSideComponent} rightSideComponent={rightSideComponent} />
-      <MilestonesWrap>
-        <Table renderTableTopMenu={<MilestonesTopMenu open={openMilestonesCount} closed={_milestonesList.length - openMilestonesCount} />} renderTableList={_milestonesList} />
-      </MilestonesWrap>
+      <MilestoneWrap>
+        <Table renderTableTopMenu={<MilestoneTopMenu open={openMilestonesCount} closed={closedMilestonesCount} />} renderTableList={_milestonesList} />
+      </MilestoneWrap>
     </>
   );
 };
 
-const MilestonesWrap = styled.div`
+const MilestoneWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,4 +46,4 @@ const MilestonesWrap = styled.div`
   background-color: #fff;
 `;
 
-export default Milestones;
+export default Milestone;

@@ -1,37 +1,51 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import TextField from "@material-ui/core/TextField";
 
-const MilestonesEditor = () => {
+import TableHeader from "@component/table/TableHeader";
+import MilestoneEditorHeader from "./MilestoneEditorHeader";
+import MilestoneEditorButtons from "./MilestoneEditorButtons";
+
+const MilestoneEditor = () => {
+  const { id } = useParams();
+  const { milestonesList } = useSelector(({ milestones }) => milestones);
+  const [milestone] = milestonesList.filter((milestone) => milestone.id === +id);
+
+  const leftSideComponent = <MilestoneEditorHeader {...{ milestone }} />;
+
   return (
-    <MilestonesEditorWrap>
-      <MilestonesEditorInner>
+    <MilestoneEditorWrap>
+      <MilestoneEditorInner>
+        <TableHeader leftSideComponent={leftSideComponent} />
         <form>
           <div className="editor-item-wrap">
             <label className="editor-item-label" htmlFor="milestones-title">
               Title
             </label>
-            <input type="text" id="milestones-title" placeholder="Title" />
+            <input type="text" id="milestones-title" placeholder="Title" defaultValue={milestone && milestone.title} />
           </div>
           <div className="editor-item-wrap">
             <label className="editor-item-label" htmlFor="milestones-due-date">
               Due Date (optional)
             </label>
-            <TextField id="milestones-due-date" type="date" />
+            <TextField id="milestones-due-date" type="date" defaultValue={milestone && milestone.dueDate} />
           </div>
           <div className="editor-item-wrap">
             <label className="editor-item-label" htmlFor="milestones-description">
               Description (optional)
             </label>
-            <textarea id="milestones-description" />
+            <textarea id="milestones-description" defaultValue={milestone && milestone.description} />
           </div>
         </form>
-      </MilestonesEditorInner>
-    </MilestonesEditorWrap>
+        <MilestoneEditorButtons {...{ milestone }} />
+      </MilestoneEditorInner>
+    </MilestoneEditorWrap>
   );
 };
 
-const MilestonesEditorWrap = styled.div`
+const MilestoneEditorWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,10 +54,15 @@ const MilestonesEditorWrap = styled.div`
   margin-top: 10px;
 `;
 
-const MilestonesEditorInner = styled.div`
+const MilestoneEditorInner = styled.div`
   box-sizing: border-box;
   background-color: #fff;
   width: 980px;
+  form {
+    padding-top: 20px;
+    border-top: 1px solid #c2c2c2;
+    border-bottom: 1px solid #c2c2c2;
+  }
   .editor-item-label {
     letter-spacing: -0.03rem;
     font-weight: 600;
@@ -77,6 +96,7 @@ const MilestonesEditorInner = styled.div`
   }
   #milestones-description {
     width: 550px;
+    margin: 0;
     min-height: 200px;
     max-width: 980px;
   }
@@ -88,4 +108,4 @@ const MilestonesEditorInner = styled.div`
   }
 `;
 
-export default MilestonesEditor;
+export default MilestoneEditor;

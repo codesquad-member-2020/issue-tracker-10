@@ -1,20 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 
-const MilestonesTopMenu = ({ open, closed }) => {
+const MilestoneTopMenu = ({ open, closed }) => {
   return (
-    <MilestonesTopMenuWrap>
+    <MilestoneTopMenuWrap>
       <div>
         <span>{open}</span> Open
       </div>
       <div>
         <span>{closed}</span> Closed
       </div>
-    </MilestonesTopMenuWrap>
+    </MilestoneTopMenuWrap>
   );
 };
 
-const MilestonesTopMenuWrap = styled.div`
+const MilestoneTopMenuWrap = styled.div`
   display: flex;
   width: 100%;
   background-color: #f6f8fa;
@@ -30,4 +30,4 @@ const MilestonesTopMenuWrap = styled.div`
   }
 `;
 
-export default MilestonesTopMenu;
+export default MilestoneTopMenu;
