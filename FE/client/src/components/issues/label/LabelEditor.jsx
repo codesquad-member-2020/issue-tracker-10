@@ -6,7 +6,7 @@ import { BsArrowRepeat } from "react-icons/bs";
 import debounce from "lodash.debounce";
 import _ from "@util";
 
-const LabelEditor = ({ type, format, setFormat, snapshot, setSnapShot, onCloseEditor, returnToFormat, onClickEditor }) => {
+const LabelEditor = ({ type, format, setFormat, snapshot, setSnapShot, onCloseEditor, returnToFormat, updateEditor }) => {
   const { id, textColor, backgroundColor, description, labelName } = format;
   const [colorPickerValue, setColorPickerValue] = useState(_.changeRgbToHex(backgroundColor));
   const [colorPickerValueError, setColorPickerValueError] = useState(false);
@@ -17,6 +17,7 @@ const LabelEditor = ({ type, format, setFormat, snapshot, setSnapShot, onCloseEd
 
   // pipeline
   const onClickCancel = () => _.pipe(returnToFormat, onCloseEditor)(snapshot);
+  const onClickEditor = () => _.pipe(updateEditor, onCloseEditor)(format);
   const onClickRandomColor = () => _.pipe(_.createRandomRGBColor, _.isDarkColor, updateLabelColors)();
   const onChangeLabelName = (e) => _.pipe(setLabelName, debounceLabelName)(e.target.value);
   const onChangeLabelColors = (e) => _.pipe(setColorPickerInputValue, updateColorPickerInputValue, _.changeHexToRgb, _.isDarkColor, debounceLabelColors)(e.target.value);
@@ -51,10 +52,10 @@ const LabelEditor = ({ type, format, setFormat, snapshot, setSnapShot, onCloseEd
     }
   };
 
-  // Cancel Button
+  // Description input
+  const updateDescription = (e) => setFormat({ ...format, description: e.target.value });
 
-  // Save Button
-
+  // Editor button Active
   const judgeActiveButton = () => (colorPickerValueError ? true : false);
 
   return (
@@ -65,7 +66,7 @@ const LabelEditor = ({ type, format, setFormat, snapshot, setSnapShot, onCloseEd
       </LabelName>
       <Description>
         <Title>Description</Title>
-        <input type="text" placeholder="Description (optional)" defaultValue={description} />
+        <input type="text" placeholder="Description (optional)" defaultValue={description} onChange={updateDescription} />
       </Description>
       <ColorPiker>
         <Title>Color</Title>
@@ -80,7 +81,7 @@ const LabelEditor = ({ type, format, setFormat, snapshot, setSnapShot, onCloseEd
       <LabelSetButtons>
         <SetButtons className="edit_buttons">
           <CancelButton onClick={onClickCancel}>Cancel</CancelButton>
-          <SaveButton disabled={judgeActiveButton()} blockButton={judgeActiveButton()}>
+          <SaveButton onClick={onClickEditor} disabled={judgeActiveButton()} blockButton={judgeActiveButton()}>
             {type === "Edit" ? "Save changes" : "Create label"}
           </SaveButton>
         </SetButtons>
