@@ -32,6 +32,17 @@ export const TableItem = styled.div`
   border-top: none;
 `;
 
+export const LabelBox = styled.div`
+  display: inline-block;
+  box-sizing: border-box;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 4px 8px;
+  border-radius: 3px;
+  color: ${(props) => `${props.textColor}`};
+  background-color: ${(props) => `${props.backgroundColor}`};
+`;
+
 export const LabelSetWrap = styled.div`
   width: 100%;
   margin-top: 8px;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TableItem } from "@style/CustomStyle";
+import { TableItem, LabelBox } from "@style/CustomStyle";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { deleteLabel } from "@modules/labels";
@@ -28,9 +28,9 @@ const LabelItem = (props) => {
     <TableItemLabel>
       <Info>
         <LabelTab>
-          <Label textColor={textColor} backgroundColor={backgroundColor}>
+          <LabelBox textColor={textColor} backgroundColor={backgroundColor}>
             {labelName}
-          </Label>
+          </LabelBox>
         </LabelTab>
         <DescriptionTab>{!editIsOpen && description}</DescriptionTab>
         <MutedLinkTab>{!editIsOpen && MutedLink}</MutedLinkTab>
@@ -39,7 +39,7 @@ const LabelItem = (props) => {
           <Button onClick={onClickDelete}>Delete</Button>
         </ButtonTab>
       </Info>
-      {editIsOpen && <LabelEditor format={format} setFormat={setFormat} snapshot={snapshot} setSnapShot={setSnapShot} onCloseEdit={onClickEdit} />}
+      {editIsOpen && <LabelEditor type="Edit" format={format} setFormat={setFormat} snapshot={snapshot} setSnapShot={setSnapShot} onCloseEdit={onClickEdit} />}
     </TableItemLabel>
   );
 };
@@ -56,17 +56,6 @@ const Info = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-`;
-
-const Label = styled.div`
-  display: inline-block;
-  box-sizing: border-box;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 4px 8px;
-  border-radius: 3px;
-  color: ${(props) => `${props.textColor}`};
-  background-color: ${(props) => `${props.backgroundColor}`};
 `;
 
 const DescriptionTab = styled.div`
