@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TableItem, LabelBox } from "@style/CustomStyle";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { deleteLabel } from "@modules/labels";
+import { deleteLabel, editLabel } from "@modules/labels";
 import LabelEditor from "./LabelEditor";
 
 const DELETE_CONFIRM_MESSAGE = '"Are you sure? Deleting a label will remove it from all issues and pull requests."';
@@ -18,6 +18,7 @@ const LabelItem = (props) => {
 
   const onClickEdit = () => setEditIsOpen(!editIsOpen);
   const onClickDelete = () => window.confirm(DELETE_CONFIRM_MESSAGE) && dispatch(deleteLabel(id));
+  const EditLabel = (formatState) => dispatch(editLabel(formatState));
   const returnToFormat = (snapshotState) => setFormat({ ...snapshotState });
 
   return (
@@ -35,7 +36,18 @@ const LabelItem = (props) => {
           <Button onClick={onClickDelete}>Delete</Button>
         </ButtonTab>
       </Info>
-      {editIsOpen && <LabelEditor type="Edit" format={format} setFormat={setFormat} snapshot={snapshot} setSnapShot={setSnapShot} onCloseEditor={onClickEdit} returnToFormat={returnToFormat} />}
+      {editIsOpen && (
+        <LabelEditor
+          type="Edit"
+          format={format}
+          setFormat={setFormat}
+          snapshot={snapshot}
+          setSnapShot={setSnapShot}
+          onCloseEditor={onClickEdit}
+          returnToFormat={returnToFormat}
+          updateEditor={EditLabel}
+        />
+      )}
     </TableItemLabel>
   );
 };

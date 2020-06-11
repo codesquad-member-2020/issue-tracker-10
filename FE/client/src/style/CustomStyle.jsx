@@ -89,7 +89,7 @@ export const Description = styled.div`
   padding-right: 16px;
 `;
 
-export const ColorPiker = styled.div`
+export const ColorPicker = styled.div`
   width: 20%;
   margin: 15px 0;
   padding-right: 16px;
