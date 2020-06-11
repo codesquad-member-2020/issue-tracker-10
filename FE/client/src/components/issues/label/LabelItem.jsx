@@ -3,7 +3,7 @@ import { TableItem } from "@style/CustomStyle";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { deleteLabel } from "@modules/labels";
-import Edit from "./Edit";
+import LabelEditor from "./LabelEditor";
 
 const DELETE_CONFIRM_MESSAGE = '"Are you sure? Deleting a label will remove it from all issues and pull requests."';
 
@@ -39,7 +39,7 @@ const LabelItem = (props) => {
           <Button onClick={onClickDelete}>Delete</Button>
         </ButtonTab>
       </Info>
-      {editIsOpen && <Edit format={format} setFormat={setFormat} snapshot={snapshot} setSnapShot={setSnapShot} onCloseEdit={onClickEdit} />}
+      {editIsOpen && <LabelEditor format={format} setFormat={setFormat} snapshot={snapshot} setSnapShot={setSnapShot} onCloseEdit={onClickEdit} />}
     </TableItemLabel>
   );
 };

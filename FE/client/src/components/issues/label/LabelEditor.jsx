@@ -6,7 +6,7 @@ import { BsArrowRepeat } from "react-icons/bs";
 import debounce from "lodash.debounce";
 import _ from "@util";
 
-const Edit = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit }) => {
+const LabelEditor = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit }) => {
   const { id, textColor, backgroundColor, description, labelName } = format;
   const [colorPickerValue, setColorPickerValue] = useState(_.changeRgbToHex(backgroundColor));
   const [colorPickerValueError, setColorPickerValueError] = useState(false);
@@ -90,4 +90,4 @@ const Edit = ({ format, setFormat, snapshot, setSnapShot, onCloseEdit }) => {
   );
 };
 
-export default Edit;
+export default LabelEditor;
