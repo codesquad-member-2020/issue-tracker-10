@@ -1,10 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import Header from "@component/header/Header";
-import Label from "@component/issues/label/Label";
-import Milestone from "@component/issues/milestone/Milestone";
-import MilestoneEditor from "@component/issues/milestone/MilestoneEditor";
+import Login from "@components/login/Login";
+import Header from "@components/header/Header";
+import Issue from "@components/issues/Issue";
+import Label from "@components/issues/label/Label";
+import Milestone from "@components/issues/milestone/Milestone";
+import MilestoneEditor from "@components/issues/milestone/MilestoneEditor";
 
 import { GlobalStyle } from "@style/GlobalStyle";
 
@@ -14,6 +16,8 @@ function App() {
       <GlobalStyle />
       <Header />
       <Switch>
+        <Route exact path="/" component={Login} />
+        <Route exact path="/issues" component={Issue} />
         <Route exact path="/labels" component={Label} />
         <Route exact path="/milestones" component={Milestone} />
         <Route path="/milestone/create" component={MilestoneEditor} />

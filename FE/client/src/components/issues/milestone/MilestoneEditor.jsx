@@ -4,14 +4,14 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import TextField from "@material-ui/core/TextField";
 
-import TableHeader from "@component/table/TableHeader";
+import TableHeader from "@components/table/TableHeader";
 import MilestoneEditorHeader from "./MilestoneEditorHeader";
 import MilestoneEditorButtons from "./MilestoneEditorButtons";
 
 const MilestoneEditor = () => {
   const { id } = useParams();
   const { milestonesList } = useSelector(({ milestones }) => milestones);
-  const [milestone] = milestonesList.filter((milestone) => milestone.id === +id);
+  const [milestone] = id ? milestonesList.filter((milestone) => milestone.id === +id) : [id];
 
   const leftSideComponent = <MilestoneEditorHeader {...{ milestone }} />;
 

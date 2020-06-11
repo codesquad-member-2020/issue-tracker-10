@@ -5,7 +5,7 @@ import styled from "styled-components";
 const HeaderMenuList = () => {
   return (
     <HeaderMenuListWrap>
-      <Link to="/">Issues</Link>
+      <Link to="/issues">Issues</Link>
       <Link to="/labels">Labels</Link>
       <Link to="/milestones">Milestones</Link>
     </HeaderMenuListWrap>

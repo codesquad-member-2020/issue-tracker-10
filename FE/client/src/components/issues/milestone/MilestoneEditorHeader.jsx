@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import SwitchButtons from "@component/table/SwitchButtons";
+import SwitchButtons from "@components/table/SwitchButtons";
 
 const MilestoneEditorHeader = ({ milestone }) => {
   return (
