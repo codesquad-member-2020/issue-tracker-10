@@ -22,8 +22,8 @@ const Label = () => {
   const [format, setFormat] = useState({ ...CREATE_LABEL_INFO });
   const [snapshot, setSnapShot] = useState({ ...CREATE_LABEL_INFO });
 
-  const _test_items = labels.map((labelOption, idx) => {
-    return <LabelItem key={idx} {...labelOption} />;
+  const _test_items = labels.map((labelOption) => {
+    return <LabelItem key={labelOption.id} {...labelOption} />;
   });
 
   const onClickEdit = () => setCreateIsOpen(!createIsOpen);
