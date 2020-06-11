@@ -37,6 +37,7 @@ export const LabelSetWrap = styled.div`
   margin-top: 8px;
   margin-bottom: -8px;
   display: flex;
+  position: relative;
 
   input {
     width: 100%;
@@ -49,8 +50,13 @@ export const LabelSetWrap = styled.div`
     background-color: #fafbfc;
     min-height: 32px;
   }
-  .colorInput {
-    /* text-decoration: wavy; */
+
+  span {
+    position: absolute;
+    top: 19%;
+    right: 26.5%;
+    color: red;
+    font-weight: bold;
   }
 `;
 
@@ -139,6 +145,7 @@ export const SaveButton = styled.button`
   color: #fff;
   background-color: #28a745;
   background-image: linear-gradient(-180deg, #34d058, #28a745 90%);
+  opacity: ${(props) => (props.blockButton ? "0.7" : "1.0")};
 `;
 
 export const TableHeaderButton = styled.button`
