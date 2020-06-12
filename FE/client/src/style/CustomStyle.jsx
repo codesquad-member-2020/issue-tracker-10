@@ -35,6 +35,8 @@ export const TableItem = styled.div`
 export const LabelBox = styled.div`
   display: inline-block;
   box-sizing: border-box;
+  word-break: break-all;
+  max-width: 90%;
   font-weight: bold;
   font-size: 14px;
   padding: 4px 8px;
