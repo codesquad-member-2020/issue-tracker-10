@@ -4,14 +4,12 @@ import styled from "styled-components";
 import { TableItem } from "@style/CustomStyle";
 import githubCharacter from "@assets/images/github-character.jpg";
 
-import { NO_LABEL_TITLE, NO_LABEL_CONTENT } from "@components/issues/label/labelConstant";
-
-const InfoMessage = () => {
+const InfoMessage = ({ title, content }) => {
   return (
     <InfoMessageItem>
-      <img src={githubCharacter} alt="" />
-      <div className="title">{NO_LABEL_TITLE}</div>
-      <div className="content">{NO_LABEL_CONTENT}</div>
+      <img src={githubCharacter} />
+      <div className="title">{title}</div>
+      <div className="content">{content}</div>
     </InfoMessageItem>
   );
 };
