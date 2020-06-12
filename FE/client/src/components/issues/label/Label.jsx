@@ -13,7 +13,7 @@ import InfoMessage from "@components/infoMessage/InfoMessage";
 import { useSelector, useDispatch } from "react-redux";
 import { addLabel } from "@modules/labels";
 
-import { CREATE_LABEL_INFO } from "./labelConstant";
+import { CREATE_LABEL_INFO, NO_LABEL_TITLE, NO_LABEL_CONTENT } from "./labelConstant";
 
 const LABEL_TEXT = "New Label";
 
@@ -59,7 +59,7 @@ const Label = () => {
         </CreateLabelWrap>
       )}
       <LabelWrap>
-        <Table renderTableTopMenu={<LabelTopMenu />} renderTableList={_test_items.length ? _test_items : <InfoMessage />} />
+        <Table renderTableTopMenu={<LabelTopMenu />} renderTableList={_test_items.length ? _test_items : <InfoMessage title={NO_LABEL_TITLE} content={NO_LABEL_CONTENT} />} />
       </LabelWrap>
     </>
   );
