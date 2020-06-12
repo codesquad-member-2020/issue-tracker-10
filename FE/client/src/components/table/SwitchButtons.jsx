@@ -33,7 +33,7 @@ const SwitchButtonsWrap = styled.div`
     display: flex;
     align-items: center;
     font-weight: bold;
-    padding: 6px 14px;
+    padding: 7px 14px;
     outline: none;
     cursor: pointer;
 
