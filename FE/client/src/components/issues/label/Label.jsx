@@ -13,9 +13,7 @@ import InfoMessage from "@components/infoMessage/InfoMessage";
 import { useSelector, useDispatch } from "react-redux";
 import { addLabel } from "@modules/labels";
 
-import { CREATE_LABEL_INFO, NO_LABEL_TITLE, NO_LABEL_CONTENT } from "./labelConstant";
-
-const LABEL_TEXT = "New Label";
+import { CREATE_LABEL_INFO, NO_LABEL_TITLE, NO_LABEL_CONTENT, LABEL_TEXT } from "./labelConstant";
 
 const Label = () => {
   const dispatch = useDispatch();

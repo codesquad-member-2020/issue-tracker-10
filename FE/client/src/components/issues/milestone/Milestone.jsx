@@ -9,13 +9,16 @@ import TableHeader from "@components/table/TableHeader";
 import SwitchButtons from "@components/table/SwitchButtons";
 import MilestoneTopMenu from "./MilestoneTopMenu";
 import MilestoneItem from "./MilestoneItem";
+import InfoMessage from "@components/infoMessage/InfoMessage";
+
+import { MILESTONE_TEXT, MILESTONE_TITLE, MILESTONE_CONTENT } from "./milestoneConstant";
 
 const Milestone = () => {
   const { milestonesList } = useSelector(({ milestones }) => milestones);
 
   const rightSideComponent = (
     <Link to="/milestone/create">
-      <TableHeaderButton>New Milestone</TableHeaderButton>
+      <TableHeaderButton>{MILESTONE_TEXT}</TableHeaderButton>
     </Link>
   );
   const leftSideComponent = <SwitchButtons type="milestones" />;
@@ -32,7 +35,10 @@ const Milestone = () => {
     <>
       <TableHeader leftSideComponent={leftSideComponent} rightSideComponent={rightSideComponent} />
       <MilestoneWrap>
-        <Table renderTableTopMenu={<MilestoneTopMenu open={openMilestonesCount} closed={closedMilestonesCount} />} renderTableList={_milestonesList} />
+        <Table
+          renderTableTopMenu={<MilestoneTopMenu open={openMilestonesCount} closed={closedMilestonesCount} />}
+          renderTableList={_milestonesList.length ? _milestonesList : <InfoMessage title={MILESTONE_TITLE} content={MILESTONE_CONTENT} />}
+        />
       </MilestoneWrap>
     </>
   );
