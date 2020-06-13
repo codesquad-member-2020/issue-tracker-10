@@ -1,6 +1,6 @@
-const ADD_LABEL = "label/ADD_LABEL";
-const DELETE_LABEL = "label/DELETE_LABEL";
-const EDIT_LABEL = "label/EDIT_LABEL";
+const ADD_LABEL = "labels/ADD_LABEL";
+const DELETE_LABEL = "labels/DELETE_LABEL";
+const EDIT_LABEL = "labels/EDIT_LABEL";
 
 export const addLabel = (labelItems) => ({ type: ADD_LABEL, payload: labelItems });
 export const deleteLabel = (labelId) => ({ type: DELETE_LABEL, payload: labelId });
