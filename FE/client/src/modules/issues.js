@@ -18,7 +18,8 @@ const issueReducer = (state = initialState, action) => {
         case INIT_ISSUES_LIST:
             return {
                 ...state,
-                issuesList: action.payload,
+                bLoading: false,
+                issuesList: action.payload.issueList,
             }
         default:
             return state;
