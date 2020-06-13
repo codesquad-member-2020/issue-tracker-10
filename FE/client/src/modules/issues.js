@@ -1,6 +1,6 @@
 const INIT_ISSUES_LIST = "issues/INIT_ISSUES_LIST";
 
-export const getInitIssuesFetch = () => async dispatch => {
+export const getInitIssues = () => async dispatch => {
     const response = await fetch('http://localhost:3000/api/issueList');
     const json = await response.json();
     dispatch(initIssuesList(json));

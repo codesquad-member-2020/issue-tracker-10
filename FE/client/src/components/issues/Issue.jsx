@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getInitIssuesFetch } from "@modules/issues";
+import { getInitIssues } from "@modules/issues";
 
 const Issue = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getInitIssuesFetch());
+    dispatch(getInitIssues());
   }, [dispatch]);
 
   return <div></div>;
