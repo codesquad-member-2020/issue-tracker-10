@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 import styled from "styled-components";
+import { SaveButton } from "@style/CustomStyle";
 import { MarkdownDefaultStyle } from "@style/CustomStyle";
+
+import { MARKDOWN_INFO_MESSGAE, MARKDOWN_WIKI_URL } from "./issyesEditorConstant";
 
 const MarkdownEditor = () => {
   const [writeMode, setWriteMode] = useState(true);
@@ -23,25 +26,54 @@ const MarkdownEditor = () => {
 
   return (
     <MarkdownEditorWrap>
-      <div className="test">
-        <MarkdownButtons>
-          <WriteButton onClick={onClickWrite} activation={writeMode}>
-            Write
-          </WriteButton>
-          <PreviewButton onClick={onClickPreview} activation={previewMode}>
-            Preview
-          </PreviewButton>
-        </MarkdownButtons>
-      </div>
-      {writeMode && <textarea name="" cols="30" rows="10" value={testValue} onChange={test_onChange} />}
-      {previewMode && (
-        <MarkdownDefaultStyle>
-          <ReactMarkdown source={testValue} />
-        </MarkdownDefaultStyle>
-      )}
+      <MarkdownButtons>
+        <WriteButton onClick={onClickWrite} activation={writeMode}>
+          Write
+        </WriteButton>
+        <PreviewButton onClick={onClickPreview} activation={previewMode}>
+          Preview
+        </PreviewButton>
+      </MarkdownButtons>
+      <MarkdownArea>
+        {writeMode && (
+          <>
+            <textarea name="" cols="30" rows="10" value={testValue} onChange={test_onChange} />
+            <MarkdownMessage href={MARKDOWN_WIKI_URL} target="_blank">
+              {MARKDOWN_INFO_MESSGAE}
+            </MarkdownMessage>
+          </>
+        )}
+        {previewMode && (
+          <MarkdownDefaultStyle>
+            <ReactMarkdown source={testValue} />
+          </MarkdownDefaultStyle>
+        )}
+      </MarkdownArea>
     </MarkdownEditorWrap>
   );
 };
+
+const MarkdownArea = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const MarkdownMessage = styled.a`
+  padding: 7px 10px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 16px;
+  color: #586069;
+  background-color: #fafbfc;
+  border: 1px solid #c3c8cf;
+  border-top: 0;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+
+  :hover {
+    color: #0366d6;
+  }
+`;
 
 const MarkdownEditorWrap = styled.div`
   button {
