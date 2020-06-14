@@ -25,6 +25,13 @@ ${variables}
   padding: 0;
   width: auto;
   background: transparent;
+   height: 32px;
+    border-radius: 3px;
+    padding: 7px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid rgba(27, 31, 35, 0.2);
+    outline: none;
  }
 
  input {
