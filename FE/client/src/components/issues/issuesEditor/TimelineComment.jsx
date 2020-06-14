@@ -20,6 +20,18 @@ const TimelineCommentBox = styled.div`
     height: 40px;
     border-radius: 3px;
   }
+  textarea {
+    min-width: 100%;
+    max-width: 100%;
+    border-radius: 3px;
+    border: 1px solid #d1d5da;
+  }
+  .title_input {
+    display: block;
+    padding: 8px;
+    font-size: 16px;
+  }
+
   .arrow_box {
     position: relative;
     border: 1px solid #d1d5da;
