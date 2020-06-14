@@ -13,6 +13,7 @@ const TimelineComment = ({ children, userImage }) => {
 const TimelineCommentBox = styled.div`
   width: 75%;
   padding: 0 16px 0 16px;
+
   img {
     float: left;
     margin-left: -56px;
@@ -25,6 +26,7 @@ const TimelineCommentBox = styled.div`
     max-width: 100%;
     border-radius: 3px;
     border: 1px solid #d1d5da;
+    border-bottom-style: dashed;
   }
   .title_input {
     display: block;
