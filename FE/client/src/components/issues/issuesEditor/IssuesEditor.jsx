@@ -1,23 +1,23 @@
 import React from "react";
 import styled from "styled-components";
-import userSampleImage from "@assets/images/user-sample-image.jpg";
-import TimelineComment from "./TimelineComment";
-import MarkdownEditor from "./MarkdownEditor";
+import GithubPiker from "./GithubPicker";
 
-const IssuesEditor = () => {
+const IssuesEditor = ({ children }) => {
   return (
     <IssuesEditorWrap>
       <IssuesEditorInner>
-        <TimelineComment userImage={userSampleImage}>
-          <div className="title_input">
-            <input type="text" placeholder="Title" />
-            <MarkdownEditor />
-          </div>
-        </TimelineComment>
+        {children}
+        <PickerWrap>
+          <GithubPiker />
+        </PickerWrap>
       </IssuesEditorInner>
     </IssuesEditorWrap>
   );
 };
+
+const PickerWrap = styled.div`
+  width: 25%;
+`;
 
 const IssuesEditorWrap = styled.div`
   display: flex;
@@ -27,6 +27,7 @@ const IssuesEditorWrap = styled.div`
 `;
 
 const IssuesEditorInner = styled.div`
+  display: flex;
   width: 1012px;
   height: 500px;
 `;
