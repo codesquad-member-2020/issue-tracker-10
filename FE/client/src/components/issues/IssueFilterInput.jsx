@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { NomalButton, NomalInput } from "@style/CustomStyle";
+import { NomalButton, NomalInput, DropdownCaret } from "@style/CustomStyle";
 import { AiOutlineSearch } from "react-icons/ai";
 
 const IssueFilterInput = () => {
@@ -8,7 +8,7 @@ const IssueFilterInput = () => {
     <IssueFilterInputWrap>
       <NomalButton type="button">
         Filter
-        <span className="dropdown-caret"></span>
+        <DropdownCaret />
       </NomalButton>
       <div className="filter-input-wrap">
         <AiOutlineSearch className="search-icon" />
@@ -21,19 +21,6 @@ const IssueFilterInput = () => {
 const IssueFilterInputWrap = styled.div`
   display: flex;
   width: 600px;
-  .dropdown-caret {
-    margin-left: 5px;
-    display: inline-block;
-    width: 0;
-    height: 0;
-    vertical-align: middle;
-    content: "";
-    border-top-style: solid;
-    border-top-width: 4px;
-    border-right: 4px solid transparent;
-    border-bottom: 0 solid transparent;
-    border-left: 4px solid transparent;
-  }
   .filter-input-wrap {
     position: relative;
     width: 100%;

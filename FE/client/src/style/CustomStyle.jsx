@@ -244,3 +244,17 @@ export const NomalInput = styled.input`
     color: #bdc3c7;
   }
 `;
+
+export const DropdownCaret = styled.span`
+  margin-left: 5px;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: middle;
+  content: "";
+  border-top-style: solid;
+  border-top-width: 4px;
+  border-right: 4px solid transparent;
+  border-bottom: 0 solid transparent;
+  border-left: 4px solid transparent;
+`;
