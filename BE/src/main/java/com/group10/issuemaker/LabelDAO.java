@@ -48,4 +48,9 @@ public class LabelDAO {
                 .addValue("name", name);
         namedParameterJdbcTemplate.update(sql, sqlParameterSource);
     }
+
+    public void deleteLabel(Long labelId) {
+        String sql = "DELETE FROM LABEL WHERE LABEL_ID = ?";
+        jdbcTemplate.update(sql, labelId);
+    }
 }

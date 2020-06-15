@@ -1,6 +1,7 @@
 package com.group10.issuemaker;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.sql.DataSource;
@@ -18,6 +19,12 @@ public class LabelController {
     @GetMapping("/labels/create")
     public List<Label> makeNewLabel() {
         labelDAO.createLabel("black", "blue", "jeju-coding", "will be awesome");
+        return labelDAO.findLabels();
+    }
+
+    @GetMapping("/labels/{labelId}/delete")
+    public List<Label> deleteLabel(@PathVariable Long labelId) {
+        labelDAO.deleteLabel(labelId);
         return labelDAO.findLabels();
     }
 }
