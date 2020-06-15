@@ -8,6 +8,7 @@ import { TableHeaderButton } from "@style/CustomStyle";
 import Table from "@components/table/Table";
 import TableHeader from "@components/table/TableHeader";
 import SwitchButtons from "@components/table/SwitchButtons";
+import IssueFilterInput from "./IssueFilterInput";
 import IssueTopMenu from "./IssueTopMenu";
 import IssueItem from "./IssueItem";
 
@@ -21,11 +22,11 @@ const Issue = () => {
     dispatch(getInitIssues());
   }, [dispatch]);
 
-  const leftSideComponent = <div>Filter Input Layout</div>;
+  const leftSideComponent = <IssueFilterInput />;
   const rightSideComponent = (
     <>
       <SwitchButtons type="issues" />
-      <Link to="/issues">
+      <Link to="/issues/create">
         <TableHeaderButton>{ISSUE_TEXT}</TableHeaderButton>
       </Link>
     </>

@@ -23,6 +23,7 @@ const TabelHeaderInner = styled.div`
   width: 980px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export default TableHeader;

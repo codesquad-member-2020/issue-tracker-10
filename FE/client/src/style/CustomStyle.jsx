@@ -180,3 +180,67 @@ export const TableHeaderButton = styled.button`
     opacity: 0.7;
   }
 `;
+
+export const NomalButton = styled.button`
+  color: #444d56;
+  background-color: #eff3f6;
+  background-image: linear-gradient(-180deg, #fafbfc, #eff3f6 90%);
+  position: relative;
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-repeat: repeat-x;
+  background-position: -1px -1px;
+  background-size: 110% 110%;
+  border: 1px solid rgba(27, 31, 35, 0.2);
+  border-radius: 0.25em;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  font-family: "Noto Sans KR", sans-serif;
+  outline: none;
+`;
+
+export const NomalInput = styled.input`
+  width: 100%;
+  padding-left: 30px;
+  min-height: 34px;
+  padding: 6px 8px;
+  font-size: 16px;
+  line-height: 20px;
+  color: #24292e;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  outline: none;
+  box-shadow: inset 0 1px 2px rgba(27, 31, 35, 0.075);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  font-family: "Noto Sans KR", sans-serif;
+  color: #bdc3c7;
+  :focus {
+    position: relative;
+    z-index: 1;
+    border-radius: 3px;
+    border-color: #2188ff;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(27, 31, 35, 0.075), 0 0 0 0.2em rgba(3, 102, 214, 0.3);
+  }
+  ::placeholder {
+    color: #bdc3c7;
+  }
+`;
