@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import GithubPiker from "./GithubPicker";
+import GithubPiker_ from "./GithubPicker_";
+
+import GithubPicker from "./githubPicker/GithubPicker";
 
 const IssuesEditor = ({ children }) => {
   return (
@@ -8,7 +10,8 @@ const IssuesEditor = ({ children }) => {
       <IssuesEditorInner>
         {children}
         <PickerWrap>
-          <GithubPiker />
+          <GithubPiker_ />
+          <GithubPicker pickerName="Labels" />
         </PickerWrap>
       </IssuesEditorInner>
     </IssuesEditorWrap>
