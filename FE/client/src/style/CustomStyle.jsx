@@ -97,6 +97,21 @@ export const ColorPicker = styled.div`
   padding-right: 16px;
 `;
 
+export const LabelSetButtons = styled.div`
+  width: 21.66667%;
+  margin-left: 32px;
+  margin: 15px 0;
+  height: 32px;
+
+  button {
+    :hover {
+      text-decoration: none;
+      background-repeat: repeat-x;
+      opacity: 0.7;
+    }
+  }
+`;
+
 export const ColorSelectTab = styled.div`
   display: flex;
   justify-content: space-between;
@@ -119,12 +134,10 @@ export const RandomColorButton = styled.button`
   color: ${(props) => `${props.color}`};
 `;
 
-export const LabelSetButtons = styled.div`
-  width: 21.66667%;
-  margin-left: 32px;
-  margin: 15px 0;
-  height: 32px;
-
+export const SetButtons = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 26px;
   button {
     height: 32px;
     border-radius: 3px;
@@ -133,18 +146,7 @@ export const LabelSetButtons = styled.div`
     font-weight: 600;
     border: 1px solid rgba(27, 31, 35, 0.2);
     outline: none;
-
-    :hover {
-      text-decoration: none;
-      background-repeat: repeat-x;
-      opacity: 0.7;
-    }
   }
-`;
-export const SetButtons = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 26px;
 `;
 
 export const CancelButton = styled.button`
