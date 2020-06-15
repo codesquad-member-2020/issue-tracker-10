@@ -1,0 +1,1 @@
+export const ISSUE_TEXT = "New Issue";
