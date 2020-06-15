@@ -1,11 +1,11 @@
 package com.group10.issuemaker;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class LabelController {
@@ -16,9 +16,13 @@ public class LabelController {
         this.labelDAO = new LabelDAO(dataSource);
     }
 
-    @GetMapping("/labels/create")
-    public List<Label> makeNewLabel() {
-        labelDAO.createLabel("black", "blue", "jeju-coding", "will be awesome");
+//    @PostMapping(value = "/labels/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+@PostMapping(value = "/labels/create")
+public List<Label> makeNewLabel(@RequestBody Map<String, String> label) {
+
+
+        labelDAO.createLabel(label.get("textColor"), label.get("backgroundColor"), label.get("description"), label.get("labelName"));
+//        labelDAO.createLabel("black", "blue", "jeju-coding", "will be awesome");
         return labelDAO.findLabels();
     }
 
