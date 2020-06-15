@@ -18,7 +18,7 @@ const CreateIssues = () => {
           <MarkdownEditor />
         </div>
         <CreateIssueWrap>
-          <SaveButton>{SUBMIT_NEW_ISSUE}</SaveButton>
+          <SubmitButton>{SUBMIT_NEW_ISSUE}</SubmitButton>
         </CreateIssueWrap>
       </TimelineComment>
     </IssuesEditor>
@@ -33,6 +33,17 @@ const CreateIssueWrap = styled.div`
   margin-right: 8px;
   margin-left: -8px;
   margin-bottom: 8px;
+`;
+
+const SubmitButton = styled(SaveButton)`
+  width: auto;
+  height: 32px;
+  border-radius: 3px;
+  padding: 7px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid rgba(27, 31, 35, 0.2);
+  outline: none;
 `;
 
 export default CreateIssues;

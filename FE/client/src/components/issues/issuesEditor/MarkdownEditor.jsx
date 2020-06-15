@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 import styled from "styled-components";
-import { SaveButton } from "@style/CustomStyle";
 import { MarkdownDefaultStyle } from "@style/CustomStyle";
 
 import { MARKDOWN_INFO_MESSGAE, MARKDOWN_WIKI_URL } from "./issyesEditorConstant";
