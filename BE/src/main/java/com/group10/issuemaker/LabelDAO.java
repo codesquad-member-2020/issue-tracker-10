@@ -40,4 +40,7 @@ public class LabelDAO {
         return namedParameterJdbcTemplate.queryForList(sql, namedParameters, Label.class);
     }
 
+    public void createLabel() {
+        String sql = "INSERT INTO LABEL (TEXTCOLOR, BACKGROUNDCOLOR, DESCRIPTION, LABELNAME) VALUES ( :textColor, :backColor, :description, :name)";
+    }
 }
