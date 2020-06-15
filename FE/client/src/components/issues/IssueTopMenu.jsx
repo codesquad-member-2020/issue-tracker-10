@@ -31,6 +31,7 @@ const IssueTopMenu = () => {
 const IssueTopMenuWrap = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   background-color: #f6f8fa;
   margin: -1px -1px 0;
@@ -43,7 +44,11 @@ const IssueTopMenuWrap = styled.div`
   & > * {
     margin-right: 20px;
   }
-
+  input {
+    width: 15px;
+    height: 15px;
+    margin: 0;
+  }
   .filter-list {
     width: 350px;
     display: flex;
