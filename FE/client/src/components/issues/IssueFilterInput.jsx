@@ -35,6 +35,7 @@ const IssueFilterInputWrap = styled.div`
     }
     input {
       text-indent: 25px;
+      font-size: 14px;
     }
   }
 `;
