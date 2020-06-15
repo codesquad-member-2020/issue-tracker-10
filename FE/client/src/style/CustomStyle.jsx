@@ -97,6 +97,21 @@ export const ColorPicker = styled.div`
   padding-right: 16px;
 `;
 
+export const LabelSetButtons = styled.div`
+  width: 21.66667%;
+  margin-left: 32px;
+  margin: 15px 0;
+  height: 32px;
+
+  button {
+    :hover {
+      text-decoration: none;
+      background-repeat: repeat-x;
+      opacity: 0.7;
+    }
+  }
+`;
+
 export const ColorSelectTab = styled.div`
   display: flex;
   justify-content: space-between;
@@ -119,12 +134,10 @@ export const RandomColorButton = styled.button`
   color: ${(props) => `${props.color}`};
 `;
 
-export const LabelSetButtons = styled.div`
-  width: 21.66667%;
-  margin-left: 32px;
-  margin: 15px 0;
-  height: 32px;
-
+export const SetButtons = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 26px;
   button {
     height: 32px;
     border-radius: 3px;
@@ -133,18 +146,7 @@ export const LabelSetButtons = styled.div`
     font-weight: 600;
     border: 1px solid rgba(27, 31, 35, 0.2);
     outline: none;
-
-    :hover {
-      text-decoration: none;
-      background-repeat: repeat-x;
-      opacity: 0.7;
-    }
   }
-`;
-export const SetButtons = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 26px;
 `;
 
 export const CancelButton = styled.button`
@@ -178,5 +180,84 @@ export const TableHeaderButton = styled.button`
     text-decoration: none;
     background-repeat: repeat-x;
     opacity: 0.7;
+  }
+`;
+
+export const MarkdownDefaultStyle = styled.div`
+  h1 {
+    display: block;
+    font-size: 2em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+  }
+  h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-top: 0.83em;
+    margin-bottom: 0.83em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+  }
+  h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+  }
+  h4 {
+    display: block;
+    margin-top: 1.33em;
+    margin-bottom: 1.33em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+  }
+  h5 {
+    display: block;
+    font-size: 0.83em;
+    margin-top: 1.67em;
+    margin-bottom: 1.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+  }
+  h6 {
+    display: block;
+    font-size: 0.67em;
+    margin-top: 2.33em;
+    margin-bottom: 2.33em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+  }
+  ul {
+    display: block;
+    list-style-type: disc;
+    margin-top: 1em;
+    margin-bottom: 1 em;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 40px;
+  }
+  li {
+    display: list-item;
+  }
+
+  input[type="checkbox" i] {
+    display: none;
+    /* background-color: initial;
+    cursor: default;
+    -webkit-appearance: checkbox;
+    box-sizing: border-box;
+    margin: 3px 3px 3px 4px;
+    padding: initial;
+    border: initial; */
   }
 `;
