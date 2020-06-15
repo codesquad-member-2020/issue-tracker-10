@@ -2,6 +2,8 @@ package com.group10.issuemaker.milestone;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MilestoneService {
 
@@ -13,5 +15,9 @@ public class MilestoneService {
 
     public void save (MilestoneRequest milestoneRequest) {
         this.mileStoneDao.save(milestoneRequest);
+    }
+
+    public List<MilestoneResponse> findAll() {
+        return this.mileStoneDao.findAll();
     }
 }

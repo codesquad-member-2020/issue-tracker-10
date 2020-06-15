@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -24,5 +25,10 @@ public class MilestoneDao {
         paramMap.put("description", milestoneRequest.getDescription());
 
         namedParameterJdbcTemplate.update(query, paramMap);
+    }
+
+    public List<MilestoneResponse> findAll() {
+        String query = "SELECT milestone_id, title, description, due_date FROM milestone";
+        return namedParameterJdbcTemplate.query(query, new MilestoneMapper());
     }
 }
