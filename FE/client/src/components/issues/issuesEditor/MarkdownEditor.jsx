@@ -1,55 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import ReactMarkdown from "react-markdown";
+import { useFormContext } from "react-hook-form";
 
 import styled from "styled-components";
 import { MarkdownDefaultStyle } from "@style/CustomStyle";
 
 import { MARKDOWN_INFO_MESSGAE, MARKDOWN_WIKI_URL } from "./issyesEditorConstant";
 
-const MarkdownEditor = () => {
-  const [writeMode, setWriteMode] = useState(true);
-  const [previewMode, setPreviewMode] = useState(false);
-  const [testValue, setTestValue] = useState("");
+const MarkdownEditor = memo(
+  ({ register, formState: { dirty } }) => {
+    const [writeMode, setWriteMode] = useState(true);
+    const [previewMode, setPreviewMode] = useState(false);
+    const [descriptionValue, setDescriptionValue] = useState("");
 
-  const onClickWrite = () => {
-    setWriteMode(true);
-    setPreviewMode(false);
-  };
+    const onClickWrite = () => {
+      setWriteMode(true);
+      setPreviewMode(false);
+    };
 
-  const onClickPreview = () => {
-    setWriteMode(false);
-    setPreviewMode(true);
-  };
+    const onClickPreview = () => {
+      setWriteMode(false);
+      setPreviewMode(true);
+    };
 
-  const test_onChange = (e) => setTestValue(e.target.value);
+    const onChangeDescription = (e) => setDescriptionValue(e.target.value);
 
-  return (
-    <MarkdownEditorWrap>
-      <MarkdownButtons>
-        <WriteButton onClick={onClickWrite} activation={writeMode}>
-          Write
-        </WriteButton>
-        <PreviewButton onClick={onClickPreview} activation={previewMode}>
-          Preview
-        </PreviewButton>
-      </MarkdownButtons>
-      <MarkdownArea>
-        {writeMode && (
-          <>
-            <textarea name="" cols="30" rows="10" value={testValue} onChange={test_onChange} />
-            <MarkdownMessage href={MARKDOWN_WIKI_URL} target="_blank">
-              {MARKDOWN_INFO_MESSGAE}
-            </MarkdownMessage>
-          </>
-        )}
-        {previewMode && (
-          <MarkdownDefaultStyle>
-            <ReactMarkdown source={testValue} />
-          </MarkdownDefaultStyle>
-        )}
-      </MarkdownArea>
-    </MarkdownEditorWrap>
-  );
+    return (
+      <MarkdownEditorWrap>
+        <MarkdownButtons>
+          <WriteButton onClick={onClickWrite} activation={writeMode}>
+            Write
+          </WriteButton>
+          <PreviewButton onClick={onClickPreview} activation={previewMode}>
+            Preview
+          </PreviewButton>
+        </MarkdownButtons>
+        <MarkdownArea>
+          {writeMode && (
+            <>
+              <textarea name="description" cols="30" rows="10" value={descriptionValue} onChange={onChangeDescription} ref={register} />
+              <MarkdownMessage href={MARKDOWN_WIKI_URL} target="_blank">
+                {MARKDOWN_INFO_MESSGAE}
+              </MarkdownMessage>
+            </>
+          )}
+          {previewMode && (
+            <MarkdownDefaultStyle>
+              <ReactMarkdown source={descriptionValue} />
+            </MarkdownDefaultStyle>
+          )}
+        </MarkdownArea>
+      </MarkdownEditorWrap>
+    );
+  },
+  (prevProps, nextProps) => prevProps.formState.dirty === nextProps.formState.dirty,
+);
+
+const MarkdownEditorContainer = () => {
+  const methods = useFormContext();
+  return <MarkdownEditor {...methods} />;
 };
 
 const MarkdownArea = styled.div`
@@ -109,4 +118,4 @@ const PreviewButton = styled.button`
   background-color: #fff;
 `;
 
-export default MarkdownEditor;
+export default MarkdownEditorContainer;
