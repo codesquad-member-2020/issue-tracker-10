@@ -21,12 +21,12 @@ const CreateIssues = () => {
       <IssuesEditor>
         <TimelineComment userImage={userSampleImage}>
           <div className="title_input">
-            <input name="title" type="text" placeholder="Title" ref={register} />
+            <input name="title" type="text" placeholder="Title" ref={register({ required: true, maxLength: 256 })} />
             {errors.title && <ErrorLog>{ISSUES_TITLE_ERROR_MESSAGE}</ErrorLog>}
             <MarkdownEditorContainer />
           </div>
           <CreateIssueWrap>
-            <SubmitButton onClick={handleSubmit(onSubmit)} blockButton={!watch("title")}>
+            <SubmitButton onClick={handleSubmit(onSubmit)} blockButton={!watch("title")} disabled={!watch("title")}>
               {SUBMIT_NEW_ISSUE}
             </SubmitButton>
           </CreateIssueWrap>
