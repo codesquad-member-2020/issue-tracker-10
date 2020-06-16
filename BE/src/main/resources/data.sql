@@ -12,13 +12,15 @@ insert into label (label_id, textColor, backGroundColor, description, labelName)
 insert into issue_label (issue_id, label_id) VALUES (1, 1);
 insert into issue_label (issue_id, label_id) VALUES (1, 2);
 insert into issue_label (issue_id, label_id) VALUES (1, 3);
-
 insert into issue_label (issue_id, label_id) VALUES (2, 1);
 insert into issue_label (issue_id, label_id) VALUES (2, 2);
-
 insert into issue_label (issue_id, label_id) VALUES (2, 3);
-
-
-
 insert into issue_label (issue_id, label_id) VALUES (3, 1);
+
+insert into user (email) VALUES ('bohyeon-n');
+
+insert into comment(issue_id, author_id, content) VALUES (1, 1, '임병주 손칼국수 vs 라공방');
+insert into comment(issue_id, author_id, content) VALUES (1, 1, '둘 중에 뭘 먹을까요');
+insert into comment(issue_id, author_id, content) VALUES (1, 1, '맞아요 먹으러 나왔어요');
+
 

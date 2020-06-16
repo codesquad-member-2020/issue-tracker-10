@@ -1,4 +1,4 @@
-package com.group10.issuemaker;
+package com.group10.issuemaker.Label;
 
 import lombok.Getter;
 import lombok.Setter;

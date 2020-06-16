@@ -21,7 +21,7 @@ create table milestone (
 );
 
 create table issue (
-    issue_id bigint primary key,
+    issue_id bigint primary key auto_increment,
     title varchar (255),
     content varchar (255),
     opened_date date,

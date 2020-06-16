@@ -1,6 +1,9 @@
-package com.group10.issuemaker;
+package com.group10.issuemaker.Issue;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.group10.issuemaker.Label.Label;
+import com.group10.issuemaker.comment.Comment;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
@@ -21,8 +24,12 @@ public class Issue {
 
     private LocalDate closed_date;
 
-    @JsonProperty("isOpen")
     private boolean opened;
 
     private List<Label> labels;
+
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<Comment> comments;
+
 }
