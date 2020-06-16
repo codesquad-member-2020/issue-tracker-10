@@ -39,11 +39,10 @@ public class IssueDAO {
         return jdbcTemplate.queryForObject(sql, new Object[]{issueId}, BeanPropertyRowMapper.newInstance(Issue.class));
     }
 
-    public List<Issue> getIssues() {
+    public List<Issue> findAllIssues() {
         String sql = "select I.issue_id, I.title, I.content, I.opened from ISSUE I";
 
         List<Issue> issues = namedParameterJdbcTemplate.query(sql, new RowMapper<Issue>() {
-
             @Override
             public Issue mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Issue issue = new Issue();
@@ -52,9 +51,7 @@ public class IssueDAO {
                 issue.setTitle(rs.getString("title"));
                 issue.setContent(rs.getString("content"));
                 issue.setOpened(rs.getBoolean("opened"));
-
                 issue.setLabels(labels);
-
                 return issue;
             }
         });
@@ -62,4 +59,12 @@ public class IssueDAO {
     }
 
 
+    public void createLabel(String textColor, String backColor, String description, String name) {
+        String sql = "INSERT INTO LABEL (TEXTCOLOR, BACKGROUNDCOLOR, DESCRIPTION, LABELNAME) VALUES ( :textColor, :backColor, :description, :name)";
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("textColor", textColor)
+                .addValue("backColor", backColor)
+                .addValue("description", description)
+                .addValue("name", name);
+        namedParameterJdbcTemplate.update(sql, sqlParameterSource);
+    }
 }
