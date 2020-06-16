@@ -20,7 +20,6 @@ public class MilestoneController {
 
     @PostMapping("/milestones")
     public ResponseEntity<String> createMilestone(@RequestBody MilestoneRequest milestoneRequest) {
-
         milestoneService.save(milestoneRequest);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }

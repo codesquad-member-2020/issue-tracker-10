@@ -21,4 +21,12 @@ public class MilestoneResponse {
     private Boolean opened;
 
     private List<IssueResponse> linkIssues;
+
+    public void setLineIssues(List<IssueResponse> issues) {
+        this.linkIssues = issues;
+    }
+
+    public void setOpened(Boolean opened) {
+        this.opened = opened;
+    }
 }
