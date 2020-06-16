@@ -27,6 +27,7 @@ ${variables}
   background: transparent;
  }
 
+ 
  textarea {
     :focus {
       background-color: #fff;

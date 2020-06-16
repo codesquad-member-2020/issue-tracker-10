@@ -21,7 +21,7 @@ const CreateIssues = () => {
       <IssuesEditor>
         <TimelineComment userImage={userSampleImage}>
           <div className="title_input">
-            <input name="title" type="text" placeholder="Title" ref={register({ required: true, maxLength: 256 })} />
+            <TitleInput name="title" type="text" placeholder="Title" ref={register({ required: true, maxLength: 256 })} />
             {errors.title && <ErrorLog>{ISSUES_TITLE_ERROR_MESSAGE}</ErrorLog>}
             <MarkdownEditorContainer />
           </div>
@@ -66,6 +66,24 @@ const SubmitButton = styled(SaveButton)`
   font-weight: 600;
   border: 1px solid rgba(27, 31, 35, 0.2);
   outline: none;
+`;
+
+const TitleInput = styled.input`
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 16px;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  outline: none;
+  box-shadow: inset 0 1px 2px rgba(27, 31, 35, 0.075);
+  background-color: #fafbfc;
+  min-height: 32px;
+  :focus {
+    background-color: #fff;
+    border-color: #2188ff;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(27, 31, 35, 0.075), 0 0 0 0.2em rgba(3, 102, 214, 0.3);
+  }
 `;
 
 export default CreateIssues;
