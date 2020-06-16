@@ -31,7 +31,7 @@ create table issue (
     milestone_id bigint references milestone(milestone_id)
 );
 create table label (
-    label_id int primary key,
+    label_id int primary key auto_increment,
     textColor varchar (255),
     backGroundColor varchar (255),
     description varchar (255),

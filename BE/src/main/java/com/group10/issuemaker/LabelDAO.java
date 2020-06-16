@@ -40,4 +40,27 @@ public class LabelDAO {
         return namedParameterJdbcTemplate.queryForList(sql, namedParameters, Label.class);
     }
 
+    public void createLabel(String textColor, String backColor, String description, String name) {
+        String sql = "INSERT INTO LABEL (TEXTCOLOR, BACKGROUNDCOLOR, DESCRIPTION, LABELNAME) VALUES ( :textColor, :backColor, :description, :name)";
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("textColor", textColor)
+                .addValue("backColor", backColor)
+                .addValue("description", description)
+                .addValue("name", name);
+        namedParameterJdbcTemplate.update(sql, sqlParameterSource);
+    }
+
+    public void deleteLabel(Long labelId) {
+        String sql = "DELETE FROM LABEL WHERE LABEL_ID = ?";
+        jdbcTemplate.update(sql, labelId);
+    }
+
+    public void editLabel(Long labelId, String labelName, String description, String textColor, String backGroundColor) {
+        String sql = "update label SET LABELNAME = :labelName, DESCRIPTION = :description, TEXTCOLOR = :textColor, BACKGROUNDCOLOR = :backGroundColor where label_id = :id";
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("labelName", labelName)
+                .addValue("description", description)
+                .addValue("textColor", textColor)
+                .addValue("backGroundColor", backGroundColor)
+                .addValue("id", labelId);
+        namedParameterJdbcTemplate.update(sql, sqlParameterSource);
+    }
 }
