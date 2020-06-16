@@ -53,7 +53,9 @@ const MarkdownEditor = memo(
       </MarkdownEditorWrap>
     );
   },
-  (prevProps, nextProps) => prevProps.formState.dirty === nextProps.formState.dirty,
+  (prevProps, nextProps) => {
+    return prevProps.formState.dirtyFields.has("description") === nextProps.formState.dirtyFields.has("description");
+  },
 );
 
 const MarkdownEditorContainer = () => {

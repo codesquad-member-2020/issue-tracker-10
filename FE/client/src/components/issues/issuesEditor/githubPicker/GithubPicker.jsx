@@ -1,10 +1,17 @@
 import React, { useState } from "react";
+
 import styled from "styled-components";
 import { MdSettings } from "react-icons/md";
 
+import ColorPickerItem from "./ColorPickerItem";
+import { useSelector } from "react-redux";
+
 const GithubPicker = ({ pickerName }) => {
+  const { labels } = useSelector((state) => state.labels);
   const [anchorPickerList, setAnchorPickerList] = useState(false);
   const [chosenItems, setChosenItems] = useState([]);
+
+  const test_list = labels.map((el) => <ColorPickerItem backgroundColor={el.backgroundColor} labelName={el.labelName} description={el.description} />);
 
   const onClickPickerHeader = () => setAnchorPickerList(!anchorPickerList);
 
@@ -20,12 +27,9 @@ const GithubPicker = ({ pickerName }) => {
           <PickerListInputBase>
             <input type="text" />
           </PickerListInputBase>
+          {test_list}
         </PickerListModal>
       )}
-      <PickerItem>bug</PickerItem>
-      <PickerItem>bug</PickerItem>
-      <PickerItem>bug</PickerItem>
-      <PickerItem>bug</PickerItem>
       <PickerItem>bug</PickerItem>
     </GithubPickerWrap>
   );
@@ -58,9 +62,11 @@ const PickerItem = styled.div`
   font-weight: 600;
   line-height: 15px;
   border-radius: 2px;
+  margin-bottom: 3px;
   background-color: green;
   color: #fff;
-  margin-bottom: 3px;
+  background-color: ${(props) => `${props.backgroundColor}`};
+  color: ${(props) => `${props.color}`};
 `;
 
 const PickerListModal = styled.div`
@@ -100,5 +106,22 @@ const PickerListInputBase = styled.div`
     }
   }
 `;
+
+const PickerListItem = styled.div`
+  display: flex;
+  padding: 8px;
+  background-color: #fff;
+`;
+
+const PickerItemLabel = styled.div`
+  width: 14px;
+  height: 14px;
+  background-color: ${(props) => `${props.backgroundColor}`};
+  margin-right: 8px;
+  border-radius: 3px;
+  margin-top: 4px;
+`;
+
+const PickerItemInfo = styled.div``;
 
 export default GithubPicker;
