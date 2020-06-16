@@ -13,7 +13,7 @@ public class Label {
 
     private String textColor;
 
-    private String backgroundColor;
+    private String backGroundColor;
 
     private String description;
 

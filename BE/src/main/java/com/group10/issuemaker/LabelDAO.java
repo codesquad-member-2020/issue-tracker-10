@@ -54,11 +54,12 @@ public class LabelDAO {
         jdbcTemplate.update(sql, labelId);
     }
 
-    public void editLabel(Long labelId, String labelName, String description, String color) {
-        String sql = "update label SET LABELNAME = :name, DESCRIPTION = :description, TEXTCOLOR = :textColor where label_id = :id";
-        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("name", labelName)
+    public void editLabel(Long labelId, String labelName, String description, String textColor, String backGroundColor) {
+        String sql = "update label SET LABELNAME = :labelName, DESCRIPTION = :description, TEXTCOLOR = :textColor, BACKGROUNDCOLOR = :backGroundColor where label_id = :id";
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("labelName", labelName)
                 .addValue("description", description)
-                .addValue("testColor", color)
+                .addValue("textColor", textColor)
+                .addValue("backGroundColor", backGroundColor)
                 .addValue("id", labelId);
         namedParameterJdbcTemplate.update(sql, sqlParameterSource);
     }
