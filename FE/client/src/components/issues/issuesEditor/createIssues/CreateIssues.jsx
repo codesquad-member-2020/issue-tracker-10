@@ -20,7 +20,7 @@ const CreateIssues = () => {
     <FormContext {...method}>
       <IssuesEditor>
         <TimelineComment userImage={userSampleImage}>
-          <div className="title_input">
+          <div className="input-area">
             <TitleInput name="title" type="text" placeholder="Title" ref={register({ required: true, maxLength: 256 })} />
             {errors.title && <ErrorLog>{ISSUES_TITLE_ERROR_MESSAGE}</ErrorLog>}
             <MarkdownEditorContainer />
