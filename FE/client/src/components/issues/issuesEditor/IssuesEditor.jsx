@@ -1,17 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-import GithubPiker_ from "./GithubPicker_";
+import { useSelector } from "react-redux";
 
 import GithubPicker from "./githubPicker/GithubPicker";
+import ColorPickerItem from "./githubPicker/ColorPickerItem";
 
 const IssuesEditor = ({ children }) => {
+  const { labelPickerList, milestonePickerList, assigneerPickerList } = useSelector((state) => state.optionPickers);
+
   return (
     <IssuesEditorWrap>
       <IssuesEditorInner>
         {children}
         <PickerWrap>
-          <GithubPiker_ />
-          <GithubPicker pickerName="Labels" />
+          <GithubPicker pickerName="labels" pickerType="labelPickerList" listItems={labelPickerList} ListItemComponent={ColorPickerItem} />
         </PickerWrap>
       </IssuesEditorInner>
     </IssuesEditorWrap>

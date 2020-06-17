@@ -3,17 +3,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { MdSettings } from "react-icons/md";
 
-import ColorPickerItem from "./ColorPickerItem";
-import PikerModal from "@components/issues/PickerModal";
+import PickerModal from "@components/issues/PickerModal";
 
-import { useSelector } from "react-redux";
-
-const GithubPicker = ({ pickerName }) => {
-  const { labels } = useSelector((state) => state.labels);
+const GithubPicker = ({ pickerName, pickerType, listItems, ListItemComponent }) => {
   const [anchorPickerList, setAnchorPickerList] = useState(false);
   const [chosenItems, setChosenItems] = useState([]);
 
-  const test_list = labels.map((el) => <ColorPickerItem backgroundColor={el.backgroundColor} labelName={el.labelName} description={el.description} />);
+  const test_list = listItems.map((el) => <ListItemComponent backgroundColor={el.backgroundColor} labelName={el.labelName} description={el.description} />);
 
   const onClickPickerHeader = () => setAnchorPickerList(!anchorPickerList);
 
@@ -23,20 +19,19 @@ const GithubPicker = ({ pickerName }) => {
         <div>{pickerName}</div>
         <MdSettings />
       </PickerHeader>
-      {anchorPickerList && <PikerModal title="Apply this to pull request" pickerModalList={test_list} />}
+      {anchorPickerList && <PickerModal title="labels" pickerType={pickerType} pickerModalList={test_list} />}
       <PickerItem>bug</PickerItem>
     </GithubPickerWrap>
   );
 };
 
 const GithubPickerWrap = styled.div`
-  margin-top: 20px;
   width: 221px;
-  /* or 100% */
   font-size: 13px;
   font-weight: bold;
   color: #586069;
   position: relative;
+  margin-bottom: 20px;
 `;
 
 const PickerHeader = styled.div`
