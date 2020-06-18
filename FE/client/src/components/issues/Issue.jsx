@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getInitIssues } from "@modules/issues";
@@ -16,6 +16,7 @@ import { ISSUE_TEXT } from "./issueConstant";
 
 const Issue = () => {
   const dispatch = useDispatch();
+  const [bCheckedAll, setbCheckedAll] = useState(false);
   const { bLoading, issuesList } = useSelector(({ issues }) => issues);
 
   useEffect(() => {
@@ -34,13 +35,13 @@ const Issue = () => {
 
   if (bLoading) return <div>Loading...</div>;
 
-  const _issuesList = issuesList.map((issue) => <IssueItem key={issue.id} {...{ issue }} />);
+  const _issuesList = issuesList.map((issue) => <IssueItem key={issue.id} {...{ issue, bCheckedAll, setbCheckedAll }} />);
 
   return (
     <>
       <TableHeader leftSideComponent={leftSideComponent} rightSideComponent={rightSideComponent} />
       <IssueWrap>
-        <Table renderTableTopMenu={<IssueTopMenu />} renderTableList={_issuesList} />
+        <Table renderTableTopMenu={<IssueTopMenu {...{ bCheckedAll, setbCheckedAll }} />} renderTableList={_issuesList} />
       </IssueWrap>
     </>
   );

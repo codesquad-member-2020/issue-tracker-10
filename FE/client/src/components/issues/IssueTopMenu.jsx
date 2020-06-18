@@ -2,10 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import { DropdownCaret } from "@style/CustomStyle";
 
-const IssueTopMenu = () => {
+const IssueTopMenu = ({ bCheckedAll, setbCheckedAll }) => {
+  const handelChange = () => setbCheckedAll(!bCheckedAll);
+
   return (
     <IssueTopMenuWrap>
-      <input type="checkbox" />
+      <input type="checkbox" onChange={handelChange} />
       <ul className="filter-list">
         <li>
           Author
