@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { MdSettings } from "react-icons/md";
 
 import ColorPickerItem from "./ColorPickerItem";
+import PikerModal from "@components/issues/PickerModal";
+
 import { useSelector } from "react-redux";
 
 const GithubPicker = ({ pickerName }) => {
@@ -21,15 +23,7 @@ const GithubPicker = ({ pickerName }) => {
         <div>{pickerName}</div>
         <MdSettings />
       </PickerHeader>
-      {anchorPickerList && (
-        <PickerListModal>
-          <PickerListHeader>Apply this to pull request</PickerListHeader>
-          <PickerListInputBase>
-            <input type="text" />
-          </PickerListInputBase>
-          {test_list}
-        </PickerListModal>
-      )}
+      {anchorPickerList && <PikerModal title="Apply this to pull request" pickerModalList={test_list} />}
       <PickerItem>bug</PickerItem>
     </GithubPickerWrap>
   );
@@ -80,48 +74,5 @@ const PickerListModal = styled.div`
   color: #586069;
   background-color: #f6f8fa;
 `;
-
-const PickerListHeader = styled.div`
-  border-bottom: 1px solid #e1e4e8;
-  /* border-top-right-radius
-  border-top-left-radius */
-  padding: 8px 10px;
-  font-weight: 600;
-`;
-
-const PickerListInputBase = styled.div`
-  padding: 10px;
-  border-bottom: 1px solid #dfe2e5;
-  input {
-    width: 100%;
-    border-radius: 4px;
-    padding: 5px;
-    border: 1px solid #ced4da;
-    font-size: 14px;
-    :focus {
-      background-color: #fff;
-      border-color: #2188ff;
-      outline: none;
-      box-shadow: inset 0 1px 2px rgba(27, 31, 35, 0.075), 0 0 0 0.2em rgba(3, 102, 214, 0.3);
-    }
-  }
-`;
-
-const PickerListItem = styled.div`
-  display: flex;
-  padding: 8px;
-  background-color: #fff;
-`;
-
-const PickerItemLabel = styled.div`
-  width: 14px;
-  height: 14px;
-  background-color: ${(props) => `${props.backgroundColor}`};
-  margin-right: 8px;
-  border-radius: 3px;
-  margin-top: 4px;
-`;
-
-const PickerItemInfo = styled.div``;
 
 export default GithubPicker;
