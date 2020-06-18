@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { NomalButton, NomalInput, DropdownCaret } from "@style/CustomStyle";
 import { AiOutlineSearch } from "react-icons/ai";
 
+import FiltersFilter from "@/components/issues/filterList/Filters";
+import PikerModal from "@components/issues/PickerModal";
+
 const IssueFilterInput = () => {
+  const [bOpen, setbOpen] = useState(false);
+  const handleFilterClick = () => setbOpen(!bOpen);
+  const filtersFilterList = <FiltersFilter />;
+
   return (
     <IssueFilterInputWrap>
-      <NomalButton type="button">
+      {bOpen && (
+        <PickerModalWrap>
+          <PikerModal title="Filter Issues" pickerModalList={filtersFilterList} />
+        </PickerModalWrap>
+      )}
+      <NomalButton type="button" onClick={handleFilterClick}>
         Filter
         <DropdownCaret />
       </NomalButton>
@@ -19,6 +31,7 @@ const IssueFilterInput = () => {
 };
 
 const IssueFilterInputWrap = styled.div`
+  position: relative;
   display: flex;
   width: 600px;
   .filter-input-wrap {
@@ -38,6 +51,11 @@ const IssueFilterInputWrap = styled.div`
       font-size: 14px;
     }
   }
+`;
+
+const PickerModalWrap = styled.div`
+  position: absolute;
+  top: 40px;
 `;
 
 export default IssueFilterInput;

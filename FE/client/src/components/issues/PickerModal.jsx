@@ -38,6 +38,7 @@ const PickerModalHeader = styled.div`
   border-bottom: 1px solid #e1e4e8;
   padding: 8px 10px;
   font-weight: 600;
+  font-size: 13px;
 `;
 
 const PickerModalInputBase = styled.div`
