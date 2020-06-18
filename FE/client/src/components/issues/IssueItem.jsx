@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { TableItem, LabelBox } from "@style/CustomStyle";
 import { GoIssueOpened, GoIssueClosed, GoMilestone } from "react-icons/go";
 import styled from "styled-components";
@@ -6,7 +6,8 @@ import moment from "moment";
 
 import userSampleImage from "@assets/images/user-sample-image.jpg";
 
-const IssueItem = ({ issue }) => {
+const IssueItem = ({ bCheckedAll, issue }) => {
+  const [bChecked, setbChecked] = useState(false);
   const { id, title, bOpen, createDate, labels, milestones, writer, assignee } = issue;
   const issueIcon = bOpen ? <GoIssueOpened className="icon open" /> : <GoIssueClosed className="icon closed" />;
   const labelsList = labels.map((label) => (
@@ -17,11 +18,16 @@ const IssueItem = ({ issue }) => {
   const issueStateText = bOpen ? "opened" : "closed";
   const issueTimeago = moment(createDate).fromNow();
   const assigneeImages = assignee.map((userData) => <img key={userData.id} src={userSampleImage} alt="assignee-image" />);
+  const handleChange = () => setbChecked(!bChecked);
+
+  useEffect(() => {
+    setbChecked(bCheckedAll);
+  }, [bCheckedAll]);
 
   return (
     <TableItem>
       <IssueItemWrap>
-        <input type="checkbox" />
+        <input type="checkbox" checked={bChecked} onChange={handleChange} />
         {issueIcon}
         <IssueItemDetailWrap>
           <div>
