@@ -1,5 +1,6 @@
 package com.group10.issuemaker.login;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -9,9 +10,10 @@ import lombok.ToString;
 @ToString
 public class UserResponse {
 
-    private Long id;
+    @JsonProperty("user_id")
+    private Long userId;
 
     private String name;
 
-    private String profile_url;
+    private String url;
 }

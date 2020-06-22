@@ -22,10 +22,10 @@ public class LoginService {
 
     private String GITHUB_REQUEST_URL = "https://github.com/login/oauth";
 
-    private final UserDao userDao;
+    private final LoginUserDao loginUserDao;
 
-    public LoginService(UserDao userDao) {
-        this.userDao = userDao;
+    public LoginService(LoginUserDao loginUserDao) {
+        this.loginUserDao = loginUserDao;
     }
 
     public String getRedirectUrl() {
@@ -50,28 +50,20 @@ public class LoginService {
         return response.getBody();
     }
 
-    private void saveUser(GithubUser user) {
-        userDao.save(user);
-    }
-
-    private String getUserFromJwt(String jws) {
-        return Jwt.parseIdFromJwt(jws);
-    }
-
     public UserResponse getUserByJwt(String jws) {
-        String username = getUserFromJwt(jws);
-        return userDao.findByUsername(username);
+        String username = Jwt.parseIdFromJwt(jws);
+
+        // Todo
+        //  user가 없을 시 unauthorization 상태 코드를 반환한다.
+        return loginUserDao.findByUsername(username).orElse(null);
     }
 
     public void join(GithubUser user) {
-        //Todo
-        this.saveUser(user);
+        loginUserDao.save(user);
     }
 
     public String login(GithubUser user) {
-        // Todo
-        //  user가 데이터 베이스에 없을 시 join 하기
-        if(true) {
+        if (!loginUserDao.findByUsername(user.getLogin()).isPresent()) {
             join(user);
         }
 
