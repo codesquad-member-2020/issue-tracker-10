@@ -1,6 +1,10 @@
 package com.group10.issuemaker.milestone;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -13,9 +17,11 @@ import java.util.stream.Collectors;
 public class MilestoneDao {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     public MilestoneDao(DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     public void save(MilestoneRequest milestoneRequest) {
@@ -40,7 +46,7 @@ public class MilestoneDao {
         String query = "SELECT milestone_id, title, description, due_date FROM milestone";
         List<MilestoneResponse> res = namedParameterJdbcTemplate.query(query, new MilestoneMapper());
         return res.stream().map(milestone -> {
-            List<IssueResponse> issueList = findIssueByMilestoneId(milestone.getId());
+            List<IssueResponse> issueList = findIssueByMilestoneId(milestone.getMilestone_id());
             milestone.setLineIssues(issueList);
             milestone.setOpened(isOpenMilestone(issueList));
             return milestone;
@@ -53,5 +59,10 @@ public class MilestoneDao {
             isOpen = isOpen || issue.getIsOpen();
         }
         return isOpen;
+    }
+
+    public MilestoneResponse findMilestoneByIssueId(Long issueId) {
+        String sql = "SELECT m.milestone_id, m.title FROM MILESTONE m JOIN ISSUE i where i.issue_id = ? AND i.milestone_id = m.milestone_id";
+        return jdbcTemplate.queryForObject(sql, new Object[]{issueId}, BeanPropertyRowMapper.newInstance(MilestoneResponse.class));
     }
 }
