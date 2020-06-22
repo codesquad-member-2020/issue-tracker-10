@@ -8,6 +8,10 @@ insert into issue (issue_id, title, content, opened_date, closed_date, opened, m
 insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (1, '#FFFFF1', '#1E90FF1', 'testing label1', 'BE');
 insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (2, '#FFFFF2', '#1E90FF2', 'testing label2', 'BE');
 insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (3, '#FFFFF3', '#1E90FF3', 'testing label3', 'BE');
+insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (4, '#FFFFF3', '#1E90FF3', 'testing label4', 'BE');
+insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (5, '#FFFFF3', '#1E90FF3', 'testing label5', 'BE');
+insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (6, '#FFFFF3', '#1E90FF3', 'testing label6', 'BE');
+
 
 insert into issue_label (issue_id, label_id) VALUES (1, 1);
 insert into issue_label (issue_id, label_id) VALUES (1, 2);
@@ -21,3 +25,4 @@ insert into user (user_id, name, url) VALUES (1, 'bohyeon', 'https://avatars3.gi
 
 insert into issue_assignee (assignee_id, issue_id) VALUES (1,1);
 
+insert into comment (comment_id, issue_id, author_id, description) VALUES (1, 1, 1, '호텔 신라 코딩');

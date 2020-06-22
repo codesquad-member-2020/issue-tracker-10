@@ -18,7 +18,7 @@ public class CommentDao {
     }
 
     public List<CommentResponse> findCommentByIssueId(Long issueId) {
-        String sql = "SELECT U.name, C.description FROM COMMENT C JOIN USER U WHERE C.issue_id = ? AND C.author_id = U.user_id";
+        String sql = "SELECT U.name as writer, C.description FROM COMMENT C JOIN USER U WHERE C.issue_id = ? AND C.author_id = U.user_id";
         return jdbcTemplate.query(sql, new Object[]{issueId}, BeanPropertyRowMapper.newInstance(CommentResponse.class));
     }
 }

@@ -50,7 +50,7 @@ public class IssueDAO {
         issue.setAssignees(userDao.findUserByIssueId(issueId));
         issue.setComments(commentDao.findCommentByIssueId(issueId));
         issue.setMilestone(milestoneDao.findMilestoneByIssueId(issueId));
-        issue.setLabels(labelDAO.findRelatedLabels(issueId));
+        issue.setLabels(labelDAO.getLabelsWithUsedLabels(issueId));
 
         return issue;
     }

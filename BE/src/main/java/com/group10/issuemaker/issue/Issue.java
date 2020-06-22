@@ -20,9 +20,9 @@ public class Issue {
 
     private String content;
 
-    private LocalDate opened_date;
+    private String opened_date;
 
-    private LocalDate closed_date;
+    private String closed_date;
 
     @JsonProperty("isOpen")
     private boolean opened;

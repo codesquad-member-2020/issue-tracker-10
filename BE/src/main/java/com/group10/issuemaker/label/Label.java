@@ -8,7 +8,6 @@ import org.springframework.data.annotation.Id;
 @Getter @Setter @ToString
 public class Label {
 
-    @Id
     private Long label_id;
 
     private String textColor;
@@ -18,5 +17,7 @@ public class Label {
     private String description;
 
     private String labelName;
+
+    private boolean bUsed = false;
 
 }
