@@ -12,4 +12,5 @@ public class IssueResponse {
     private Long id;
 
     private Boolean isOpen;
+
 }

@@ -1,5 +1,7 @@
-package com.group10.issuemaker;
+package com.group10.issuemaker.issue;
 
+import com.group10.issuemaker.label.Label;
+import com.group10.issuemaker.label.LabelDAO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

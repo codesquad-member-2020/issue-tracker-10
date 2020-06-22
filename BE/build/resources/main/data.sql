@@ -12,13 +12,12 @@ insert into label (label_id, textColor, backGroundColor, description, labelName)
 insert into issue_label (issue_id, label_id) VALUES (1, 1);
 insert into issue_label (issue_id, label_id) VALUES (1, 2);
 insert into issue_label (issue_id, label_id) VALUES (1, 3);
-
 insert into issue_label (issue_id, label_id) VALUES (2, 1);
 insert into issue_label (issue_id, label_id) VALUES (2, 2);
-
 insert into issue_label (issue_id, label_id) VALUES (2, 3);
-
-
-
 insert into issue_label (issue_id, label_id) VALUES (3, 1);
+
+insert into user (user_id, name, url) VALUES (1, 'bohyeon', 'https://avatars3.githubusercontent.com/u/52371228?s=460&u=a8d3d9d22c8a07e5393f265f211585f1a956f3d8&v=4');
+
+insert into issue_assignee (assignee_id, issue_id) VALUES (1,1);
 

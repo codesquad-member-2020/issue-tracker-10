@@ -1,10 +1,11 @@
-package com.group10.issuemaker;
+package com.group10.issuemaker.issue;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.group10.issuemaker.milestone.MilestoneDao;
+import com.group10.issuemaker.comment.CommentResponse;
+import com.group10.issuemaker.label.Label;
+import com.group10.issuemaker.User.User;
 import com.group10.issuemaker.milestone.MilestoneResponse;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 
 import javax.xml.stream.events.Comment;
 import java.time.LocalDate;
@@ -28,7 +29,7 @@ public class Issue {
 
     private List<Label> labels;
 
-    private List<Comment> comments;
+    private List<CommentResponse> comments;
 
     private List<User> assignees;
 

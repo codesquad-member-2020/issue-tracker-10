@@ -1,5 +1,9 @@
-package com.group10.issuemaker;
+package com.group10.issuemaker.issue;
 
+import com.group10.issuemaker.comment.CommentDao;
+import com.group10.issuemaker.label.Label;
+import com.group10.issuemaker.User.UserDao;
+import com.group10.issuemaker.label.LabelDAO;
 import com.group10.issuemaker.milestone.MilestoneDao;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,26 +14,29 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import javax.xml.transform.Result;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class IssueDAO {
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private LabelDAO labelDAO;
+    private UserDao userDao;
     private MilestoneDao milestoneDao;
+    private CommentDao commentDao;
+    private LabelDAO labelDAO;
 
     public IssueDAO(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         this.milestoneDao = new MilestoneDao(dataSource);
+        this.userDao = new UserDao(dataSource);
+        this.commentDao = new CommentDao(dataSource);
+        this.labelDAO = new LabelDAO(dataSource);
     }
+
     public List<Label> findRelatedLabels(Long issueId) {
         String sql = "select * from label L\n" +
                 "join issue_label X \n" +
@@ -39,8 +46,16 @@ public class IssueDAO {
 
     public Issue findIssue(Long issueId) {
         String sql = "SELECT * from issue where issue_id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{issueId}, BeanPropertyRowMapper.newInstance(Issue.class));
+        Issue issue = jdbcTemplate.queryForObject(sql, new Object[]{issueId}, BeanPropertyRowMapper.newInstance(Issue.class));
+        issue.setAssignees(userDao.findUserByIssueId(issueId));
+        issue.setComments(commentDao.findCommentByIssueId(issueId));
+        issue.setMilestone(milestoneDao.findMilestoneByIssueId(issueId));
+        issue.setLabels(labelDAO.findRelatedLabels(issueId));
+
+        return issue;
     }
+
+
 
     public List<Issue> findAllIssues() {
         String sql = "select I.issue_id, I.title, I.content, I.opened from ISSUE I";
@@ -59,6 +74,7 @@ public class IssueDAO {
                 issue.setOpened(rs.getBoolean("opened"));
                 issue.setLabels(labels);
                 issue.setMilestone(milestoneDao.findMilestoneByIssueId(issueId));
+                issue.setAssignees(userDao.findUserByIssueId(issueId));
                 return issue;
             }
         });
