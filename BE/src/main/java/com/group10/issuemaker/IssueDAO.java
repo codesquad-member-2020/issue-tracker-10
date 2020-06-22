@@ -1,5 +1,6 @@
 package com.group10.issuemaker;
 
+import com.group10.issuemaker.milestone.MilestoneDao;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -22,10 +23,12 @@ public class IssueDAO {
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private LabelDAO labelDAO;
+    private MilestoneDao milestoneDao;
 
     public IssueDAO(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        this.milestoneDao = new MilestoneDao(dataSource);
     }
     public List<Label> findRelatedLabels(Long issueId) {
         String sql = "select * from label L\n" +
@@ -46,18 +49,21 @@ public class IssueDAO {
             @Override
             public Issue mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Issue issue = new Issue();
-                issue.setIssue_id(rs.getLong("issue_id"));
-                List<Label> labels = findRelatedLabels(rs.getLong("issue_id"));
+                Long issueId = rs.getLong("issue_id");
+                issue.setIssue_id(issueId);
+
+                List<Label> labels = findRelatedLabels(issueId);
+
                 issue.setTitle(rs.getString("title"));
                 issue.setContent(rs.getString("content"));
                 issue.setOpened(rs.getBoolean("opened"));
                 issue.setLabels(labels);
+                issue.setMilestone(milestoneDao.findMilestoneByIssueId(issueId));
                 return issue;
             }
         });
         return issues;
     }
-
 
     public void createLabel(String textColor, String backColor, String description, String name) {
         String sql = "INSERT INTO LABEL (TEXTCOLOR, BACKGROUNDCOLOR, DESCRIPTION, LABELNAME) VALUES ( :textColor, :backColor, :description, :name)";
