@@ -37,8 +37,9 @@ public class IssueDAO {
     }
 
     public Issue findIssue(Long issueId) {
-        String sql = "SELECT * from issue where issue_id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{issueId}, BeanPropertyRowMapper.newInstance(Issue.class));
+        String sql = "SELECT * FROM ISSUE I JOIN COMMENT C ON I.ISSUE_ID = C.ISSUE_ID WHERE I.ISSUE_ID = " + issueId;
+
+        return jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Issue.class));
     }
 
     public List<Issue> findAllIssues() {
@@ -87,7 +88,6 @@ public class IssueDAO {
                 .addValue("label_id", label_id);
         namedParameterJdbcTemplate.update(sql, sqlParameterSource);
     }
-
 
 
 }

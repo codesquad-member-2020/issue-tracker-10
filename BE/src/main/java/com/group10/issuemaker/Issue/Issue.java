@@ -28,7 +28,6 @@ public class Issue {
 
     private List<Label> labels;
 
-
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<Comment> comments;
 
