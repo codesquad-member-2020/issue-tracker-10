@@ -8,10 +8,12 @@ import { MarkdownDefaultStyle } from "@style/CustomStyle";
 import { MARKDOWN_INFO_MESSGAE, MARKDOWN_WIKI_URL } from "./issyesEditorConstant";
 
 const MarkdownEditor = memo(
-  ({ register, formState: { dirty } }) => {
+  (props) => {
     const [writeMode, setWriteMode] = useState(true);
     const [previewMode, setPreviewMode] = useState(false);
     const [descriptionValue, setDescriptionValue] = useState("");
+
+    const { register } = props;
 
     const onClickWrite = () => {
       setWriteMode(true);

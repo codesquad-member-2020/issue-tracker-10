@@ -1,54 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import styled from "styled-components";
 import { MdSettings } from "react-icons/md";
 
 import PickerModal from "@components/issues/PickerModal";
 
-const GithubPicker = ({ pickerName, pickerType, listItems, ListItemComponent, ModalItemComponent }) => {
-  const [anchorPickerList, setAnchorPickerList] = useState(false);
-  const [chosenItems, setChosenItems] = useState([]);
+const GithubPicker = ({ pickerName, pickerType, pickerList, ListItemComponent, ModalItemComponent }) => {
+  const toggleContainer = useRef();
+  const [bOpen, setbOpen] = useState(false);
 
-  const onClickPickerHeader = () => setAnchorPickerList(!anchorPickerList);
+  const _list = pickerList.map((el) => <ListItemComponent {...el} />);
+  const _list2 = pickerList.map((el) => <ModalItemComponent {...el} />);
 
-  const pickerModalListItems = listItems.map((el) => <ModalItemComponent {...el} />);
+  const onClickPicker = () => setbOpen(!bOpen);
+
+  const onClickOutside = (event) => {
+    console.log(event.target);
+    if (bOpen && !toggleContainer.current.contains(event.target)) {
+      setbOpen(false);
+    }
+  };
 
   useEffect(() => {
-    setChosenItems(test_issues_detail_state.labels.map((el) => <ListItemComponent {...el} />));
-  }, []);
+    window.addEventListener("click", onClickOutside);
+
+    return () => {
+      window.removeEventListener("click", onClickOutside);
+    };
+  });
 
   return (
-    <GithubPickerWrap>
-      <PickerHeader onClick={onClickPickerHeader}>
+    <GithubPickerWrap ref={toggleContainer}>
+      <PickerHeader onClick={onClickPicker}>
         <div>{pickerName}</div>
         <MdSettings />
       </PickerHeader>
-      {anchorPickerList && <PickerModal title="labels" pickerType={pickerType} pickerModalList={pickerModalListItems} />}
-      {chosenItems}
+      {bOpen && <PickerModal title={pickerName} pickerType={pickerType} modalItemList={_list2} />}
+      {_list}
     </GithubPickerWrap>
   );
-};
-
-// 상세 페이지를 요청했을 때 해당하는 issues에 대한 데이터 (label or milestone or assignees ) // props로 전달받는 로직으로 수정 예정
-const test_issues_detail_state = {
-  labels: [
-    {
-      id: 1,
-      bCheck: true,
-      textColor: "#fff",
-      backgroundColor: "rgb(203,92,208)",
-      description: "testing label",
-      labelName: "duplicate",
-    },
-    {
-      id: 2,
-      bCheck: true,
-      textColor: "#fff",
-      backgroundColor: "rgb(254,40,119)",
-      description: "testing label",
-      labelName: "FE",
-    },
-  ],
 };
 
 const GithubPickerWrap = styled.div`

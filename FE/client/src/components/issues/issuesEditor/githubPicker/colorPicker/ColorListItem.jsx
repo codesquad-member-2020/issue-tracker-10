@@ -2,11 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 const ColorListItem = (props) => {
-  const { labelName, backgroundColor, textColor } = props;
+  console.log(props);
+  const { title, backgroundColor, color } = props;
 
   return (
-    <ColorListItemWrap backgroundColor={backgroundColor} textColor={textColor}>
-      {labelName}
+    <ColorListItemWrap backgroundColor={backgroundColor} textColor={color}>
+      {title}
     </ColorListItemWrap>
   );
 };
@@ -22,7 +23,7 @@ const ColorListItemWrap = styled.div`
   background-color: green;
   color: #fff;
   background-color: ${(props) => `${props.backgroundColor}`};
-  color: ${(props) => `${props.color}`};
+  color: ${(props) => `${props.textColor}`};
 `;
 
 export default ColorListItem;
