@@ -1,23 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
 
-import { getInitPickerList } from "@modules/optionPickers";
-
-const PickerModal = ({ title, pickerType, pickerModalList }) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getInitPickerList(pickerType));
-  }, [dispatch]);
-
+const PickerModal = ({ title, modalItemList }) => {
   return (
     <PickerModalWrap>
       <PickerModalHeader>{title}</PickerModalHeader>
       <PickerModalInputBase>
         <input type="text" />
       </PickerModalInputBase>
-      {pickerModalList}
+      {modalItemList}
     </PickerModalWrap>
   );
 };
