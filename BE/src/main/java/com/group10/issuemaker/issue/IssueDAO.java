@@ -148,6 +148,7 @@ public class IssueDAO {
     public void deleteComment(Long issueId) {
         String sql = "DELETE FROM comment where issue_id = ?";
         jdbcTemplate.update(sql, issueId);
+    }
 
     public void updateIssueOnDeleteMilestone(Long milestoneId) {
         String sql = "UPDATE issue SET issue.milestone_id = null WHERE issue.milestone_id = :milestoneId";
