@@ -1,24 +1,29 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { MdLabelOutline } from "react-icons/md";
 import { GoMilestone } from "react-icons/go";
 
 const SwitchButtons = ({ type }) => {
+  const { pickerData } = useSelector(({ createIssue }) => createIssue);
+  const labelsNumber = pickerData ? pickerData.labels.length : "";
+  const milestonesNumber = pickerData ? pickerData.milestones.length : "";
+
   return (
     <SwitchButtonsWrap>
       <Link to="/labels">
         <LabelButton {...{ type }}>
           <MdLabelOutline className="icon" />
           <div>Labels</div>
-          {type === "issues" && <span className="count">5</span>}
+          {type === "issues" && <span className="count">{labelsNumber}</span>}
         </LabelButton>
       </Link>
       <Link to="/milestones">
         <MileStoneButton {...{ type }}>
           <GoMilestone className="icon" />
           <div>Milestones</div>
-          {type === "issues" && <span className="count">5</span>}
+          {type === "issues" && <span className="count">{milestonesNumber}</span>}
         </MileStoneButton>
       </Link>
     </SwitchButtonsWrap>
