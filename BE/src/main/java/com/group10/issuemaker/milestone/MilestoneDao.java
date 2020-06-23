@@ -1,10 +1,9 @@
 package com.group10.issuemaker.milestone;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -64,7 +63,11 @@ public class MilestoneDao {
 
     public MilestoneResponse findMilestoneByIssueId(Long issueId) {
         String sql = "SELECT m.milestone_id, m.title FROM MILESTONE m JOIN ISSUE i where i.issue_id = ? AND i.milestone_id = m.milestone_id";
-        return jdbcTemplate.queryForObject(sql, new Object[]{issueId}, BeanPropertyRowMapper.newInstance(MilestoneResponse.class));
+        try {
+            return jdbcTemplate.queryForObject(sql, new Object[]{issueId}, BeanPropertyRowMapper.newInstance(MilestoneResponse.class));
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public void deleteByMilestoneId(Long milestoneId) {
