@@ -1,5 +1,6 @@
 INSERT INTO milestone (title, description, due_date ) VALUES ('spring 공부', 'spring 공부하기', NOW());
 INSERT INTO milestone (title, description, due_date ) VALUES ('java 공부', 'java 공부하기', NOW());
+INSERT INTO milestone (title, description, due_date ) VALUES ('더워', 'java 공부하기', NOW());
 
 insert into issue (issue_id, title, content, opened_date, closed_date, opened, milestone_id) values (1, 'eat healthy', 'eat organic stuff', '2020-06-01', '2020-06-03', 1, 1);
 insert into issue (issue_id, title, content, opened_date, closed_date, opened, milestone_id) values (2, 'eat healthy', 'eat organic stuff', '2020-06-01', '2020-06-03', 1, 1);
