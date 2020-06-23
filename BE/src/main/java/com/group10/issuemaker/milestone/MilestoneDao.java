@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -64,5 +65,52 @@ public class MilestoneDao {
     public MilestoneResponse findMilestoneByIssueId(Long issueId) {
         String sql = "SELECT m.milestone_id, m.title FROM MILESTONE m JOIN ISSUE i where i.issue_id = ? AND i.milestone_id = m.milestone_id";
         return jdbcTemplate.queryForObject(sql, new Object[]{issueId}, BeanPropertyRowMapper.newInstance(MilestoneResponse.class));
+    }
+
+    public void deleteByMilestoneId(Long milestoneId) {
+        String sql = "DELETE FROM milestone where milestone.milestone_id = :milestoneId";
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("milestoneId", milestoneId);
+
+        namedParameterJdbcTemplate.update(sql, sqlParameterSource);
+    }
+
+    public void updateMilestone(Long milestoneId, MilestoneRequest milestoneRequest) {
+
+        HashMap<String, Object> changeFields = new HashMap<>();
+        if (milestoneRequest.getDescription() != null) {
+            changeFields.put("description", milestoneRequest.getDescription());
+        }
+        if (milestoneRequest.getTitle() != null) {
+            changeFields.put("title", milestoneRequest.getTitle());
+        }
+        if (milestoneRequest.getDueDate() != null) {
+            changeFields.put("due_date", milestoneRequest.getDueDate());
+        }
+
+        if (changeFields.size() == 0) {
+            return;
+        }
+
+        StringBuilder sql = new StringBuilder("UPDATE milestone SET ");
+
+        Iterator it = changeFields.entrySet().iterator();
+
+        while(it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            sql.append(pair.getKey());
+            sql.append(" = '");
+            sql.append(pair.getValue());
+            sql.append("' ");
+
+            if(it.hasNext()) {
+                sql.append(" , ");
+            }
+        }
+
+        sql.append(" WHERE milestone.milestone_id = :milestoneId");
+
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("milestoneId", milestoneId);
+
+        namedParameterJdbcTemplate.update(sql.toString(), sqlParameterSource);
     }
 }
