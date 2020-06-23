@@ -24,4 +24,9 @@ public class UserDao {
 
         return jdbcTemplate.query(sql, new Object[]{issueId}, BeanPropertyRowMapper.newInstance(User.class));
     }
+
+    public List<User> findAllUses() {
+        String sql = "select * from user";
+        return jdbcTemplate.query(sql, new Object[]{}, BeanPropertyRowMapper.newInstance(User.class));
+    }
 }
