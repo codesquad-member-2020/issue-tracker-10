@@ -8,8 +8,10 @@ import TimelineComment from "../TimelineComment";
 import MarkdownEditorContainer from "../MarkdownEditor";
 import GithubPicker from "../githubPicker/GithubPicker";
 
-import ColorModalItem from "../githubPicker/colorPicker/ColorModalItem";
 import ColorListItem from "../githubPicker/colorPicker/ColorListItem";
+import ColorModalItem from "../githubPicker/colorPicker/ColorModalItem";
+import AssigneesListItem from "../githubPicker/assignees/AssigneesListItem";
+import AssigneesModalItem from "../githubPicker/assignees/AssigneesModalItem";
 
 import styled from "styled-components";
 import { SaveButton } from "@style/CustomStyle";
@@ -24,8 +26,14 @@ const CreateIssues = () => {
   const { labels, assignees } = useSelector(({ createIssue }) => createIssue);
   const dispatch = useDispatch();
 
-  const onClickModalItem = (labelId) => dispatch(changeLabelBCheck(labelId));
-  const onSubmit = (data) => console.log(data);
+  const onClickModalItem = (labelId, pickerType = "labels") => dispatch(changeLabelBCheck(labelId, pickerType));
+  const onClickModalItem_2 = (labelId, pickerType = "assignees") => dispatch(changeLabelBCheck(labelId, pickerType));
+
+  const onSubmit = (data) => {
+    const checkedLabels = filteringPickerList(labels);
+    const checkdAssignnes = filteringPickerList(assignees);
+    console.log({ ...data, labels: checkedLabels, assignnes: checkdAssignnes });
+  };
 
   const filteringPickerList = (pickerList) => (pickerList.length ? pickerList.filter((el) => el.bCheck) : []);
 
@@ -47,6 +55,7 @@ const CreateIssues = () => {
           </TimelineComment>
         </FormContext>
         <PickerWrap>
+          <GithubPicker pickerName="assignees" pickerList={assignees} ListItemComponent={AssigneesListItem} ModalItemComponent={AssigneesModalItem} onClickModalItem={onClickModalItem_2} />
           <GithubPicker pickerName="labels" pickerList={labels} ListItemComponent={ColorListItem} ModalItemComponent={ColorModalItem} onClickModalItem={onClickModalItem} />
         </PickerWrap>
       </IssuesEditor>
