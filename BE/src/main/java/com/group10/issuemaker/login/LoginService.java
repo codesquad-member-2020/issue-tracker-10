@@ -63,10 +63,10 @@ public class LoginService {
     }
 
     public String login(GithubUser user) {
-        if (!loginUserDao.findByUsername(user.getLogin()).isPresent()) {
+        if (!loginUserDao.findByUsername(user.getUsername()).isPresent()) {
             join(user);
         }
 
-        return Jwt.generateJwt(user.getLogin());
+        return Jwt.generateJwt(user.getUsername());
     }
 }

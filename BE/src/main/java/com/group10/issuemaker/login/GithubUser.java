@@ -10,7 +10,8 @@ import lombok.ToString;
 @ToString
 public class GithubUser {
 
-    private String login;
+    @JsonProperty("login")
+    private String username;
 
     @JsonProperty("avatar_url")
     private String avatarUrl;

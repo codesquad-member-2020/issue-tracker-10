@@ -21,7 +21,7 @@ public class LoginUserDao {
 
     public void save(GithubUser user) {
         String sql = "INSERT INTO user (name, url) VALUES (:name, :url)";
-        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("name", user.getLogin())
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("name", user.getUsername())
                 .addValue("url", user.getAvatarUrl());
 
         namedParameterJdbcTemplate.update(sql, sqlParameterSource);
