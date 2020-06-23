@@ -84,6 +84,7 @@ public class IssueDAO {
     }
 
     public void makeIssue(@RequestBody IssueRequest issueRequest) {
+        System.out.println(issueRequest);
         String sql = "insert into issue (title, content, opened_date, closed_date, opened, milestone_id, author_id) values (:title, :content, :openedDate, :closedDate, 1, :milestoneId, :authorId)";
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("title", issueRequest.getTitle())
                 .addValue("content", issueRequest.getContent())
@@ -93,5 +94,32 @@ public class IssueDAO {
                 .addValue("authorId", issueRequest.getAuthorId());
         namedParameterJdbcTemplate.update(sql, sqlParameterSource);
 
+
+        Long issueId = 4L;
+        if (issueRequest.getLabelIds().length != 0) {
+            for (Long labelId : issueRequest.getLabelIds()) {
+                updateIssueLabel(issueId, labelId );
+                System.out.println(" issue label id : " +  labelId  + " has been added");
+            }
+        } if (issueRequest.getAssigneeIds().length != 0) {
+            for (Long assigneeId : issueRequest.getAssigneeIds()) {
+                updateAssignee(issueId, assigneeId);
+                System.out.println(" assignee id : " + assigneeId + " has been added");
+            }
+        }
+    }
+
+    public void updateIssueLabel(Long issueId, Long labelId) {
+        String sql = "insert into issue_label (issue_id, label_id) values ( :issueId, :labelId)";
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("issueId", issueId)
+                .addValue("labelId", labelId);
+        namedParameterJdbcTemplate.update(sql, sqlParameterSource);
+    }
+
+    public void updateAssignee(Long issueId, Long assigneeId) {
+        String sql = "insert into issue_assignee (issue_id, assignee_id) values ( :issueId, :assigneeId)";
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("issueId", issueId)
+                .addValue("assigneeId", assigneeId);
+        namedParameterJdbcTemplate.update(sql, sqlParameterSource);
     }
 }
