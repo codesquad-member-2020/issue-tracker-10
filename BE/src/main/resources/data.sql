@@ -26,3 +26,7 @@ insert into user (user_id, name, url) VALUES (1, 'bohyeon', 'https://avatars3.gi
 insert into issue_assignee (assignee_id, issue_id) VALUES (1,1);
 
 insert into comment (comment_id, issue_id, author_id, description) VALUES (1, 1, 1, '호텔 신라 코딩');
+insert into comment (comment_id, issue_id, author_id, description) VALUES (2, 1, 1, '호텔 신라 코딩?');
+
+insert into comment (comment_id, issue_id, author_id, description) VALUES (3, 2, 1, '호텔 신라 코딩2');
+insert into comment (comment_id, issue_id, author_id, description) VALUES (4, 3, 1, '호텔 신라 코딩3');

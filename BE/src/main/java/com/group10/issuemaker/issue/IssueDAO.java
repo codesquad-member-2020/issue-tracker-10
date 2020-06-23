@@ -75,6 +75,7 @@ public class IssueDAO {
                 issue.setLabels(labels);
                 issue.setMilestone(milestoneDao.findMilestoneByIssueId(issueId));
                 issue.setAssignees(userDao.findUserByIssueId(issueId));
+                issue.setNumberOfComments(commentDao.findNumberOfComments(issueId));
                 return issue;
             }
         });

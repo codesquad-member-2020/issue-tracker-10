@@ -31,6 +31,8 @@ public class Issue {
 
     private List<CommentResponse> comments;
 
+    private int numberOfComments;
+
     private List<User> assignees;
 
     private MilestoneResponse milestone;
