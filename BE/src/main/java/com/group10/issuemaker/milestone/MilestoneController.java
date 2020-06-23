@@ -2,10 +2,7 @@ package com.group10.issuemaker.milestone;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,5 +25,19 @@ public class MilestoneController {
     public ResponseEntity<List<MilestoneResponse>> getMilestone() {
         List<MilestoneResponse> res = milestoneService.findAll();
         return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/milestones/{milestoneId}")
+    public ResponseEntity<String> deleteMilestone(@PathVariable Long milestoneId) {
+        milestoneService.deleteMilestone(milestoneId);
+
+        return new ResponseEntity("OK", HttpStatus.OK);
+    }
+
+    @PutMapping("/milestones/{milestoneId}")
+    public ResponseEntity<String> updateMilestone(@PathVariable Long milestoneId , @RequestBody MilestoneRequest milestoneRequest)  {
+        milestoneService.updateMilestone(milestoneId,  milestoneRequest);
+
+        return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 }

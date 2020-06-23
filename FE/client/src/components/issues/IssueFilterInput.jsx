@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { NomalButton, NomalInput, DropdownCaret } from "@style/CustomStyle";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -7,15 +7,25 @@ import FiltersFilter from "@/components/issues/filterList/Filters";
 import PikerModal from "@components/issues/PickerModal";
 
 const IssueFilterInput = () => {
+  const issueFilterContainer = useRef();
   const [bOpen, setbOpen] = useState(false);
   const handleFilterClick = () => setbOpen(!bOpen);
   const filtersFilterList = <FiltersFilter />;
 
+  useEffect(() => {
+    window.addEventListener("click", handleOnClickOutside);
+    return () => window.removeEventListener("click", handleOnClickOutside);
+  });
+
+  const handleOnClickOutside = ({ target }) => {
+    if (bOpen && !issueFilterContainer.current.contains(target)) setbOpen(false);
+  };
+
   return (
-    <IssueFilterInputWrap>
+    <IssueFilterInputWrap ref={issueFilterContainer}>
       {bOpen && (
         <PickerModalWrap>
-          <PikerModal title="Filter Issues" pickerModalList={filtersFilterList} />
+          <PikerModal title="Filter Issues" modalItemList={filtersFilterList} />
         </PickerModalWrap>
       )}
       <NomalButton type="button" onClick={handleFilterClick}>

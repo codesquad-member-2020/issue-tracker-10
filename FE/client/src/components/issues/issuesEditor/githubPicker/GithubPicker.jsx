@@ -5,17 +5,20 @@ import { MdSettings } from "react-icons/md";
 
 import PickerModal from "@components/issues/PickerModal";
 
-const GithubPicker = ({ pickerName, pickerType, pickerList, ListItemComponent, ModalItemComponent }) => {
+const GithubPicker = ({ pickerName, pickerType, pickerList, onClickModalItem, ListItemComponent, ModalItemComponent }) => {
   const toggleContainer = useRef();
   const [bOpen, setbOpen] = useState(false);
+  const [chosenList, setChoseList] = useState([]);
 
-  const _list = pickerList.map((el) => <ListItemComponent {...el} />);
-  const _list2 = pickerList.map((el) => <ModalItemComponent {...el} />);
+  const setChosenList = () => {
+    const filterChosenList = pickerList.filter((el) => el.bCheck === true);
+    setChoseList(filterChosenList);
+  };
+
+  const modalList = pickerList.map((el) => <ModalItemComponent {...el} onClickModalItem={onClickModalItem} />);
 
   const onClickPicker = () => setbOpen(!bOpen);
-
   const onClickOutside = (event) => {
-    console.log(event.target);
     if (bOpen && !toggleContainer.current.contains(event.target)) {
       setbOpen(false);
     }
@@ -23,11 +26,14 @@ const GithubPicker = ({ pickerName, pickerType, pickerList, ListItemComponent, M
 
   useEffect(() => {
     window.addEventListener("click", onClickOutside);
-
     return () => {
       window.removeEventListener("click", onClickOutside);
     };
   });
+
+  useEffect(() => {
+    setChosenList();
+  }, [pickerList]);
 
   return (
     <GithubPickerWrap ref={toggleContainer}>
@@ -35,8 +41,10 @@ const GithubPicker = ({ pickerName, pickerType, pickerList, ListItemComponent, M
         <div>{pickerName}</div>
         <MdSettings />
       </PickerHeader>
-      {bOpen && <PickerModal title={pickerName} pickerType={pickerType} modalItemList={_list2} />}
-      {_list}
+      {bOpen && <PickerModal title={pickerName} pickerType={pickerType} modalItemList={modalList} />}
+      {chosenList.map((el) => {
+        return <ListItemComponent {...el} />;
+      })}
     </GithubPickerWrap>
   );
 };

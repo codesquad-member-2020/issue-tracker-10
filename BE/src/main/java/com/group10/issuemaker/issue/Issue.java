@@ -1,5 +1,6 @@
 package com.group10.issuemaker.issue;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.group10.issuemaker.comment.CommentResponse;
 import com.group10.issuemaker.label.Label;
@@ -29,6 +30,7 @@ public class Issue {
 
     private List<Label> labels;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<CommentResponse> comments;
 
     private int numberOfComments;
@@ -36,6 +38,5 @@ public class Issue {
     private List<User> assignees;
 
     private MilestoneResponse milestone;
-
 
 }

@@ -124,6 +124,7 @@ public class IssueDAO {
         namedParameterJdbcTemplate.update(sql, sqlParameterSource);
     }
 
+
     public void deleteIssue(Long issueId) {
         deleteIssueAssignee(issueId);
         deleteIssueLabel(issueId);
@@ -145,5 +146,12 @@ public class IssueDAO {
     public void deleteComment(Long issueId) {
         String sql = "DELETE FROM comment where issue_id = ?";
         jdbcTemplate.update(sql, issueId);
+
+    public void updateIssueOnDeleteMilestone(Long milestoneId) {
+        String sql = "UPDATE issue SET issue.milestone_id = null WHERE issue.milestone_id = :milestoneId";
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("milestoneId", milestoneId);
+
+        namedParameterJdbcTemplate.update(sql, sqlParameterSource);
+
     }
 }

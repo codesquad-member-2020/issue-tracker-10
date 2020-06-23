@@ -4,14 +4,14 @@ import styled from "styled-components";
 import { FiCheck } from "react-icons/fi";
 
 const ColorPickerItem = (props) => {
-  const { backgroundColor, title, description, bCheck, id } = props;
+  const { backgroundColor, labelName, description, bCheck, id, onClickModalItem } = props;
 
   return (
-    <PickerListItem key={id}>
+    <PickerListItem id={id} onClick={() => onClickModalItem(id)}>
       <PickerItemCheck>{bCheck && <FiCheck />}</PickerItemCheck>
       <PickerItemLabel backgroundColor={backgroundColor} />
       <PickerItemInfo>
-        <div>{title}</div>
+        <div>{labelName}</div>
         <div>{description}</div>
       </PickerItemInfo>
     </PickerListItem>
@@ -24,6 +24,7 @@ const PickerListItem = styled.div`
   display: flex;
   padding: 8px;
   background-color: #fff;
+  cursor: pointer;
   :hover {
     background-color: #f5f5f5;
   }
