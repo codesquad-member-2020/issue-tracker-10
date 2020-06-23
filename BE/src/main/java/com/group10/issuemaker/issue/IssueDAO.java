@@ -124,10 +124,34 @@ public class IssueDAO {
         namedParameterJdbcTemplate.update(sql, sqlParameterSource);
     }
 
+
+    public void deleteIssue(Long issueId) {
+        deleteIssueAssignee(issueId);
+        deleteIssueLabel(issueId);
+        deleteComment(issueId);
+        String sql = "DELETE FROM ISSUE WHERE ISSUE_ID = ?";
+        jdbcTemplate.update(sql, issueId);
+    }
+
+    public void deleteIssueLabel(Long issueId) {
+        String sql = "DELETE FROM issue_label where issue_id = ?";
+        jdbcTemplate.update(sql, issueId);
+    }
+
+    public void deleteIssueAssignee(Long issueId) {
+        String sql = "DELETE FROM issue_assignee where issue_id = ?";
+        jdbcTemplate.update(sql, issueId);
+    }
+
+    public void deleteComment(Long issueId) {
+        String sql = "DELETE FROM comment where issue_id = ?";
+        jdbcTemplate.update(sql, issueId);
+
     public void updateIssueOnDeleteMilestone(Long milestoneId) {
         String sql = "UPDATE issue SET issue.milestone_id = null WHERE issue.milestone_id = :milestoneId";
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("milestoneId", milestoneId);
 
         namedParameterJdbcTemplate.update(sql, sqlParameterSource);
+
     }
 }
