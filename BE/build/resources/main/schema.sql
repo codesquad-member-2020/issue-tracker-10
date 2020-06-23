@@ -9,7 +9,8 @@ drop table if exists user;
 
 create table user (
     user_id bigint primary key auto_increment,
-    email varchar(512)
+    name varchar(256),
+    url varchar(512)
 );
 
 
@@ -47,7 +48,7 @@ create table comment (
     comment_id bigint primary key auto_increment,
     issue_id bigint references issue (issue_id),
     author_id bigint references user (user_id),
-    content text
+    description text
 );
 
 create table issue_assignee (

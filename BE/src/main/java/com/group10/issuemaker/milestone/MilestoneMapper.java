@@ -11,7 +11,7 @@ public class MilestoneMapper implements RowMapper<MilestoneResponse> {
     public MilestoneResponse mapRow(ResultSet rs, int rowNum) throws SQLException {
         return MilestoneResponse
                 .builder()
-                .id(rs.getLong("milestone_id"))
+                .milestone_id(rs.getLong("milestone_id"))
                 .dueDate(rs.getString("due_date"))
                 .title(rs.getString("title"))
                 .description(rs.getString("description"))
