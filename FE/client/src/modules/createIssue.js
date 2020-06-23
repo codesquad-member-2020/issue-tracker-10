@@ -1,0 +1,51 @@
+const INIT_CREATE_ISSUES = "createIssue/INIT_CREATE_ISSUES";
+const RESET_CREATE_ISSUES = "createIssue/RESET_CREATE_ISSUES";
+const UPDATE_CHECKED_STATE = "createIssue/UPDATE_CHECKED_STATE";
+
+export const getInitCreateIssues = () => async (dispatch) => {
+  const response = await fetch();
+  const json = await response.json();
+  dispatch(initCreateIssues(json));
+};
+
+export const createIssues = (postData) => async (dispatch) => {
+  const response = await fetch();
+  const json = await response.json();
+  dispatch(resetCreateIssues());
+};
+
+export const changeLabelBCheck = (labelId) => ({ type: UPDATE_CHECKED_STATE, payload: labelId });
+
+const initCreateIssues = (data) => ({ type: INIT_CREATE_ISSUES, payload: data });
+const resetCreateIssues = () => ({ type: RESET_CREATE_ISSUES });
+
+const initialState = {
+  assignees: [
+    { id: 1, username: "choichoigang", user_image: "test image" },
+    { id: 2, username: "taek", user_image: "test image" },
+    { id: 3, username: "엘리", user_image: "test image" },
+    { id: 4, username: "XP", user_image: "test image" },
+  ],
+  labels: [
+    { id: 1, bCheck: true, textColor: "#fff", backgroundColor: "rgb(203,92,208)", description: "testing label", labelName: "duplicate" },
+    { id: 2, bCheck: false, textColor: "#fff", backgroundColor: "rgb(254,40,119)", description: "testing label", labelName: "FE" },
+    { id: 3, bCheck: false, textColor: "#fff", backgroundColor: "rgb(86,185,42)", description: "testing label", labelName: "good first issue" },
+    { id: 4, bCheck: false, textColor: "#fff", backgroundColor: "rgb(118,148,231)", description: "testing label", labelName: "help wanted" },
+    { id: 5, bCheck: false, textColor: "#000", backgroundColor: "rgb(128,177,104)", description: "testing label", labelName: "question" },
+  ],
+};
+
+const filteringLabelBCheck = (labelId, state) => state.map((el) => (el.id === labelId ? { ...el, bCheck: !el.bCheck } : el));
+
+const createIssueReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case UPDATE_CHECKED_STATE:
+      return { ...state, labels: filteringLabelBCheck(action.payload, state.labels) };
+    case RESET_CREATE_ISSUES:
+      return { assignees: [], labels: [], milestone: [] };
+    default:
+      return state;
+  }
+};
+
+export default createIssueReducer;
