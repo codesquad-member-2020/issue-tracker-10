@@ -90,4 +90,11 @@ public class IssueDAO {
                 .addValue("name", name);
         namedParameterJdbcTemplate.update(sql, sqlParameterSource);
     }
+
+    public void updateIssueOnDeleteMilestone(Long milestoneId) {
+        String sql = "UPDATE issue SET issue.milestone_id = null WHERE issue.milestone_id = :milestoneId";
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("milestoneId", milestoneId);
+
+        namedParameterJdbcTemplate.update(sql, sqlParameterSource);
+    }
 }
