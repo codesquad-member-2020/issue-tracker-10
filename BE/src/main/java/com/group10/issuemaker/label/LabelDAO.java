@@ -39,7 +39,7 @@ public class LabelDAO {
 
         for (Label l : labels) {
             if (idList.contains(l.getLabel_id())) {
-                l.setBUsed(true);
+                l.setBChecked(true);
             }
         }
         return labels;
