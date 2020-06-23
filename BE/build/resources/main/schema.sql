@@ -22,11 +22,11 @@ create table milestone (
 );
 
 create table issue (
-    issue_id bigint primary key,
+    issue_id bigint primary key auto_increment,
     title varchar (255),
     content varchar (255),
-    opened_date date,
-    closed_date date,
+    opened_date varchar(255),
+    closed_date varchar(255),
     opened bit(1),
     author_id bigint references user(user_id),
     milestone_id bigint references milestone(milestone_id)

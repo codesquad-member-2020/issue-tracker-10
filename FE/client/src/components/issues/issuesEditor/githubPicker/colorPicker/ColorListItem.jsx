@@ -2,12 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 const ColorListItem = (props) => {
-  console.log(props);
-  const { title, backgroundColor, color } = props;
+  const { labelName, backgroundColor, textColor } = props;
 
   return (
-    <ColorListItemWrap backgroundColor={backgroundColor} textColor={color}>
-      {title}
+    <ColorListItemWrap backgroundColor={backgroundColor} textColor={textColor}>
+      {labelName}
     </ColorListItemWrap>
   );
 };
