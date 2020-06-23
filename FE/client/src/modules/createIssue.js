@@ -1,6 +1,10 @@
+import user_image from "@assets/images/user-sample-image.jpg";
+
 const INIT_CREATE_ISSUES = "createIssue/INIT_CREATE_ISSUES";
-const RESET_CREATE_ISSUES = "createIssue/RESET_CREATE_ISSUES";
-const UPDATE_CHECKED_STATE = "createIssue/UPDATE_CHECKED_STATE";
+
+const UPDATE_CHECKED_LABELS = "createIssue/UPDATE_CHECKED_LABELS";
+const UPDATE_CHECKED_ASSIGNEES = "createIssue/UPDATE_CHECKED_ASSIGNEES";
+const UPDATE_CHECKED_MILESTONES = "createIssue/UPDATE_CHECKED_MILESTONES";
 
 export const getInitCreateIssues = () => async (dispatch) => {
   const response = await fetch();
@@ -11,23 +15,25 @@ export const getInitCreateIssues = () => async (dispatch) => {
 export const createIssues = (postData) => async (dispatch) => {
   const response = await fetch();
   const json = await response.json();
-  dispatch(resetCreateIssues());
 };
 
-export const changeLabelBCheck = (labelId) => ({ type: UPDATE_CHECKED_STATE, payload: labelId });
+export const changeLabelBCheck = (labelId, pickerType) => {
+  if (pickerType === "labels") return { type: UPDATE_CHECKED_LABELS, payload: labelId };
+  if (pickerType === "assignees") return { type: UPDATE_CHECKED_ASSIGNEES, payload: labelId };
+  if (pickerType === "milestones") return { type: UPDATE_CHECKED_MILESTONES, payload: labelId };
+};
 
 const initCreateIssues = (data) => ({ type: INIT_CREATE_ISSUES, payload: data });
-const resetCreateIssues = () => ({ type: RESET_CREATE_ISSUES });
 
 const initialState = {
   assignees: [
-    { id: 1, username: "choichoigang", user_image: "test image" },
-    { id: 2, username: "taek", user_image: "test image" },
-    { id: 3, username: "엘리", user_image: "test image" },
-    { id: 4, username: "XP", user_image: "test image" },
+    { id: 1, bCheck: false, username: "choichoigang", user_image: user_image },
+    { id: 2, bCheck: false, username: "taek", user_image: user_image },
+    { id: 3, bCheck: false, username: "엘리", user_image: user_image },
+    { id: 4, bCheck: false, username: "XP", user_image: user_image },
   ],
   labels: [
-    { id: 1, bCheck: true, textColor: "#fff", backgroundColor: "rgb(203,92,208)", description: "testing label", labelName: "duplicate" },
+    { id: 1, bCheck: false, textColor: "#fff", backgroundColor: "rgb(203,92,208)", description: "testing label", labelName: "duplicate" },
     { id: 2, bCheck: false, textColor: "#fff", backgroundColor: "rgb(254,40,119)", description: "testing label", labelName: "FE" },
     { id: 3, bCheck: false, textColor: "#fff", backgroundColor: "rgb(86,185,42)", description: "testing label", labelName: "good first issue" },
     { id: 4, bCheck: false, textColor: "#fff", backgroundColor: "rgb(118,148,231)", description: "testing label", labelName: "help wanted" },
@@ -39,10 +45,13 @@ const filteringLabelBCheck = (labelId, state) => state.map((el) => (el.id === la
 
 const createIssueReducer = (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_CHECKED_STATE:
+    case UPDATE_CHECKED_LABELS:
       return { ...state, labels: filteringLabelBCheck(action.payload, state.labels) };
-    case RESET_CREATE_ISSUES:
-      return { assignees: [], labels: [], milestone: [] };
+    case UPDATE_CHECKED_ASSIGNEES:
+      return { ...state, assignees: filteringLabelBCheck(action.payload, state.assignees) };
+    case UPDATE_CHECKED_MILESTONES:
+      return { ...state, milestones: filteringLabelBCheck(action.payload, state.milestones) };
+
     default:
       return state;
   }
