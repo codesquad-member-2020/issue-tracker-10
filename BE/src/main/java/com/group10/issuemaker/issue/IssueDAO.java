@@ -95,6 +95,7 @@ public class IssueDAO {
         namedParameterJdbcTemplate.update(sql, sqlParameterSource);
 
 
+        ///엘리 여기야~~~ 여기 issueId 를 가장 최근 생성된 issue Id 로 바꾸는 법 모르겠어~~
         Long issueId = 4L;
         if (issueRequest.getLabelIds().length != 0) {
             for (Long labelId : issueRequest.getLabelIds()) {
