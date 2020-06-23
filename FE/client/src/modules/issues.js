@@ -1,7 +1,9 @@
+import { URL } from '@constants/url';
+
 const INIT_ISSUES_LIST = "issues/INIT_ISSUES_LIST";
 
 export const getInitIssues = () => async dispatch => {
-    const response = await fetch('http://localhost:3000/api/issueList');
+    const response = await fetch(URL.ISSUE_LIST_API);
     const json = await response.json();
     dispatch(initIssuesList(json));
 };
@@ -19,7 +21,7 @@ const issueReducer = (state = initialState, action) => {
             return {
                 ...state,
                 bLoading: false,
-                issuesList: action.payload.issueList,
+                issuesList: action.payload,
             }
         default:
             return state;

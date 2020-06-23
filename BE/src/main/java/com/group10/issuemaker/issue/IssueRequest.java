@@ -11,7 +11,7 @@ public class IssueRequest {
     private String title;
     private String content;
     private String openedDate;
-    private int milestoneId;
+    private Integer milestoneId;
     private int authorId;
     private Long[] labelIds;
     private Long[] assigneeIds;

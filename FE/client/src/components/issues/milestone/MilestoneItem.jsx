@@ -7,7 +7,7 @@ import MilestoneItemProgress from "./MilestoneItemProgress";
 import MilestoneItemButtons from "./MilestoneItemButtons";
 
 const MilestoneItem = ({ milestones }) => {
-  const { id, title, dueDate, description, linkIssues } = milestones;
+  const { milestone_id, title, dueDate, description, linkIssues } = milestones;
 
   let openLinkIssuesCount = 0;
   let closedLinkIssuesCount = 0;
@@ -24,7 +24,7 @@ const MilestoneItem = ({ milestones }) => {
         </div>
         <div className="right-info">
           <MilestoneItemProgress {...{ completeRatio, openLinkIssuesCount, closedLinkIssuesCount }} />
-          <MilestoneItemButtons {...{ id }} />
+          <MilestoneItemButtons id={milestone_id} />
         </div>
       </MilestoneItemWrap>
     </TableItem>

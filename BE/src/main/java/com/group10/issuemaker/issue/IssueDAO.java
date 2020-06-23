@@ -11,6 +11,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -92,11 +94,11 @@ public class IssueDAO {
                 .addValue("closedDate", "tbd")
                 .addValue("milestoneId", issueRequest.getMilestoneId())
                 .addValue("authorId", issueRequest.getAuthorId());
-        namedParameterJdbcTemplate.update(sql, sqlParameterSource);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        namedParameterJdbcTemplate.update(sql, sqlParameterSource, keyHolder);
 
+        Long issueId = keyHolder.getKey().longValue();
 
-        ///엘리 여기야~~~ 여기 issueId 를 가장 최근 생성된 issue Id 로 바꾸는 법 모르겠어~~
-        Long issueId = 4L;
         if (issueRequest.getLabelIds().length != 0) {
             for (Long labelId : issueRequest.getLabelIds()) {
                 updateIssueLabel(issueId, labelId );
@@ -124,10 +126,34 @@ public class IssueDAO {
         namedParameterJdbcTemplate.update(sql, sqlParameterSource);
     }
 
+
+    public void deleteIssue(Long issueId) {
+        deleteIssueAssignee(issueId);
+        deleteIssueLabel(issueId);
+        deleteComment(issueId);
+        String sql = "DELETE FROM ISSUE WHERE ISSUE_ID = ?";
+        jdbcTemplate.update(sql, issueId);
+    }
+
+    public void deleteIssueLabel(Long issueId) {
+        String sql = "DELETE FROM issue_label where issue_id = ?";
+        jdbcTemplate.update(sql, issueId);
+    }
+
+    public void deleteIssueAssignee(Long issueId) {
+        String sql = "DELETE FROM issue_assignee where issue_id = ?";
+        jdbcTemplate.update(sql, issueId);
+    }
+
+    public void deleteComment(Long issueId) {
+        String sql = "DELETE FROM comment where issue_id = ?";
+        jdbcTemplate.update(sql, issueId);
+
     public void updateIssueOnDeleteMilestone(Long milestoneId) {
         String sql = "UPDATE issue SET issue.milestone_id = null WHERE issue.milestone_id = :milestoneId";
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("milestoneId", milestoneId);
 
         namedParameterJdbcTemplate.update(sql, sqlParameterSource);
+
     }
 }

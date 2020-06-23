@@ -11,19 +11,12 @@ insert into issue (issue_id, title, content, opened_date, closed_date, opened, m
 insert into issue (issue_id, title, content, opened_date, closed_date, opened, milestone_id, author_id) values (3, 'eat healthy', 'eat organic stuff', '2020-06-01', '2020-06-03', 0, 2, 1);
 
 
-insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (1, '#FFFFF1', '#1E90FF1', 'testing label1', 'BE');
-insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (2, '#FFFFF2', '#1E90FF2', 'testing label2', 'BE');
-insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (3, '#FFFFF3', '#1E90FF3', 'testing label3', 'BE');
-insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (4, '#FFFFF3', '#1E90FF3', 'testing label4', 'BE');
-insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (5, '#FFFFF3', '#1E90FF3', 'testing label5', 'BE');
-insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (6, '#FFFFF3', '#1E90FF3', 'testing label6', 'BE');
+insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (1, '#fff', 'rgb(203,92,208)', 'testing label1', 'group 10 is the best');
+insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (2, '#fff', 'rgb(254,40,119)', 'testing label2', 'XP is beyond silver');
+insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (3, '#fff', 'rgb(86,185,42)', 'testing label3', 'Hoi is Korean tiger');
+insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (4, '#fff', 'rgb(118,148,231)', 'testing label4', 'Taek is TaekSin');
+insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (5, '#000', 'rgb(128,177,104)', 'testing label5', 'Ellie is Alligator');
 
--- { id: 1, bCheck: true, textColor: "#fff", backgroundColor: "rgb(203,92,208)", description: "testing label", labelName: "duplicate" },
---     { id: 2, bCheck: false, textColor: "#fff", backgroundColor: "rgb(254,40,119)", description: "testing label", labelName: "FE" },
---     { id: 3, bCheck: false, textColor: "#fff", backgroundColor: "rgb(86,185,42)", description: "testing label", labelName: "good first issue" },
---     { id: 4, bCheck: false, textColor: "#fff", backgroundColor: "rgb(118,148,231)", description: "testing label", labelName: "help wanted" },
---     { id: 5, bCheck: false, textColor: "#000", backgroundColor: "rgb(128,177,104)", description: "testing label", labelName: "question" },
---
 insert into issue_label (issue_id, label_id) VALUES (1, 1);
 insert into issue_label (issue_id, label_id) VALUES (1, 2);
 insert into issue_label (issue_id, label_id) VALUES (1, 3);

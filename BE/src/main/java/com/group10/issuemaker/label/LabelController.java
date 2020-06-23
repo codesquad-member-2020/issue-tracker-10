@@ -35,7 +35,6 @@ public class LabelController {
         return labelDAO.findLabels();
     }
 
-    ///모든 항목을 변경하지 않고 몇 가지 항목만 변경할 때는 리퀘스트 바디 어떻게 받음?
     @PutMapping("/labels/{labelId}")
     public List<Label> editLabel(@RequestBody Label label, @PathVariable Long labelId) {
         labelDAO.editLabel(labelId, label.getLabelName(), label.getDescription(), label.getTextColor(), label.getBackGroundColor());

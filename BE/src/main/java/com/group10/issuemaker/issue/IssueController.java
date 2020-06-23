@@ -45,6 +45,11 @@ public class IssueController {
         issueDAO.makeIssue(issueRequest);
     }
 
+    @DeleteMapping("/issues/{issueId}")
+    public void deleteIssue(@PathVariable Long issueId) {
+        issueDAO.deleteIssue(issueId);
+    }
+
     @GetMapping("/info")
     public Trinity getTrinity() {
         Trinity trinity = new Trinity();

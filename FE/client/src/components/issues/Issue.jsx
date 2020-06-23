@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getInitIssues } from "@modules/issues";
+import { getInitCreateIssues } from "@modules/createIssue";
 import styled from "styled-components";
 import { TableHeaderButton } from "@style/CustomStyle";
 
@@ -21,6 +22,7 @@ const Issue = () => {
 
   useEffect(() => {
     dispatch(getInitIssues());
+    dispatch(getInitCreateIssues());
   }, [dispatch]);
 
   const leftSideComponent = <IssueFilterInput />;
@@ -35,7 +37,7 @@ const Issue = () => {
 
   if (bLoading) return <div>Loading...</div>;
 
-  const _issuesList = issuesList.map((issue) => <IssueItem key={issue.id} {...{ issue, bCheckedAll, setbCheckedAll }} />);
+  const _issuesList = issuesList.map((issue) => <IssueItem key={issue.issue_id} {...{ issue, bCheckedAll, setbCheckedAll }} />);
 
   return (
     <>

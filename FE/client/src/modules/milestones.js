@@ -1,46 +1,28 @@
+import { URL } from '@constants/url';
+
+const INIT_MILESTONES_LIST = "milestones/INIT_MILESTONES_LIST";
+
+export const getInitMilestones = () => async dispatch => {
+    const response = await fetch(URL.MILESTONE_LIST_API);
+    const json = await response.json();
+    dispatch(initMilestonesList(json));
+};
+
+const initMilestonesList = data => ({ type: INIT_MILESTONES_LIST, payload: data })
+
 const initialState = {
-    milestonesList: [
-        {
-            id: 1,
-            title: '스프린트1',
-            dueDate: '2020-06-26',
-            description: '이번 배포를 위한 스프린트1',
-            bOpen: true,
-            linkIssues: [
-                {
-                    bOpen: true,
-                },
-                {
-                    bOpen: true,
-                },
-                {
-                    bOpen: false,
-                },
-            ],
-        },
-        {
-            id: 2,
-            title: '스프린트2',
-            dueDate: '2020-07-26',
-            description: '이번 배포를 위한 스프린트2',
-            bOpen: true,
-            linkIssues: [
-                {
-                    bOpen: true,
-                },
-                {
-                    bOpen: true,
-                },
-                {
-                    bOpen: true,
-                },
-            ],
-        },
-    ],
+    bLoading: true,
+    milestonesList: [],
 };
 
 const milestonesReducer = (state = initialState, action) => {
     switch (action.type) {
+        case INIT_MILESTONES_LIST:
+            return {
+                ...state,
+                bLoading: false,
+                milestonesList: action.payload,
+            }
         default:
             return state;
     }
