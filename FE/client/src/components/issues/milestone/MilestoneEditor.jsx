@@ -11,7 +11,7 @@ import MilestoneEditorButtons from "./MilestoneEditorButtons";
 const MilestoneEditor = () => {
   const { id } = useParams();
   const { milestonesList } = useSelector(({ milestones }) => milestones);
-  const [milestone] = id ? milestonesList.filter((milestone) => milestone.id === +id) : [id];
+  const [milestone] = id ? milestonesList.filter((milestone) => milestone.milestone_id === +id) : [id];
 
   const leftSideComponent = <MilestoneEditorHeader {...{ milestone }} />;
 
