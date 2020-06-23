@@ -40,7 +40,7 @@ public class LoginController {
         return redirectView;
     }
 
-    @GetMapping("/my")
+    @GetMapping("/me")
     public UserResponse getUser(@CookieValue("token") String token) {
         return loginService.getUserByJwt(token);
     }
