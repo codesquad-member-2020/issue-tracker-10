@@ -1,16 +1,19 @@
 package com.group10.issuemaker.milestone;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
+import org.springframework.data.annotation.Id;
 
 import java.util.List;
 
 @Getter
-@Builder
+@Setter
 @ToString
+@Builder
+@AllArgsConstructor
 public class MilestoneResponse {
-    private Long id;
+
+    @Id
+    private Long milestone_id;
 
     private String title;
 
@@ -20,6 +23,8 @@ public class MilestoneResponse {
 
     private Boolean opened;
 
+    private boolean bChecked = false;
+
     private List<IssueResponse> linkIssues;
 
     public void setLineIssues(List<IssueResponse> issues) {
@@ -28,5 +33,8 @@ public class MilestoneResponse {
 
     public void setOpened(Boolean opened) {
         this.opened = opened;
+    }
+
+    public MilestoneResponse() {
     }
 }

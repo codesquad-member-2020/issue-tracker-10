@@ -1,10 +1,14 @@
 package com.group10.issuemaker.milestone;
 
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -13,9 +17,11 @@ import java.util.stream.Collectors;
 public class MilestoneDao {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     public MilestoneDao(DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     public void save(MilestoneRequest milestoneRequest) {
@@ -40,7 +46,7 @@ public class MilestoneDao {
         String query = "SELECT milestone_id, title, description, due_date FROM milestone";
         List<MilestoneResponse> res = namedParameterJdbcTemplate.query(query, new MilestoneMapper());
         return res.stream().map(milestone -> {
-            List<IssueResponse> issueList = findIssueByMilestoneId(milestone.getId());
+            List<IssueResponse> issueList = findIssueByMilestoneId(milestone.getMilestone_id());
             milestone.setLineIssues(issueList);
             milestone.setOpened(isOpenMilestone(issueList));
             return milestone;
@@ -53,5 +59,61 @@ public class MilestoneDao {
             isOpen = isOpen || issue.getIsOpen();
         }
         return isOpen;
+    }
+
+    public MilestoneResponse findMilestoneByIssueId(Long issueId) {
+        String sql = "SELECT m.milestone_id, m.title FROM MILESTONE m JOIN ISSUE i where i.issue_id = ? AND i.milestone_id = m.milestone_id";
+        try {
+            return jdbcTemplate.queryForObject(sql, new Object[]{issueId}, BeanPropertyRowMapper.newInstance(MilestoneResponse.class));
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    public void deleteByMilestoneId(Long milestoneId) {
+        String sql = "DELETE FROM milestone where milestone.milestone_id = :milestoneId";
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("milestoneId", milestoneId);
+
+        namedParameterJdbcTemplate.update(sql, sqlParameterSource);
+    }
+
+    public void updateMilestone(Long milestoneId, MilestoneRequest milestoneRequest) {
+
+        HashMap<String, Object> changeFields = new HashMap<>();
+        if (milestoneRequest.getDescription() != null) {
+            changeFields.put("description", milestoneRequest.getDescription());
+        }
+        if (milestoneRequest.getTitle() != null) {
+            changeFields.put("title", milestoneRequest.getTitle());
+        }
+        if (milestoneRequest.getDueDate() != null) {
+            changeFields.put("due_date", milestoneRequest.getDueDate());
+        }
+
+        if (changeFields.size() == 0) {
+            return;
+        }
+
+        StringBuilder sql = new StringBuilder("UPDATE milestone SET ");
+
+        Iterator it = changeFields.entrySet().iterator();
+
+        while(it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            sql.append(pair.getKey());
+            sql.append(" = '");
+            sql.append(pair.getValue());
+            sql.append("' ");
+
+            if(it.hasNext()) {
+                sql.append(" , ");
+            }
+        }
+
+        sql.append(" WHERE milestone.milestone_id = :milestoneId");
+
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("milestoneId", milestoneId);
+
+        namedParameterJdbcTemplate.update(sql.toString(), sqlParameterSource);
     }
 }
