@@ -51,7 +51,7 @@ public class IssueDAO {
         issue.setComments(commentDao.findCommentByIssueId(issueId));
         issue.setMilestone(milestoneDao.findMilestoneByIssueId(issueId));
         issue.setLabels(labelDAO.getLabelsWithUsedLabels(issueId));
-
+        issue.setNumberOfComments(commentDao.findNumberOfComments(issueId));
         return issue;
     }
 
