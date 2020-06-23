@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -82,12 +83,15 @@ public class IssueDAO {
         return issues;
     }
 
-    public void createLabel(String textColor, String backColor, String description, String name) {
-        String sql = "INSERT INTO LABEL (TEXTCOLOR, BACKGROUNDCOLOR, DESCRIPTION, LABELNAME) VALUES ( :textColor, :backColor, :description, :name)";
-        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("textColor", textColor)
-                .addValue("backColor", backColor)
-                .addValue("description", description)
-                .addValue("name", name);
+    public void makeIssue(@RequestBody IssueRequest issueRequest) {
+        String sql = "insert into issue (title, content, opened_date, closed_date, opened, milestone_id, author_id) values (:title, :content, :openedDate, :closedDate, 1, :milestoneId, :authorId)";
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("title", issueRequest.getTitle())
+                .addValue("content", issueRequest.getContent())
+                .addValue("openedDate", issueRequest.getOpenedDate())
+                .addValue("closedDate", "tbd")
+                .addValue("milestoneId", issueRequest.getMilestoneId())
+                .addValue("authorId", issueRequest.getAuthorId());
         namedParameterJdbcTemplate.update(sql, sqlParameterSource);
+
     }
 }

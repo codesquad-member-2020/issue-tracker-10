@@ -5,10 +5,7 @@ import com.group10.issuemaker.User.UserDao;
 import com.group10.issuemaker.label.Label;
 import com.group10.issuemaker.label.LabelDAO;
 import com.group10.issuemaker.milestone.MilestoneDao;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -43,10 +40,9 @@ public class IssueController {
         return labelDAO.findRelatedLabels(issueId);
     }
 
-    @GetMapping("issues/post")
-    public String makeIssue(@RequestBody Issue issue) {
-
-        return "updated";
+    @PostMapping("/issues")
+    public void makeIssue(@RequestBody IssueRequest issueRequest) {
+        issueDAO.makeIssue(issueRequest);
     }
 
     @GetMapping("/info")
@@ -57,6 +53,8 @@ public class IssueController {
         trinity.setUsers(userDao.findAllUses());
         return trinity;
     }
+
+
 
 
 }
