@@ -1,4 +1,4 @@
-package Cors;
+package com.group10.issuemaker;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
