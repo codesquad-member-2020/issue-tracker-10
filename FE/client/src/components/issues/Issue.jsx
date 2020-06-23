@@ -35,7 +35,7 @@ const Issue = () => {
 
   if (bLoading) return <div>Loading...</div>;
 
-  const _issuesList = issuesList.map((issue) => <IssueItem key={issue.id} {...{ issue, bCheckedAll, setbCheckedAll }} />);
+  const _issuesList = issuesList.map((issue) => <IssueItem key={issue.issue_id} {...{ issue, bCheckedAll, setbCheckedAll }} />);
 
   return (
     <>

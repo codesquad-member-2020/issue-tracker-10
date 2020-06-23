@@ -4,20 +4,18 @@ import { GoIssueOpened, GoIssueClosed, GoMilestone } from "react-icons/go";
 import styled from "styled-components";
 import moment from "moment";
 
-import userSampleImage from "@assets/images/user-sample-image.jpg";
-
 const IssueItem = ({ bCheckedAll, issue }) => {
   const [bChecked, setbChecked] = useState(false);
-  const { id, title, bOpen, createDate, labels, milestones, writer, assignee } = issue;
-  const issueIcon = bOpen ? <GoIssueOpened className="icon open" /> : <GoIssueClosed className="icon closed" />;
+  const { id, title, isOpen, createDate, labels, milestone, writer, assignees } = issue;
+  const issueIcon = isOpen ? <GoIssueOpened className="icon open" /> : <GoIssueClosed className="icon closed" />;
   const labelsList = labels.map((label) => (
-    <LabelBox key={label.title} textColor={label.color} backgroundColor={label.backgroundColor}>
-      {label.title}
+    <LabelBox key={label.label_id} textColor={label.textColor} backgroundColor={label.backGroundColor}>
+      {label.labelName}
     </LabelBox>
   ));
-  const issueStateText = bOpen ? "opened" : "closed";
+  const issueStateText = isOpen ? "opened" : "closed";
   const issueTimeago = moment(createDate).fromNow();
-  const assigneeImages = assignee.map((userData) => <img key={userData.id} src={userSampleImage} alt="assignee-image" />);
+  const assigneeImages = assignees.map((userData) => <img key={userData.user_id} src={userData.url} alt="assignee-image" />);
   const handleChange = () => setbChecked(!bChecked);
 
   useEffect(() => {
@@ -39,9 +37,9 @@ const IssueItem = ({ bCheckedAll, issue }) => {
               <span>#{id}</span>
               <span>{issueStateText}</span>
               <span>{issueTimeago}</span>
-              <span>by {writer.id}</span>
+              <span>by {"temp writer"}</span>
               <span className="issue-info-milestone">
-                {milestones.title && <GoMilestone className="icon" />} {milestones.title}
+                {milestone.title && <GoMilestone className="icon" />} {milestone.title}
               </span>
             </div>
           </div>
