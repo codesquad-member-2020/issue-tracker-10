@@ -14,10 +14,10 @@ const LabelItem = (props) => {
   const [format, setFormat] = useState({ ...props });
   const [snapshot, setSnapShot] = useState({ ...props });
 
-  const { id, textColor, backgroundColor, description, MutedLink, labelName } = format;
+  const { label_id, textColor, backGroundColor, description, MutedLink, labelName } = format;
 
   const onClickEdit = () => setEditIsOpen(!editIsOpen);
-  const onClickDelete = () => window.confirm(DELETE_CONFIRM_MESSAGE) && dispatch(deleteLabel(id));
+  const onClickDelete = () => window.confirm(DELETE_CONFIRM_MESSAGE) && dispatch(deleteLabel(label_id));
   const EditLabel = (formatState) => dispatch(editLabel(formatState));
   const returnToFormat = (snapshotState) => setFormat({ ...snapshotState });
 
@@ -25,7 +25,7 @@ const LabelItem = (props) => {
     <TableItemLabel>
       <Info>
         <LabelTab>
-          <LabelBox textColor={textColor} backgroundColor={backgroundColor}>
+          <LabelBox textColor={textColor} backgroundColor={backGroundColor}>
             {labelName}
           </LabelBox>
         </LabelTab>

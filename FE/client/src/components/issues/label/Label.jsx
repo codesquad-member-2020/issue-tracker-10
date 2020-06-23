@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { TableHeaderButton, LabelBox } from "@style/CustomStyle";
 
@@ -11,25 +11,28 @@ import SwitchButtons from "@components/table/SwitchButtons";
 import InfoMessage from "@components/infoMessage/InfoMessage";
 
 import { useSelector, useDispatch } from "react-redux";
-import { addLabel } from "@modules/labels";
+import { postNewLabel, getInitLabels } from "@modules/labels";
 
 import { CREATE_LABEL_INFO, NO_LABEL_TITLE, NO_LABEL_CONTENT, LABEL_TEXT } from "./labelConstant";
 
 const Label = () => {
   const dispatch = useDispatch();
+
   const { labels } = useSelector((state) => state.labels);
   const [createIsOpen, setCreateIsOpen] = useState(false);
 
   const [format, setFormat] = useState({ ...CREATE_LABEL_INFO });
   const [snapshot, setSnapShot] = useState({ ...CREATE_LABEL_INFO });
 
-  const _test_items = labels.map((labelOption) => {
-    return <LabelItem key={labelOption.id} {...labelOption} />;
-  });
+  const _test_items = labels.map((labelOption) => <LabelItem key={labelOption.label_id} {...labelOption} />);
 
   const onClickEdit = () => setCreateIsOpen(!createIsOpen);
   const returnToFormat = (snapshotState) => setFormat({ ...snapshotState });
-  const CreateLabel = () => dispatch(addLabel(format));
+  const createLabel = () => dispatch(postNewLabel(format));
+
+  useEffect(() => {
+    dispatch(getInitLabels());
+  }, [dispatch]);
 
   const rightSideComponent = <TableHeaderButton onClick={onClickEdit}>{LABEL_TEXT}</TableHeaderButton>;
   const leftSideComponent = <SwitchButtons type="labels" />;
@@ -40,7 +43,7 @@ const Label = () => {
       {createIsOpen && (
         <CreateLabelWrap>
           <CreateLabelInner>
-            <LabelBox backgroundColor={format.backgroundColor} textColor={format.textColor}>
+            <LabelBox backgroundColor={format.backGroundColor} textColor={format.textColor}>
               {format.labelName}
             </LabelBox>
             <LabelEditor
@@ -51,7 +54,7 @@ const Label = () => {
               setSnapShot={setSnapShot}
               onCloseEditor={onClickEdit}
               returnToFormat={returnToFormat}
-              updateEditor={CreateLabel}
+              updateEditor={createLabel}
             />
           </CreateLabelInner>
         </CreateLabelWrap>

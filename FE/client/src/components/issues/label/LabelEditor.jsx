@@ -7,8 +7,8 @@ import debounce from "lodash.debounce";
 import _ from "@util";
 
 const LabelEditor = ({ type, format, setFormat, snapshot, setSnapShot, onCloseEditor, returnToFormat, updateEditor }) => {
-  const { id, textColor, backgroundColor, description, labelName } = format;
-  const [colorPickerValue, setColorPickerValue] = useState(_.changeRgbToHex(backgroundColor));
+  const { id, textColor, backGroundColor, description, labelName } = format;
+  const [colorPickerValue, setColorPickerValue] = useState(_.changeRgbToHex(backGroundColor));
   const [colorPickerValueError, setColorPickerValueError] = useState(false);
 
   // debounce
@@ -26,12 +26,12 @@ const LabelEditor = ({ type, format, setFormat, snapshot, setSnapShot, onCloseEd
   const updateLabelColors = (labelColors) => {
     if (!labelColors) {
       setColorPickerValueError(true);
-      setFormat({ ...format, textColor: snapshot.textColor, backgroundColor: snapshot.backgroundColor });
+      setFormat({ ...format, textColor: snapshot.textColor, backGroundColor: snapshot.backgroundColor });
     } else {
       const { r, g, b, textColor } = labelColors;
       const bgColor = "rgb(" + r + "," + g + "," + b + ")";
       setColorPickerValueError(false);
-      setFormat({ ...format, textColor: textColor, backgroundColor: bgColor });
+      setFormat({ ...format, textColor: textColor, backGroundColor: bgColor });
     }
   };
 
@@ -71,7 +71,7 @@ const LabelEditor = ({ type, format, setFormat, snapshot, setSnapShot, onCloseEd
       <ColorPicker>
         <Title>Color</Title>
         <ColorSelectTab>
-          <RandomColorButton backgroundColor={backgroundColor} color={textColor} onClick={() => debounce(onClickRandomColor, 200)()}>
+          <RandomColorButton backgroundColor={backGroundColor} color={textColor} onClick={() => debounce(onClickRandomColor, 200)()}>
             <BsArrowRepeat />
           </RandomColorButton>
           {colorPickerValueError && <span>Unavailable Color</span>}
