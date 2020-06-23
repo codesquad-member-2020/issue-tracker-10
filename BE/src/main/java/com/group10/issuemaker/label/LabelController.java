@@ -23,15 +23,12 @@ public class LabelController {
         return labelDAO.findLabels();
     }
 
-
-    //    @PostMapping(value = "/labels/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     @PostMapping(value = "/labels/create")
     public List<Label> makeNewLabel(@RequestBody Label label) {
         labelDAO.createLabel(label.getTextColor(), label.getBackGroundColor(), label.getDescription(), label.getLabelName());
         return labelDAO.findLabels();
     }
 
-    ///레이블 삭제하면 기존에 만들어놓은 이슈에 사용된 레이블도 다 삭제해주어야함
     @DeleteMapping("/labels/{labelId}/delete")
     public List<Label> deleteLabel(@PathVariable Long labelId) {
         labelDAO.deleteLabel(labelId);

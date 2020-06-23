@@ -21,4 +21,10 @@ public class CommentDao {
         String sql = "SELECT U.name as writer, C.description FROM COMMENT C JOIN USER U WHERE C.issue_id = ? AND C.author_id = U.user_id";
         return jdbcTemplate.query(sql, new Object[]{issueId}, BeanPropertyRowMapper.newInstance(CommentResponse.class));
     }
+
+    public Integer findNumberOfComments(Long issueId) {
+        String sql = "SELECT COUNT(comment_id) from comment where issue_id = ?";
+
+        return jdbcTemplate.queryForObject(sql, new Object[]{issueId}, Integer.class);
+    }
 }
