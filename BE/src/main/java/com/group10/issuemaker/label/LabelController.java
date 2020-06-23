@@ -23,8 +23,6 @@ public class LabelController {
         return labelDAO.findLabels();
     }
 
-
-    //    @PostMapping(value = "/labels/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     @PostMapping(value = "/labels/create")
     public List<Label> makeNewLabel(@RequestBody Label label) {
         labelDAO.createLabel(label.getTextColor(), label.getBackGroundColor(), label.getDescription(), label.getLabelName());

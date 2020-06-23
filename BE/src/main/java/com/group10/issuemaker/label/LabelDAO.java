@@ -35,7 +35,6 @@ public class LabelDAO {
     public List<Label> getLabelsWithUsedLabels(Long issueId) {
         List<Label> labels = findLabels();
         List<Label> usedLabels = findRelatedLabels(issueId);
-        ///usedlabels 리스트에서 id 만 빼와서 -> ids = [1, 2, 3]
         List<Long> idList = usedLabels.stream().map(Label::getLabel_id).collect(Collectors.toList());
 
         for (Label l : labels) {
@@ -56,8 +55,10 @@ public class LabelDAO {
     }
 
     public void deleteLabel(Long labelId) {
-        String sql = "DELETE FROM LABEL WHERE LABEL_ID = ?";
-        jdbcTemplate.update(sql, labelId);
+        String sql1 = "DELETE FROM ISSUE_LABEL WHERE LABEL_ID = ?";
+        String sql2 = "DELETE FROM LABEL WHERE LABEL_ID = ?";
+        jdbcTemplate.update(sql1, labelId);
+        jdbcTemplate.update(sql2, labelId);
     }
 
     public void editLabel(Long labelId, String labelName, String description, String textColor, String backGroundColor) {
