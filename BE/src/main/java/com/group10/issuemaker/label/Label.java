@@ -18,6 +18,6 @@ public class Label {
 
     private String labelName;
 
-    private final boolean bChecked = false;
+    private boolean bChecked = false;
 
 }
