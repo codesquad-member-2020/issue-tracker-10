@@ -7,4 +7,5 @@ public class User {
     private String user_id;
     private String name;
     private String url;
+    private boolean bChecked = false;
 }

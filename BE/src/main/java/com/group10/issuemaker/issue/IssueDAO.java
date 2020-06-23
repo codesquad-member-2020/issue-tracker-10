@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -51,7 +52,7 @@ public class IssueDAO {
         issue.setComments(commentDao.findCommentByIssueId(issueId));
         issue.setMilestone(milestoneDao.findMilestoneByIssueId(issueId));
         issue.setLabels(labelDAO.getLabelsWithUsedLabels(issueId));
-
+        issue.setNumberOfComments(commentDao.findNumberOfComments(issueId));
         return issue;
     }
 
@@ -82,12 +83,44 @@ public class IssueDAO {
         return issues;
     }
 
-    public void createLabel(String textColor, String backColor, String description, String name) {
-        String sql = "INSERT INTO LABEL (TEXTCOLOR, BACKGROUNDCOLOR, DESCRIPTION, LABELNAME) VALUES ( :textColor, :backColor, :description, :name)";
-        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("textColor", textColor)
-                .addValue("backColor", backColor)
-                .addValue("description", description)
-                .addValue("name", name);
+    public void makeIssue(@RequestBody IssueRequest issueRequest) {
+        System.out.println(issueRequest);
+        String sql = "insert into issue (title, content, opened_date, closed_date, opened, milestone_id, author_id) values (:title, :content, :openedDate, :closedDate, 1, :milestoneId, :authorId)";
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("title", issueRequest.getTitle())
+                .addValue("content", issueRequest.getContent())
+                .addValue("openedDate", issueRequest.getOpenedDate())
+                .addValue("closedDate", "tbd")
+                .addValue("milestoneId", issueRequest.getMilestoneId())
+                .addValue("authorId", issueRequest.getAuthorId());
+        namedParameterJdbcTemplate.update(sql, sqlParameterSource);
+
+
+        ///엘리 여기야~~~ 여기 issueId 를 가장 최근 생성된 issue Id 로 바꾸는 법 모르겠어~~
+        Long issueId = 4L;
+        if (issueRequest.getLabelIds().length != 0) {
+            for (Long labelId : issueRequest.getLabelIds()) {
+                updateIssueLabel(issueId, labelId );
+                System.out.println(" issue label id : " +  labelId  + " has been added");
+            }
+        } if (issueRequest.getAssigneeIds().length != 0) {
+            for (Long assigneeId : issueRequest.getAssigneeIds()) {
+                updateAssignee(issueId, assigneeId);
+                System.out.println(" assignee id : " + assigneeId + " has been added");
+            }
+        }
+    }
+
+    public void updateIssueLabel(Long issueId, Long labelId) {
+        String sql = "insert into issue_label (issue_id, label_id) values ( :issueId, :labelId)";
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("issueId", issueId)
+                .addValue("labelId", labelId);
+        namedParameterJdbcTemplate.update(sql, sqlParameterSource);
+    }
+
+    public void updateAssignee(Long issueId, Long assigneeId) {
+        String sql = "insert into issue_assignee (issue_id, assignee_id) values ( :issueId, :assigneeId)";
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("issueId", issueId)
+                .addValue("assigneeId", assigneeId);
         namedParameterJdbcTemplate.update(sql, sqlParameterSource);
     }
 

@@ -23,6 +23,8 @@ public class MilestoneResponse {
 
     private Boolean opened;
 
+    private boolean bChecked = false;
+
     private List<IssueResponse> linkIssues;
 
     public void setLineIssues(List<IssueResponse> issues) {

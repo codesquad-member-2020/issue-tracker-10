@@ -1,11 +1,13 @@
 package com.group10.issuemaker.label;
 
+import com.group10.issuemaker.issue.IssueRequest;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -39,7 +41,7 @@ public class LabelDAO {
 
         for (Label l : labels) {
             if (idList.contains(l.getLabel_id())) {
-                l.setBUsed(true);
+                l.setBChecked(true);
             }
         }
         return labels;
