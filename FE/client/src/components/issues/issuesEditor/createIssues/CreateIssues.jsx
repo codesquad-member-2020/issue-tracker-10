@@ -1,40 +1,72 @@
 import React from "react";
 import { useForm, FormContext } from "react-hook-form";
+import { useSelector, useDispatch } from "react-redux";
 
 import IssuesEditor from "../IssuesEditor";
 import userSampleImage from "@assets/images/user-sample-image.jpg";
 import TimelineComment from "../TimelineComment";
 import MarkdownEditorContainer from "../MarkdownEditor";
+import GithubPicker from "../githubPicker/GithubPicker";
+
+import ColorListItem from "../githubPicker/colorPicker/ColorListItem";
+import ColorModalItem from "../githubPicker/colorPicker/ColorModalItem";
+import AssigneesListItem from "../githubPicker/assignees/AssigneesListItem";
+import AssigneesModalItem from "../githubPicker/assignees/AssigneesModalItem";
 
 import styled from "styled-components";
 import { SaveButton } from "@style/CustomStyle";
 import { SUBMIT_NEW_ISSUE, ISSUES_TITLE_ERROR_MESSAGE } from "../issyesEditorConstant";
 
+import { changeLabelBCheck } from "@modules/createIssue";
+
 const CreateIssues = () => {
   const method = useForm();
   const { errors, register, watch, handleSubmit } = method;
 
-  const onSubmit = (data) => console.log(data);
+  const { labels, assignees } = useSelector(({ createIssue }) => createIssue);
+  const dispatch = useDispatch();
+
+  const onClickModalItem = (labelId, pickerType = "labels") => dispatch(changeLabelBCheck(labelId, pickerType));
+  const onClickModalItem_2 = (labelId, pickerType = "assignees") => dispatch(changeLabelBCheck(labelId, pickerType));
+
+  const onSubmit = (data) => {
+    const checkedLabels = filteringPickerList(labels);
+    const checkdAssignnes = filteringPickerList(assignees);
+    console.log({ ...data, labels: checkedLabels, assignnes: checkdAssignnes });
+  };
+
+  const filteringPickerList = (pickerList) => (pickerList.length ? pickerList.filter((el) => el.bCheck) : []);
 
   return (
-    <FormContext {...method}>
+    <>
       <IssuesEditor>
-        <TimelineComment userImage={userSampleImage}>
-          <div className="input-area">
-            <TitleInput name="title" type="text" placeholder="Title" ref={register({ required: true, maxLength: 256 })} />
-            {errors.title && <ErrorLog>{ISSUES_TITLE_ERROR_MESSAGE}</ErrorLog>}
-            <MarkdownEditorContainer />
-          </div>
-          <CreateIssueWrap>
-            <SubmitButton onClick={handleSubmit(onSubmit)} blockButton={!watch("title")} disabled={!watch("title")}>
-              {SUBMIT_NEW_ISSUE}
-            </SubmitButton>
-          </CreateIssueWrap>
-        </TimelineComment>
+        <FormContext {...method}>
+          <TimelineComment userImage={userSampleImage}>
+            <div className="input-area">
+              <TitleInput name="title" type="text" placeholder="Title" ref={register({ required: true, maxLength: 256 })} />
+              {errors.title && <ErrorLog>{ISSUES_TITLE_ERROR_MESSAGE}</ErrorLog>}
+              <MarkdownEditorContainer />
+            </div>
+            <CreateIssueWrap>
+              <SubmitButton onClick={handleSubmit(onSubmit)} blockButton={!watch("title")} disabled={!watch("title")}>
+                {SUBMIT_NEW_ISSUE}
+              </SubmitButton>
+            </CreateIssueWrap>
+          </TimelineComment>
+        </FormContext>
+        <PickerWrap>
+          <GithubPicker pickerName="assignees" pickerList={assignees} ListItemComponent={AssigneesListItem} ModalItemComponent={AssigneesModalItem} onClickModalItem={onClickModalItem_2} />
+          <GithubPicker pickerName="labels" pickerList={labels} ListItemComponent={ColorListItem} ModalItemComponent={ColorModalItem} onClickModalItem={onClickModalItem} />
+        </PickerWrap>
       </IssuesEditor>
-    </FormContext>
+    </>
   );
 };
+
+const PickerWrap = styled.div`
+  width: 240px;
+  margin-left: 10px;
+`;
 
 const ErrorLog = styled.div`
   width: 99%;

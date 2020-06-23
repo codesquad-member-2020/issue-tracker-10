@@ -1,23 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
-
-import GithubPicker from "./githubPicker/GithubPicker";
-
-import ColorModalItem from "./githubPicker/colorPicker/ColorModalItem";
-import ColorListItem from "./githubPicker/colorPicker/ColorListItem";
 
 const IssuesEditor = ({ children }) => {
-  const { labels } = useSelector(({ detailIssue }) => detailIssue);
-
   return (
     <IssuesEditorWrap>
-      <IssuesEditorInner>
-        {children}
-        <PickerWrap>
-          <GithubPicker pickerName="labels" pickerList={labels} ListItemComponent={ColorListItem} ModalItemComponent={ColorModalItem} />
-        </PickerWrap>
-      </IssuesEditorInner>
+      <IssuesEditorInner>{children}</IssuesEditorInner>
     </IssuesEditorWrap>
   );
 };
