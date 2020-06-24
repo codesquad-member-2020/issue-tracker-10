@@ -4,7 +4,7 @@ INSERT INTO milestone (title, description, due_date ) VALUES ('더워', 'java �
 
 
 insert into user (user_id, name, url) VALUES (1, 'bohyeon', 'https://avatars3.githubusercontent.com/u/52371228?s=460&u=a8d3d9d22c8a07e5393f265f211585f1a956f3d8&v=4');
-insert into user (user_id, name, url) VALUES (2, 'xp', 'https://avatars3.githubusercontent.com/u/52371228?s=460&u=a8d3d9d22c8a07e5393f265f211585f1a956f3d8&v=4');
+insert into user (user_id, name, url) VALUES (2, 'xp', 'https://avatars0.githubusercontent.com/u/36990926?s=460&v=4');
 
 insert into issue (issue_id, title, content, opened_date, closed_date, opened, milestone_id, author_id) values (1, 'eat healthy', 'eat organic stuff', '2020-06-11T12:48:28+09:00', 'tbd', 1, 1, 1);
 insert into issue (issue_id, title, content, opened_date, closed_date, opened, milestone_id, author_id) values (2, 'eat healthy', 'eat organic stuff', '2020-06-11T12:48:28+09:00', 'tbd', 1, 1, 1);

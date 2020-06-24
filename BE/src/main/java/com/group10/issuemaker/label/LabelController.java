@@ -16,8 +16,8 @@ public class LabelController {
     }
 
     @GetMapping("/labels")
-    public List<Label> findAllLabels() {
-        return labelDAO.findLabels();
+    public ResponseMessage<List<Label>> findAllLabels() {
+        return new ResponseMessage<>(HttpStatus.OK, "Requested Successfully", labelDAO.findLabels());
     }
 
     @PostMapping("/labels")
