@@ -28,6 +28,12 @@ export const putEditMilestone = (milestoneId, data) => async dispatch => {
     });
 }
 
+export const deleteEditMilestone = (milestoneId) => async dispatch => {
+    const response = await fetch(URL.MILESTONE_DELETE_API(milestoneId), {
+        method: 'DELETE',
+    });
+}
+
 const initMilestonesList = data => ({ type: INIT_MILESTONES_LIST, payload: data });
 
 const initialState = {

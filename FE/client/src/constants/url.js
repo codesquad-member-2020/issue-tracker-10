@@ -4,6 +4,7 @@ export const URL = {
     MILESTONE_LIST_API: DOMAIN_ROOT + process.env.REACT_APP_MILESTONE_LIST_API,
     MILESTONE_CREATE_API: DOMAIN_ROOT + process.env.REACT_APP_MILESTONE_CREATE_API,
     MILESTONE_EDIT_API: (milestoneId) => DOMAIN_ROOT + process.env.REACT_APP_MILESTONE_EDIT_API.replace('{milestoneId}', milestoneId),
+    MILESTONE_DELETE_API: (milestoneId) => DOMAIN_ROOT + process.env.REACT_APP_MILESTONE_DELETE_API.replace('{milestoneId}', milestoneId),
 
     LABEL_LIST_API: DOMAIN_ROOT + process.env.REACT_APP_LABEL_LIST_API,
     LABEL_CREATE_API: DOMAIN_ROOT + process.env.REACT_APP_LABEL_CREATE_API,

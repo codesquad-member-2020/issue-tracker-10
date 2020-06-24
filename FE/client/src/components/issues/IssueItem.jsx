@@ -39,9 +39,11 @@ const IssueItem = ({ bCheckedAll, issue }) => {
               <span>{issueStateText}</span>
               <span>{issueTimeago}</span>
               <span>by {"temp writer"}</span>
-              <span className="issue-info-milestone">
-                {milestone.title && <GoMilestone className="icon" />} {milestone.title}
-              </span>
+              {milestone && (
+                <span className="issue-info-milestone">
+                  <GoMilestone className="icon" /> {milestone.title}
+                </span>
+              )}
             </div>
           </div>
           <IssueItemOtherInfoWrap>
