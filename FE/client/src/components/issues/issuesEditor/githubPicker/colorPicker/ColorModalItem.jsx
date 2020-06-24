@@ -4,12 +4,12 @@ import styled from "styled-components";
 import { FiCheck } from "react-icons/fi";
 
 const ColorPickerItem = (props) => {
-  const { backgroundColor, labelName, description, bCheck, id, onClickModalItem } = props;
+  const { backGroundColor, labelName, description, bchecked, label_id, onClickModalItem } = props;
 
   return (
-    <PickerListItem id={id} onClick={() => onClickModalItem(id)}>
-      <PickerItemCheck>{bCheck && <FiCheck />}</PickerItemCheck>
-      <PickerItemLabel backgroundColor={backgroundColor} />
+    <PickerListItem id={label_id} onClick={() => onClickModalItem(label_id)}>
+      <PickerItemCheck>{bchecked && <FiCheck />}</PickerItemCheck>
+      <PickerItemLabel backgroundColor={backGroundColor} />
       <PickerItemInfo>
         <div>{labelName}</div>
         <div>{description}</div>

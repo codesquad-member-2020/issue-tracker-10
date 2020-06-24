@@ -11,7 +11,7 @@ const GithubPicker = ({ pickerName, pickerType, pickerList, onClickModalItem, Li
   const [chosenList, setChoseList] = useState([]);
 
   const setChosenList = () => {
-    const filterChosenList = pickerList.filter((el) => el.bCheck === true);
+    const filterChosenList = pickerList.filter((el) => el.bchecked === true);
     setChoseList(filterChosenList);
   };
 

@@ -4,12 +4,13 @@ import styled from "styled-components";
 import { FiCheck } from "react-icons/fi";
 
 const AssigneesModalItem = (props) => {
-  const { id, username, user_image, bCheck, onClickModalItem } = props;
+  const { user_id, name, url, bchecked, onClickModalItem } = props;
+
   return (
-    <AssigneesModalItemWrap key={id} onClick={() => onClickModalItem(id)}>
-      <PickerItemCheck>{bCheck && <FiCheck />}</PickerItemCheck>
-      <img src={user_image} />
-      <span>{username}</span>
+    <AssigneesModalItemWrap key={user_id} onClick={() => onClickModalItem(user_id)}>
+      <PickerItemCheck>{bchecked && <FiCheck />}</PickerItemCheck>
+      <img src={url} />
+      <span>{name}</span>
     </AssigneesModalItemWrap>
   );
 };

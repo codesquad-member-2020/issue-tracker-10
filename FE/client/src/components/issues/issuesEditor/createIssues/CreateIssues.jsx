@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, FormContext } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
+
+import moment from "moment";
 
 import IssuesEditor from "../IssuesEditor";
 import userSampleImage from "@assets/images/user-sample-image.jpg";
@@ -17,25 +19,37 @@ import styled from "styled-components";
 import { SaveButton } from "@style/CustomStyle";
 import { SUBMIT_NEW_ISSUE, ISSUES_TITLE_ERROR_MESSAGE } from "../issyesEditorConstant";
 
-import { changeLabelBCheck } from "@modules/createIssue";
+import { changeLabelBCheck, getInitCreateIssues, postNewIssues } from "@modules/createIssue";
 
 const CreateIssues = () => {
   const method = useForm();
   const { errors, register, watch, handleSubmit } = method;
 
-  const { labels, assignees } = useSelector(({ createIssue }) => createIssue);
+  const { labels, users } = useSelector(({ createIssue }) => createIssue);
   const dispatch = useDispatch();
 
-  const onClickModalItem = (labelId, pickerType = "labels") => dispatch(changeLabelBCheck(labelId, pickerType));
-  const onClickModalItem_2 = (labelId, pickerType = "assignees") => dispatch(changeLabelBCheck(labelId, pickerType));
+  const onClickLabelsItem = (labelId, pickerType = "labels") => dispatch(changeLabelBCheck(labelId, pickerType));
+  const onClickAssigneesItem = (labelId, pickerType = "assignees") => dispatch(changeLabelBCheck(labelId, pickerType));
 
   const onSubmit = (data) => {
-    const checkedLabels = filteringPickerList(labels);
-    const checkdAssignnes = filteringPickerList(assignees);
-    console.log({ ...data, labels: checkedLabels, assignnes: checkdAssignnes });
+    const checkedLabels = filteringPickerList(labels, "label_id");
+    const checkdUsers = filteringPickerList(users, "user_id");
+    const currentDate = moment().format();
+    const postIssuesData = { ...data, authorId: 1, milestoneId: 1, openedDate: currentDate, labelIds: checkedLabels, assigneeIds: checkdUsers };
+    dispatch(postNewIssues(postIssuesData));
   };
 
-  const filteringPickerList = (pickerList) => (pickerList.length ? pickerList.filter((el) => el.bCheck) : []);
+  const filteringPickerList = (pickerList, id) =>
+    pickerList.length
+      ? pickerList.reduce((acc, curr) => {
+          if (curr.bchecked) acc.push(Number(curr[id]));
+          return acc;
+        }, [])
+      : [];
+
+  useEffect(() => {
+    dispatch(getInitCreateIssues());
+  }, []);
 
   return (
     <>
@@ -55,8 +69,8 @@ const CreateIssues = () => {
           </TimelineComment>
         </FormContext>
         <PickerWrap>
-          <GithubPicker pickerName="assignees" pickerList={assignees} ListItemComponent={AssigneesListItem} ModalItemComponent={AssigneesModalItem} onClickModalItem={onClickModalItem_2} />
-          <GithubPicker pickerName="labels" pickerList={labels} ListItemComponent={ColorListItem} ModalItemComponent={ColorModalItem} onClickModalItem={onClickModalItem} />
+          <GithubPicker pickerName="assignees" pickerList={users} ListItemComponent={AssigneesListItem} ModalItemComponent={AssigneesModalItem} onClickModalItem={onClickAssigneesItem} />
+          <GithubPicker pickerName="labels" pickerList={labels} ListItemComponent={ColorListItem} ModalItemComponent={ColorModalItem} onClickModalItem={onClickLabelsItem} />
         </PickerWrap>
       </IssuesEditor>
     </>

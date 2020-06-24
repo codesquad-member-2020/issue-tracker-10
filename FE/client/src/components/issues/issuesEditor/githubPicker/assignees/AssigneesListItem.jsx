@@ -2,12 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 const AssigneesListItem = (props) => {
-  const { username, user_image } = props;
+  const { name, url } = props;
 
   return (
     <AssigneesListItemWrap>
-      <img src={user_image} />
-      <span>{username}</span>
+      <img src={url} />
+      <span>{name}</span>
     </AssigneesListItemWrap>
   );
 };

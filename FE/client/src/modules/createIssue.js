@@ -1,4 +1,4 @@
-import { URL } from '@constants/url';
+import { URL } from "@constants/url";
 import user_image from "@assets/images/user-sample-image.jpg";
 
 const INIT_CREATE_ISSUES = "createIssue/INIT_CREATE_ISSUES";
@@ -10,7 +10,22 @@ const UPDATE_CHECKED_MILESTONES = "createIssue/UPDATE_CHECKED_MILESTONES";
 export const getInitCreateIssues = () => async (dispatch) => {
   const response = await fetch(URL.ISSUE_PICKER_INFO_API);
   const json = await response.json();
-  dispatch(initCreateIssues(json));
+  dispatch(initCreateIssues(json.data));
+};
+
+export const postNewIssues = (newIssuesObj) => async (dispatch) => {
+  console.log(newIssuesObj);
+  try {
+    const response = fetch("http://52.79.207.15:8080/issues", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newIssuesObj),
+    });
+  } catch {
+    console.error("fetch error");
+  }
 };
 
 export const createIssues = (postData) => async (dispatch) => {
@@ -19,46 +34,32 @@ export const createIssues = (postData) => async (dispatch) => {
 };
 
 export const changeLabelBCheck = (labelId, pickerType) => {
-  if (pickerType === "labels") return { type: UPDATE_CHECKED_LABELS, payload: labelId };
-  if (pickerType === "assignees") return { type: UPDATE_CHECKED_ASSIGNEES, payload: labelId };
-  if (pickerType === "milestones") return { type: UPDATE_CHECKED_MILESTONES, payload: labelId };
+  if (pickerType === "labels") return { type: UPDATE_CHECKED_LABELS, payload: { labelId, pickerType } };
+  if (pickerType === "assignees") return { type: UPDATE_CHECKED_ASSIGNEES, payload: { labelId, pickerType } };
 };
-
+const filteringLabelBCheck = (labelId, state, pickerType) => {
+  if (pickerType === "labels") return state.map((el) => (el.label_id === labelId ? { ...el, bchecked: !el.bchecked } : el));
+  if (pickerType === "assignees") return state.map((el) => (el.user_id === labelId ? { ...el, bchecked: !el.bchecked } : el));
+};
 const initCreateIssues = (data) => ({ type: INIT_CREATE_ISSUES, payload: data });
 
 const initialState = {
   pickerData: null,
-  assignees: [
-    { id: 1, bCheck: false, username: "choichoigang", user_image: user_image },
-    { id: 2, bCheck: false, username: "taek", user_image: user_image },
-    { id: 3, bCheck: false, username: "엘리", user_image: user_image },
-    { id: 4, bCheck: false, username: "XP", user_image: user_image },
-  ],
-  labels: [
-    { id: 1, bCheck: false, textColor: "#fff", backgroundColor: "rgb(203,92,208)", description: "testing label", labelName: "duplicate" },
-    { id: 2, bCheck: false, textColor: "#fff", backgroundColor: "rgb(254,40,119)", description: "testing label", labelName: "FE" },
-    { id: 3, bCheck: false, textColor: "#fff", backgroundColor: "rgb(86,185,42)", description: "testing label", labelName: "good first issue" },
-    { id: 4, bCheck: false, textColor: "#fff", backgroundColor: "rgb(118,148,231)", description: "testing label", labelName: "help wanted" },
-    { id: 5, bCheck: false, textColor: "#000", backgroundColor: "rgb(128,177,104)", description: "testing label", labelName: "question" },
-  ],
+  labels: [],
+  users: [],
+  milestone: [],
 };
-
-const filteringLabelBCheck = (labelId, state) => state.map((el) => (el.id === labelId ? { ...el, bCheck: !el.bCheck } : el));
 
 const createIssueReducer = (state = initialState, action) => {
   switch (action.type) {
     case INIT_CREATE_ISSUES:
-      return {
-        ...state,
-        pickerData: action.payload,
-      }
+      return { ...action.payload };
     case UPDATE_CHECKED_LABELS:
-      return { ...state, labels: filteringLabelBCheck(action.payload, state.labels) };
+      return { ...state, labels: filteringLabelBCheck(action.payload.labelId, state.labels, action.payload.pickerType) };
     case UPDATE_CHECKED_ASSIGNEES:
-      return { ...state, assignees: filteringLabelBCheck(action.payload, state.assignees) };
+      return { ...state, users: filteringLabelBCheck(action.payload.labelId, state.users, action.payload.pickerType) };
     case UPDATE_CHECKED_MILESTONES:
       return { ...state, milestones: filteringLabelBCheck(action.payload, state.milestones) };
-
     default:
       return state;
   }
