@@ -39,4 +39,7 @@ public class Issue {
 
     private MilestoneResponse milestone;
 
+    private String author;
+
+
 }
