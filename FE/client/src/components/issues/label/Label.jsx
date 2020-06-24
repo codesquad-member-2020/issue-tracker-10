@@ -26,7 +26,10 @@ const Label = () => {
 
   const _test_items = labels.map((labelOption) => <LabelItem key={labelOption.label_id} {...labelOption} />);
 
-  const onClickEdit = () => setCreateIsOpen(!createIsOpen);
+  const onClickEdit = () => {
+    setFormat(CREATE_LABEL_INFO);
+    setCreateIsOpen(!createIsOpen);
+  };
   const returnToFormat = (snapshotState) => setFormat({ ...snapshotState });
   const createLabel = () => dispatch(postNewLabel(format));
 
