@@ -48,7 +48,7 @@ public class IssueDAO {
     }
 
     public Issue findIssue(Long issueId) {
-        String sql = "SELECT * from issue where issue_id = ?";
+        String sql = "select I.issue_id, I.title, I.content, I.opened, I.opened_date, I.closed_date, U.name as author from ISSUE I JOIN USER U ON U.USER_ID = I.AUTHOR_ID WHERE ISSUE_ID = ?";
         Issue issue = jdbcTemplate.queryForObject(sql, new Object[]{issueId}, BeanPropertyRowMapper.newInstance(Issue.class));
         issue.setAssignees(userDao.findUserByIssueId(issueId));
         issue.setComments(commentDao.findCommentByIssueId(issueId));
@@ -58,23 +58,22 @@ public class IssueDAO {
         return issue;
     }
 
-
-
     public List<Issue> findAllIssues() {
-        String sql = "select I.issue_id, I.title, I.content, I.opened from ISSUE I";
-
+        String sql = "select I.issue_id, I.title, I.content, I.opened, I.opened_date, I.closed_date, U.name as author from ISSUE I JOIN USER U ON U.USER_ID = I.AUTHOR_ID";
         List<Issue> issues = namedParameterJdbcTemplate.query(sql, new RowMapper<Issue>() {
             @Override
             public Issue mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Issue issue = new Issue();
                 Long issueId = rs.getLong("issue_id");
                 issue.setIssue_id(issueId);
-
                 List<Label> labels = findRelatedLabels(issueId);
 
                 issue.setTitle(rs.getString("title"));
                 issue.setContent(rs.getString("content"));
                 issue.setOpened(rs.getBoolean("opened"));
+                issue.setOpened_date(rs.getString("opened_date"));
+                issue.setClosed_date(rs.getString("closed_date"));
+                issue.setAuthor(rs.getString("author"));
                 issue.setLabels(labels);
                 issue.setMilestone(milestoneDao.findMilestoneByIssueId(issueId));
                 issue.setAssignees(userDao.findUserByIssueId(issueId));
@@ -186,4 +185,13 @@ public class IssueDAO {
         return issueId;
     }
 
+    public void closeIssue(Long issueId, String closedTime) {
+        String sql = "UPDATE ISSUE SET closed_date = ?,  opened = ? where issue_id = ?";
+        jdbcTemplate.update(sql, new Object[]{closedTime, 0,  issueId});
+    }
+
+    public void openIssue(Long issueId) {
+        String sql = "UPDATE ISSUE SET closed_date = ?, opened = ? where issue_id = ?";
+        jdbcTemplate.update(sql, new Object[]{"tbd", 1,  issueId});
+    }
 }

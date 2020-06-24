@@ -7,6 +7,7 @@ import com.group10.issuemaker.label.Label;
 import com.group10.issuemaker.label.LabelDAO;
 import com.group10.issuemaker.milestone.MilestoneDAO;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
@@ -68,4 +69,18 @@ public class IssueController {
         trinity.setUsers(userDao.findAllUses());
         return new ResponseMessage(HttpStatus.OK, "Requested Successfully", trinity);
     }
+
+
+    @PutMapping("/close/{issueId}")
+    public ResponseMessage closeIssue(@PathVariable Long issueId, @RequestBody String closedTime) {
+        issueDAO.closeIssue(issueId, closedTime);
+        return new ResponseMessage(HttpStatus.OK, "Closed Successfully");
+    }
+
+    @PutMapping("/open/{issueId}")
+    public ResponseMessage openIssue(@PathVariable Long issueId) {
+        issueDAO.openIssue(issueId);
+        return new ResponseMessage(HttpStatus.OK, "Opened Successfully");
+    }
+
 }
