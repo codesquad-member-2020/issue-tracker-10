@@ -58,6 +58,10 @@ public class MilestoneDAO {
     }
 
     private Boolean isOpenMilestone(List<IssueResponse> issues) {
+        if (issues.size() == 0) {
+            return true;
+        }
+
         Boolean isOpen = false;
         for (IssueResponse issue : issues) {
             isOpen = isOpen || issue.getIsOpen();
@@ -102,14 +106,14 @@ public class MilestoneDAO {
 
         Iterator it = changeFields.entrySet().iterator();
 
-        while(it.hasNext()) {
+        while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
             sql.append(pair.getKey());
             sql.append(" = '");
             sql.append(pair.getValue());
             sql.append("' ");
 
-            if(it.hasNext()) {
+            if (it.hasNext()) {
                 sql.append(" , ");
             }
         }
