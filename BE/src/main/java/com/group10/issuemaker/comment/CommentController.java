@@ -1,30 +1,24 @@
 package com.group10.issuemaker.comment;
 
-import com.group10.issuemaker.issue.Issue;
-import com.group10.issuemaker.issue.IssueDAO;
-import com.group10.issuemaker.label.LabelDAO;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.group10.issuemaker.ResponseMessage;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 public class CommentController {
 
-    private final IssueDAO issueDAO;
-    private final CommentDao commentDao;
-    private final LabelDAO labelDAO;
+    private final CommentService commentService;
 
-    public CommentController(IssueDAO issueDAO, LabelDAO labelDAO, CommentDao commentDao) {
-        this.labelDAO = labelDAO;
-        this.issueDAO = issueDAO;
-        this.commentDao = commentDao;
+    public CommentController(CommentService commentService) {
+        this.commentService = commentService;
     }
 
-    @GetMapping("/comments")
-    public Integer cmt() {
+    @PostMapping("/comments")
+    public ResponseMessage<CommentResponse> createComment(@RequestBody CommentRequest commentRequest) {
+        CommentResponse comment = commentService.save(commentRequest);
 
-        return commentDao.findNumberOfComments(1L);
+        return new ResponseMessage(HttpStatus.OK, "", comment);
     }
-
 }
