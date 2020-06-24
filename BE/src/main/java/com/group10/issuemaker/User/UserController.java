@@ -9,10 +9,10 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    private final UserDao userDao;
+    private final UserDAO userDao;
 
     public UserController(DataSource dataSource) {
-        this.userDao = new UserDao(dataSource);
+        this.userDao = new UserDAO(dataSource);
     }
 
     @GetMapping("/users")

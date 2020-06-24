@@ -22,9 +22,9 @@ public class LoginService {
 
     private String GITHUB_REQUEST_URL = "https://github.com/login/oauth";
 
-    private final LoginUserDao loginUserDao;
+    private final LoginUserDAO loginUserDao;
 
-    public LoginService(LoginUserDao loginUserDao) {
+    public LoginService(LoginUserDAO loginUserDao) {
         this.loginUserDao = loginUserDao;
     }
 

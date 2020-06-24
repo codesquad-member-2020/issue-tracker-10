@@ -11,11 +11,11 @@ import javax.sql.DataSource;
 import java.util.Optional;
 
 @Repository
-public class LoginUserDao {
+public class LoginUserDAO {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public LoginUserDao(DataSource dataSource) {
+    public LoginUserDAO(DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 

@@ -1,5 +1,6 @@
 package com.group10.issuemaker.milestone;
 
+import com.group10.issuemaker.ResponseMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,28 +17,27 @@ public class MilestoneController {
     }
 
     @PostMapping("/milestones")
-    public ResponseEntity<String> createMilestone(@RequestBody MilestoneRequest milestoneRequest) {
-        milestoneService.save(milestoneRequest);
-        return new ResponseEntity<>("OK", HttpStatus.OK);
+    public ResponseMessage<MilestoneResponse> createMilestone(@RequestBody MilestoneRequest milestoneRequest) {
+        Long id = milestoneService.save(milestoneRequest);
+        return new ResponseMessage(HttpStatus.OK, "Milestone has been created", milestoneService.findMilestoneById(id));
     }
 
     @GetMapping("/milestones")
-    public ResponseEntity<List<MilestoneResponse>> getMilestone() {
-        List<MilestoneResponse> res = milestoneService.findAll();
-        return new ResponseEntity<>(res, HttpStatus.OK);
+    public ResponseMessage<List<MilestoneResponse>> getMilestone() {
+        List<MilestoneResponse> response = milestoneService.findAll();
+        return new ResponseMessage<>(HttpStatus.OK, "Requested Successfully", response);
     }
 
     @DeleteMapping("/milestones/{milestoneId}")
-    public ResponseEntity<String> deleteMilestone(@PathVariable Long milestoneId) {
+    public ResponseMessage deleteMilestone(@PathVariable Long milestoneId) {
         milestoneService.deleteMilestone(milestoneId);
-
-        return new ResponseEntity("OK", HttpStatus.OK);
+        return new ResponseMessage(HttpStatus.OK, "Deleted Successfully");
     }
 
     @PutMapping("/milestones/{milestoneId}")
-    public ResponseEntity<String> updateMilestone(@PathVariable Long milestoneId , @RequestBody MilestoneRequest milestoneRequest)  {
+    public ResponseMessage<MilestoneResponse> updateMilestone(@PathVariable Long milestoneId , @RequestBody MilestoneRequest milestoneRequest)  {
         milestoneService.updateMilestone(milestoneId,  milestoneRequest);
 
-        return new ResponseEntity<>("OK", HttpStatus.OK);
+        return new ResponseMessage<>(HttpStatus.OK, "Milestone has been edited",milestoneService.findMilestoneById(milestoneId));
     }
 }

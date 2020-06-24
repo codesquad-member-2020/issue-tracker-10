@@ -9,12 +9,12 @@ import javax.sql.DataSource;
 import java.util.List;
 
 @Repository
-public class UserDao {
+public class UserDAO {
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public UserDao(DataSource dataSource) {
+    public UserDAO(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
