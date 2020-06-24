@@ -158,4 +158,32 @@ public class IssueDAO {
         namedParameterJdbcTemplate.update(sql, sqlParameterSource);
 
     }
+
+    public Long editIssue(IssueRequest issueRequest, Long issueId) {
+        String sql = "UPDATE ISSUE SET title = :title, content = :content, milestone_id = :milestoneId where issue_id = :issueId";
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("title", issueRequest.getTitle())
+                .addValue("content", issueRequest.getContent())
+                .addValue("milestoneId", issueRequest.getMilestoneId())
+                .addValue("issueId", issueId);
+        namedParameterJdbcTemplate.update(sql, sqlParameterSource);
+
+        if (issueRequest.getLabelIds().length != 0) {
+            for (Long labelId : issueRequest.getLabelIds()) {
+                updateIssueLabel(issueId, labelId );
+                System.out.println(" issue label id : " +  labelId  + " has been added");
+            }
+        }  else {
+            deleteIssueLabel(issueId);
+        }
+        if (issueRequest.getAssigneeIds().length != 0) {
+            for (Long assigneeId : issueRequest.getAssigneeIds()) {
+                updateAssignee(issueId, assigneeId);
+                System.out.println(" assignee id : " + assigneeId + " has been added");
+            }
+        } else {
+            deleteIssueAssignee(issueId);
+        }
+        return issueId;
+    }
+
 }

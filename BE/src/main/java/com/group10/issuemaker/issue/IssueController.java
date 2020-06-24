@@ -48,11 +48,16 @@ public class IssueController {
         return new ResponseMessage<>(HttpStatus.OK, "Issue has been created", issueDAO.findIssue(issueId));
     }
 
-
     @DeleteMapping("/issues/{issueId}")
     public ResponseMessage deleteIssue(@PathVariable Long issueId) {
         issueDAO.deleteIssue(issueId);
         return new ResponseMessage(HttpStatus.OK, "issue has been deleted");
+    }
+
+    @PutMapping("issues/{issueId}")
+    public ResponseMessage editIssue(@PathVariable Long issueId, @RequestBody IssueRequest issueRequest) {
+        issueDAO.editIssue(issueRequest, issueId);
+        return new ResponseMessage(HttpStatus.OK, "Updated Successfully", issueDAO.findIssue(issueId));
     }
 
     @GetMapping("/info")
