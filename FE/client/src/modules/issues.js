@@ -21,7 +21,7 @@ const issueReducer = (state = initialState, action) => {
             return {
                 ...state,
                 bLoading: false,
-                issuesList: action.payload,
+                issuesList: action.payload.data,
             }
         default:
             return state;

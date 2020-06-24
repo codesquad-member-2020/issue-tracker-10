@@ -8,7 +8,27 @@ export const getInitMilestones = () => async dispatch => {
     dispatch(initMilestonesList(json));
 };
 
-const initMilestonesList = data => ({ type: INIT_MILESTONES_LIST, payload: data })
+export const postMilestone = (data) => async dispatch => {
+    const response = await fetch(URL.MILESTONE_CREATE_API, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+}
+
+export const putEditMilestone = (milestoneId, data) => async dispatch => {
+    const response = await fetch(URL.MILESTONE_EDIT_API(milestoneId), {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+}
+
+const initMilestonesList = data => ({ type: INIT_MILESTONES_LIST, payload: data });
 
 const initialState = {
     bLoading: true,
@@ -21,7 +41,7 @@ const milestonesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 bLoading: false,
-                milestonesList: action.payload,
+                milestonesList: action.payload.data,
             }
         default:
             return state;

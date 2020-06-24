@@ -1,17 +1,36 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import TextField from "@material-ui/core/TextField";
+import moment from "moment";
+import { putEditMilestone, postMilestone } from "@modules/milestones";
 
 import TableHeader from "@components/table/TableHeader";
 import MilestoneEditorHeader from "./MilestoneEditorHeader";
 import MilestoneEditorButtons from "./MilestoneEditorButtons";
 
 const MilestoneEditor = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const { id } = useParams();
+  const [dueDate, setDueDate] = useState(null);
+  const { register, handleSubmit } = useForm();
   const { milestonesList } = useSelector(({ milestones }) => milestones);
   const [milestone] = id ? milestonesList.filter((milestone) => milestone.milestone_id === +id) : [id];
+
+  const handleDueDate = ({ target }) => setDueDate(target.value);
+  const onSubmit = (data) => {
+    data["dueDate"] = dueDate ? moment(dueDate).format("YYYY-MM-DD") : "";
+    if (id) dispatch(putEditMilestone(id, data));
+    else dispatch(postMilestone(data));
+    history.push("/milestones");
+  };
+
+  useEffect(() => {
+    if (milestone) setDueDate(moment(milestone.dueDate).format("YYYY-MM-DD"));
+  }, [milestone]);
 
   const leftSideComponent = <MilestoneEditorHeader {...{ milestone }} />;
 
@@ -19,27 +38,27 @@ const MilestoneEditor = () => {
     <MilestoneEditorWrap>
       <MilestoneEditorInner>
         <TableHeader leftSideComponent={leftSideComponent} />
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="editor-item-wrap">
             <label className="editor-item-label" htmlFor="milestones-title">
               Title
             </label>
-            <input type="text" id="milestones-title" placeholder="Title" defaultValue={milestone && milestone.title} />
+            <input type="text" id="milestones-title" placeholder="Title" defaultValue={milestone && milestone.title} name="title" ref={register} />
           </div>
           <div className="editor-item-wrap">
             <label className="editor-item-label" htmlFor="milestones-due-date">
               Due Date (optional)
             </label>
-            <TextField id="milestones-due-date" type="date" defaultValue={milestone && milestone.dueDate} />
+            <TextField id="milestones-due-date" type="date" defaultValue={milestone && moment(milestone.dueDate).format("YYYY-MM-DD")} onChange={handleDueDate} />
           </div>
           <div className="editor-item-wrap">
             <label className="editor-item-label" htmlFor="milestones-description">
               Description (optional)
             </label>
-            <textarea id="milestones-description" defaultValue={milestone && milestone.description} />
+            <textarea id="milestones-description" defaultValue={milestone && milestone.description} name="description" ref={register} />
           </div>
+          <MilestoneEditorButtons {...{ milestone, handleSubmit, onSubmit }} />
         </form>
-        <MilestoneEditorButtons {...{ milestone }} />
       </MilestoneEditorInner>
     </MilestoneEditorWrap>
   );
@@ -59,6 +78,7 @@ const MilestoneEditorInner = styled.div`
   background-color: #fff;
   width: 980px;
   form {
+    position: relative;
     padding-top: 20px;
     border-top: 1px solid #c2c2c2;
     border-bottom: 1px solid #c2c2c2;

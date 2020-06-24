@@ -50,7 +50,7 @@ const createIssueReducer = (state = initialState, action) => {
     case INIT_CREATE_ISSUES:
       return {
         ...state,
-        pickerData: action.payload,
+        pickerData: action.payload.data,
       }
     case UPDATE_CHECKED_LABELS:
       return { ...state, labels: filteringLabelBCheck(action.payload, state.labels) };

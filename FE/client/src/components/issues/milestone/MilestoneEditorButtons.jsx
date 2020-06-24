@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { LabelSetButtons, SetButtons, CancelButton, SaveButton } from "@style/CustomStyle";
 
-const MilestoneEditorButtons = ({ milestone }) => {
+const MilestoneEditorButtons = ({ milestone, handleSubmit, onSubmit }) => {
   return (
     <MilestoneEditorButtonsWrap>
       {milestone ? (
@@ -13,7 +13,9 @@ const MilestoneEditorButtons = ({ milestone }) => {
               <Link to="/milestones">Cancel</Link>
             </CancelButton>
             <CancelButton className="button">Close milestone</CancelButton>
-            <SaveButton className="button">Save changes</SaveButton>
+            <SaveButton className="button" type="submit">
+              Save changes
+            </SaveButton>
           </SetButtons>
         </LabelSetButtons>
       ) : (
@@ -28,6 +30,8 @@ const MilestoneEditorButtons = ({ milestone }) => {
 };
 
 const MilestoneEditorButtonsWrap = styled.div`
+  position: absolute;
+  right: 0;
   display: flex;
   justify-content: flex-end;
   .button-wrap {
