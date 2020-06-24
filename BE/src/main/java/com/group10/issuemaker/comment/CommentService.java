@@ -21,4 +21,7 @@ public class CommentService {
         return commentDao.findCommentById(commentId);
     }
 
+    public void delete(Long commentId) {
+        commentDao.delete(commentId);
+    }
 }

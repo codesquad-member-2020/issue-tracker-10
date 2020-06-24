@@ -58,4 +58,9 @@ public class CommentDao {
         String sql = "UPDATE comment SET description = ? WHERE comment.comment_id = ?";
         namedParameterJdbcTemplate.getJdbcTemplate().update(sql, new Object[]{commentUpdateRequest.getDescription(), commentId});
     }
+
+    public void delete(Long commentId) {
+        String sql = "DELETE comment WHERE comment.comment_id = ?";
+        namedParameterJdbcTemplate.getJdbcTemplate().update(sql, new Object[]{commentId});
+    }
 }
