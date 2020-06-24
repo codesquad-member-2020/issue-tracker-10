@@ -53,5 +53,9 @@ public class CommentDao {
 
         return namedParameterJdbcTemplate.getJdbcTemplate().queryForObject(sql, new Object[]{id}, BeanPropertyRowMapper.newInstance(CommentResponse.class));
     }
-}
 
+    public void update(Long commentId, CommentUpdateRequest commentUpdateRequest) {
+        String sql = "UPDATE comment SET description = ? WHERE comment.comment_id = ?";
+        namedParameterJdbcTemplate.getJdbcTemplate().update(sql, new Object[]{commentUpdateRequest.getDescription(), commentId});
+    }
+}

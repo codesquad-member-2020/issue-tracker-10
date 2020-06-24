@@ -16,4 +16,9 @@ public class CommentService {
         return  commentDao.findCommentById(id);
     }
 
+    public CommentResponse update(Long commentId,  CommentUpdateRequest commentUpdateRequest) {
+        commentDao.update(commentId, commentUpdateRequest);
+        return commentDao.findCommentById(commentId);
+    }
+
 }
