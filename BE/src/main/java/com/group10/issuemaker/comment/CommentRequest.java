@@ -7,11 +7,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CommentResponse {
+public class CommentRequest {
 
-    private Long id;
+    private Long issueId;
 
-    private String writer;
+    private Long authorId;
 
     private String description;
 }
