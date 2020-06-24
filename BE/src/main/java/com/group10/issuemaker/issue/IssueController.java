@@ -1,10 +1,12 @@
 package com.group10.issuemaker.issue;
 
+import com.group10.issuemaker.ResponseMessage;
 import com.group10.issuemaker.Trinity;
-import com.group10.issuemaker.User.UserDao;
+import com.group10.issuemaker.User.UserDAO;
 import com.group10.issuemaker.label.Label;
 import com.group10.issuemaker.label.LabelDAO;
-import com.group10.issuemaker.milestone.MilestoneDao;
+import com.group10.issuemaker.milestone.MilestoneDAO;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
@@ -14,52 +16,51 @@ import java.util.List;
 public class IssueController {
 
     private final IssueDAO issueDAO;
-    private final MilestoneDao milestoneDao;
+    private final MilestoneDAO milestoneDao;
     private final LabelDAO labelDAO;
-    private final UserDao userDao;
+    private final UserDAO userDao;
 
     public IssueController(DataSource dataSource) {
         this.labelDAO = new LabelDAO(dataSource);
-        this.milestoneDao = new MilestoneDao(dataSource);
+        this.milestoneDao = new MilestoneDAO(dataSource);
         this.issueDAO = new IssueDAO(dataSource);
-        this.userDao = new UserDao(dataSource);
+        this.userDao = new UserDAO(dataSource);
     }
 
     @GetMapping("/issues")
-    public List<Issue> getAllIssues() {
-        return issueDAO.findAllIssues();
+    public ResponseMessage<List<Issue>> getAllIssues() {
+        return new ResponseMessage<>(HttpStatus.OK, "Requested Successfully", issueDAO.findAllIssues());
     }
 
     @GetMapping("issues/{issueId}")
-    public Issue getParticularIssue(@PathVariable Long issueId) {
-        return issueDAO.findIssue(issueId);
+    public ResponseMessage<Issue> getParticularIssue(@PathVariable Long issueId) {
+        return new ResponseMessage<>(HttpStatus.OK, "Requested Successfully", issueDAO.findIssue(issueId));
     }
 
     @GetMapping("issues/{issueId}/labels")
-    public List<Label> getLabelsRelatedWithSpecificIssue(@PathVariable Long issueId) {
-        return labelDAO.findRelatedLabels(issueId);
+    public ResponseMessage<List<Label>> getLabelsRelatedWithSpecificIssue(@PathVariable Long issueId) {
+        return new ResponseMessage(HttpStatus.OK, "Requested Successfully", labelDAO.findRelatedLabels(issueId));
     }
 
     @PostMapping("/issues")
-    public void makeIssue(@RequestBody IssueRequest issueRequest) {
-        issueDAO.makeIssue(issueRequest);
+    public ResponseMessage<Issue> makeIssue(@RequestBody IssueRequest issueRequest) {
+        Long issueId = issueDAO.makeIssue(issueRequest);
+        return new ResponseMessage<>(HttpStatus.OK, "Issue has been created", issueDAO.findIssue(issueId));
     }
 
+
     @DeleteMapping("/issues/{issueId}")
-    public void deleteIssue(@PathVariable Long issueId) {
+    public ResponseMessage deleteIssue(@PathVariable Long issueId) {
         issueDAO.deleteIssue(issueId);
+        return new ResponseMessage(HttpStatus.OK, "issue has been deleted");
     }
 
     @GetMapping("/info")
-    public Trinity getTrinity() {
+    public ResponseMessage<Trinity> getTrinity() {
         Trinity trinity = new Trinity();
         trinity.setLabels(labelDAO.findLabels());
         trinity.setMilestones(milestoneDao.findAll());
         trinity.setUsers(userDao.findAllUses());
-        return trinity;
+        return new ResponseMessage(HttpStatus.OK, "Requested Successfully", trinity);
     }
-
-
-
-
 }

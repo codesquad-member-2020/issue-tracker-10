@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -47,13 +49,15 @@ public class LabelDAO {
         return labels;
     }
 
-    public void createLabel(String textColor, String backColor, String description, String name) {
+    public Long createLabel(String textColor, String backColor, String description, String name) {
         String sql = "INSERT INTO LABEL (TEXTCOLOR, BACKGROUNDCOLOR, DESCRIPTION, LABELNAME) VALUES ( :textColor, :backColor, :description, :name)";
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("textColor", textColor)
                 .addValue("backColor", backColor)
                 .addValue("description", description)
                 .addValue("name", name);
-        namedParameterJdbcTemplate.update(sql, sqlParameterSource);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        namedParameterJdbcTemplate.update(sql, sqlParameterSource, keyHolder);
+        return keyHolder.getKey().longValue();
     }
 
     public void deleteLabel(Long labelId) {
@@ -63,13 +67,20 @@ public class LabelDAO {
         jdbcTemplate.update(sql2, labelId);
     }
 
-    public void editLabel(Long labelId, String labelName, String description, String textColor, String backGroundColor) {
+    public Long editLabel(Long labelId, String labelName, String description, String textColor, String backGroundColor) {
         String sql = "update label SET LABELNAME = :labelName, DESCRIPTION = :description, TEXTCOLOR = :textColor, BACKGROUNDCOLOR = :backGroundColor where label_id = :id";
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("labelName", labelName)
                 .addValue("description", description)
                 .addValue("textColor", textColor)
                 .addValue("backGroundColor", backGroundColor)
                 .addValue("id", labelId);
-        namedParameterJdbcTemplate.update(sql, sqlParameterSource);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        namedParameterJdbcTemplate.update(sql, sqlParameterSource, keyHolder);
+        return keyHolder.getKey().longValue();
+    }
+
+    public Label findLabelWithId(Long id) {
+        String sql = "SELECT * FROM LABEL WHERE LABEL_ID = " +id;
+        return jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Label.class));
     }
 }

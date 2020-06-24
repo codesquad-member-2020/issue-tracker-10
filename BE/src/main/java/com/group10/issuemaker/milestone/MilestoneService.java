@@ -8,18 +8,18 @@ import java.util.List;
 @Service
 public class MilestoneService {
 
-    private final MilestoneDao milestoneDao;
+    private final MilestoneDAO milestoneDao;
 
     private final IssueDAO issueDAO;
 
-    public MilestoneService(MilestoneDao mileStoneDao, IssueDAO issueDAO) {
+    public MilestoneService(MilestoneDAO mileStoneDao, IssueDAO issueDAO) {
 
         this.milestoneDao = mileStoneDao;
         this.issueDAO = issueDAO;
     }
 
-    public void save(MilestoneRequest milestoneRequest) {
-        this.milestoneDao.save(milestoneRequest);
+    public Long save(MilestoneRequest milestoneRequest) {
+        return this.milestoneDao.save(milestoneRequest);
     }
 
     public List<MilestoneResponse> findAll() {
@@ -33,5 +33,9 @@ public class MilestoneService {
 
     public void updateMilestone(Long milestoneId, MilestoneRequest milestoneRequest) {
         milestoneDao.updateMilestone(milestoneId, milestoneRequest);
+    }
+
+    public MilestoneResponse findMilestoneById(Long id) {
+        return milestoneDao.findMilestoneById(id);
     }
 }

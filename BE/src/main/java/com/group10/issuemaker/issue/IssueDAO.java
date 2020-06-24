@@ -2,9 +2,9 @@ package com.group10.issuemaker.issue;
 
 import com.group10.issuemaker.comment.CommentDao;
 import com.group10.issuemaker.label.Label;
-import com.group10.issuemaker.User.UserDao;
+import com.group10.issuemaker.User.UserDAO;
 import com.group10.issuemaker.label.LabelDAO;
-import com.group10.issuemaker.milestone.MilestoneDao;
+import com.group10.issuemaker.milestone.MilestoneDAO;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -26,16 +26,16 @@ public class IssueDAO {
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private UserDao userDao;
-    private MilestoneDao milestoneDao;
+    private UserDAO userDao;
+    private MilestoneDAO milestoneDao;
     private CommentDao commentDao;
     private LabelDAO labelDAO;
 
     public IssueDAO(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-        this.milestoneDao = new MilestoneDao(dataSource);
-        this.userDao = new UserDao(dataSource);
+        this.milestoneDao = new MilestoneDAO(dataSource);
+        this.userDao = new UserDAO(dataSource);
         this.commentDao = new CommentDao(dataSource);
         this.labelDAO = new LabelDAO(dataSource);
     }
@@ -85,7 +85,7 @@ public class IssueDAO {
         return issues;
     }
 
-    public void makeIssue(@RequestBody IssueRequest issueRequest) {
+    public Long makeIssue(@RequestBody IssueRequest issueRequest) {
         System.out.println(issueRequest);
         String sql = "insert into issue (title, content, opened_date, closed_date, opened, milestone_id, author_id) values (:title, :content, :openedDate, :closedDate, 1, :milestoneId, :authorId)";
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("title", issueRequest.getTitle())
@@ -110,6 +110,7 @@ public class IssueDAO {
                 System.out.println(" assignee id : " + assigneeId + " has been added");
             }
         }
+        return issueId;
     }
 
     public void updateIssueLabel(Long issueId, Long labelId) {

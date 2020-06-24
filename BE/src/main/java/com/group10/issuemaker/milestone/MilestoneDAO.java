@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -16,24 +18,24 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository
-public class MilestoneDao {
+public class MilestoneDAO {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final JdbcTemplate jdbcTemplate;
 
-    public MilestoneDao(DataSource dataSource) {
+    public MilestoneDAO(DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void save(MilestoneRequest milestoneRequest) {
+    public Long save(MilestoneRequest milestoneRequest) {
         String query = "INSERT INTO milestone (title, due_date, description) values (:title, :due_date, :description)";
-        Map<String, Object> paramMap = new HashMap<String, Object>();
-        paramMap.put("title", milestoneRequest.getTitle());
-        paramMap.put("due_date", milestoneRequest.getDueDate());
-        paramMap.put("description", milestoneRequest.getDescription());
-
-        namedParameterJdbcTemplate.update(query, paramMap);
+        SqlParameterSource parameterSource = new MapSqlParameterSource("title", milestoneRequest.getTitle())
+                .addValue("due_date", milestoneRequest.getDueDate())
+                .addValue("description", milestoneRequest.getDescription());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        namedParameterJdbcTemplate.update(query, parameterSource, keyHolder);
+        return keyHolder.getKey().longValue();
     }
 
     private List<IssueResponse> findIssueByMilestoneId(Long milestoneId) {
@@ -117,5 +119,16 @@ public class MilestoneDao {
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("milestoneId", milestoneId);
 
         namedParameterJdbcTemplate.update(sql.toString(), sqlParameterSource);
+    }
+
+    public MilestoneResponse findMilestoneById(Long id) {
+        String sql = "SELECT milestone_id, title, description, due_date FROM milestone Where milestone.milestone_id = ?";
+
+        MilestoneResponse milestone = jdbcTemplate.queryForObject(sql, new Object[]{id}, BeanPropertyRowMapper.newInstance(MilestoneResponse.class));
+        List<IssueResponse> issueList = findIssueByMilestoneId(milestone.getMilestone_id());
+        milestone.setLineIssues(issueList);
+        milestone.setOpened(isOpenMilestone(issueList));
+
+        return milestone;
     }
 }
