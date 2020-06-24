@@ -40,7 +40,7 @@ const MarkdownEditor = memo(
         <MarkdownArea>
           {writeMode && (
             <>
-              <textarea name="description" cols="30" rows="10" value={descriptionValue} onChange={onChangeDescription} ref={register} />
+              <textarea name="content" cols="30" rows="10" value={descriptionValue} onChange={onChangeDescription} ref={register} />
               <MarkdownMessage href={MARKDOWN_WIKI_URL} target="_blank">
                 {MARKDOWN_INFO_MESSGAE}
               </MarkdownMessage>
