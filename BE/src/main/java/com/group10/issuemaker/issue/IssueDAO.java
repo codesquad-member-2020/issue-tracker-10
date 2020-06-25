@@ -4,6 +4,7 @@ import com.group10.issuemaker.comment.CommentDao;
 import com.group10.issuemaker.label.Label;
 import com.group10.issuemaker.User.UserDAO;
 import com.group10.issuemaker.label.LabelDAO;
+import com.group10.issuemaker.login.UserResponse;
 import com.group10.issuemaker.milestone.MilestoneDAO;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -84,15 +85,14 @@ public class IssueDAO {
         return issues;
     }
 
-    public Long makeIssue(@RequestBody IssueRequest issueRequest) {
-        System.out.println(issueRequest);
+    public Long makeIssue(@RequestBody IssueRequest issueRequest, UserResponse user) {
         String sql = "insert into issue (title, content, opened_date, closed_date, opened, milestone_id, author_id) values (:title, :content, :openedDate, :closedDate, 1, :milestoneId, :authorId)";
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("title", issueRequest.getTitle())
                 .addValue("content", issueRequest.getContent())
                 .addValue("openedDate", issueRequest.getOpenedDate())
                 .addValue("closedDate", "tbd")
                 .addValue("milestoneId", issueRequest.getMilestoneId())
-                .addValue("authorId", issueRequest.getAuthorId());
+                .addValue("authorId", user.getUserId());
         KeyHolder keyHolder = new GeneratedKeyHolder();
         namedParameterJdbcTemplate.update(sql, sqlParameterSource, keyHolder);
 

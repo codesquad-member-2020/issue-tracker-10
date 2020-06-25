@@ -5,6 +5,9 @@ import com.group10.issuemaker.Trinity;
 import com.group10.issuemaker.User.UserDAO;
 import com.group10.issuemaker.label.Label;
 import com.group10.issuemaker.label.LabelDAO;
+import com.group10.issuemaker.login.LoginService;
+import com.group10.issuemaker.login.LoginUserDAO;
+import com.group10.issuemaker.login.UserResponse;
 import com.group10.issuemaker.milestone.MilestoneDAO;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
@@ -20,12 +23,14 @@ public class IssueController {
     private final MilestoneDAO milestoneDao;
     private final LabelDAO labelDAO;
     private final UserDAO userDao;
+    private final LoginService loginService;
 
     public IssueController(DataSource dataSource) {
         this.labelDAO = new LabelDAO(dataSource);
         this.milestoneDao = new MilestoneDAO(dataSource);
         this.issueDAO = new IssueDAO(dataSource);
         this.userDao = new UserDAO(dataSource);
+        this.loginService = new LoginService(dataSource);
     }
 
     @GetMapping("/issues")
@@ -44,8 +49,9 @@ public class IssueController {
     }
 
     @PostMapping("/issues")
-    public ResponseMessage<Issue> makeIssue(@RequestBody IssueRequest issueRequest) {
-        Long issueId = issueDAO.makeIssue(issueRequest);
+    public ResponseMessage<Issue> makeIssue(@CookieValue(name = "token") String token, @RequestBody IssueRequest issueRequest) {
+        UserResponse user = loginService.getUserByJwt(token);
+        Long issueId = issueDAO.makeIssue(issueRequest, user);
         return new ResponseMessage<>(HttpStatus.OK, "Issue has been created", issueDAO.findIssue(issueId));
     }
 

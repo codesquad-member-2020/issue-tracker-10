@@ -14,8 +14,8 @@ public class CommentController {
     }
 
     @PostMapping("/comments")
-    public ResponseMessage<CommentResponse> createComment(@RequestBody CommentRequest commentRequest) {
-        CommentResponse comment = commentService.save(commentRequest);
+    public ResponseMessage<CommentResponse> createComment(@CookieValue(name = "token") String token, @RequestBody CommentRequest commentRequest) {
+        CommentResponse comment = commentService.save(commentRequest, token);
 
         return new ResponseMessage(HttpStatus.OK, "Label has been added", comment);
     }
