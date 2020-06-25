@@ -11,7 +11,7 @@ insert into issue (issue_id, title, content, opened_date, closed_date, opened, m
 insert into issue (issue_id, title, content, opened_date, closed_date, opened, milestone_id, author_id) values (3, 'eat healthy', 'eat organic stuff', '2020-06-11T12:48:28+09:00', 'tbd', 0, 2, 1);
 
 
-insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (1, '#fff', 'rgb(203,92,208)',  'testing label1', '코쿼 수강생 여러분');
+insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (1, '#fff', 'rgb(203,92,208)',  'testing label1', '코드스쿼드 여러분');
 insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (2, '#fff', 'rgb(254,40,119)',  'testing label2', '한 학기동안 수고 많았어요');
 insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (3, '#fff', 'rgb(86,185,42)',   'testing label3', '겨울에 시작해 봄을 지나');
 insert into label (label_id, textColor, backGroundColor, description, labelName) VALUES (4, '#fff', 'rgb(118,148,231)', 'testing label4', '무더운 여름이 되었네요');
