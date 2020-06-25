@@ -11,7 +11,5 @@ public class CommentRequest {
 
     private Long issueId;
 
-    private Long authorId;
-
     private String description;
 }

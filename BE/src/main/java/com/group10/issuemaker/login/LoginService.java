@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.sql.DataSource;
+
 @Service
 public class LoginService {
 
@@ -24,8 +26,8 @@ public class LoginService {
 
     private final LoginUserDAO loginUserDao;
 
-    public LoginService(LoginUserDAO loginUserDao) {
-        this.loginUserDao = loginUserDao;
+    public LoginService(DataSource dataSource) {
+        this.loginUserDao = new LoginUserDAO(dataSource);
     }
 
     public String getRedirectUrl() {

@@ -1,5 +1,6 @@
 package com.group10.issuemaker.comment;
 
+import com.group10.issuemaker.login.UserResponse;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -35,10 +36,10 @@ public class CommentDao {
                 .queryForObject(sql, new Object[]{issueId}, Integer.class);
     }
 
-    public Long save(CommentRequest commentRequest) {
+    public Long save(CommentRequest commentRequest, UserResponse userResponse) {
         String sql = "INSERT INTO comment (issue_id, author_id, description) VALUES (:issueId, :authorId, :description)";
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("issueId", commentRequest.getIssueId())
-                .addValue("authorId", commentRequest.getAuthorId())
+                .addValue("authorId", userResponse.getUserId())
                 .addValue("description", commentRequest.getDescription());
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
