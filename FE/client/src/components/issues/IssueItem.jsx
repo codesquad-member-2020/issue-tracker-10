@@ -7,7 +7,7 @@ import moment from "moment";
 
 const IssueItem = ({ bCheckedAll, issue }) => {
   const [bChecked, setbChecked] = useState(false);
-  const { id, title, isOpen, createDate, labels, milestone, writer, assignees, numberOfComments } = issue;
+  const { id, title, isOpen, labels, milestone, opened_date, author, assignees, numberOfComments } = issue;
   const issueIcon = isOpen ? <GoIssueOpened className="icon open" /> : <GoIssueClosed className="icon closed" />;
   const labelsList = labels.map((label) => (
     <LabelBox key={label.label_id} textColor={label.textColor} backgroundColor={label.backGroundColor}>
@@ -15,7 +15,7 @@ const IssueItem = ({ bCheckedAll, issue }) => {
     </LabelBox>
   ));
   const issueStateText = isOpen ? "opened" : "closed";
-  const issueTimeago = moment(createDate).fromNow();
+  const issueTimeago = moment(opened_date).fromNow();
   const assigneeImages = assignees.map((userData) => <img key={userData.user_id} src={userData.url} alt="assignee-image" />);
   const handleChange = () => setbChecked(!bChecked);
 
@@ -38,7 +38,7 @@ const IssueItem = ({ bCheckedAll, issue }) => {
               <span>#{id}</span>
               <span>{issueStateText}</span>
               <span>{issueTimeago}</span>
-              <span>by {"temp writer"}</span>
+              <span>by {author}</span>
               {milestone && (
                 <span className="issue-info-milestone">
                   <GoMilestone className="icon" /> {milestone.title}
