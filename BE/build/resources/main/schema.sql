@@ -18,7 +18,7 @@ create table milestone (
     milestone_id bigint primary key auto_increment,
     title varchar(512),
     description text,
-    due_date DATETIME
+    due_date varchar(255)
 );
 
 create table issue (
