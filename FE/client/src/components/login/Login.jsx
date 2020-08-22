@@ -6,15 +6,15 @@ import _ from "@util";
 
 const Login = () => {
   // 개발 단계 테스트용 임시 로그인 cookie
-  // const tempSetCookie = () => _.setCookie("token", "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJib2h5ZW9uIn0.O8r-57BdLFt36x9ECcYOBgK9lR0OlApJoa7Um728e1JoFCUxBrg5GzUMJlVGNnLKJBuHT5D8ZslKaMcProVHrA", 14);
+  const tempSetCookie = () => _.setCookie("token", "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJib2h5ZW9uIn0.O8r-57BdLFt36x9ECcYOBgK9lR0OlApJoa7Um728e1JoFCUxBrg5GzUMJlVGNnLKJBuHT5D8ZslKaMcProVHrA", 14);
 
   return (
     <LoginButtonWrap>
       <LoginButton onClick={tempSetCookie}>
-        {/* <Link to="/issues">
+        <Link to="/issues">
           Sign in with GitHub
           <AiFillGithub className="github-logo" />
-        </Link> */}
+        </Link>
         <a href="http://52.79.207.15:8080/github-login">
           Sign in with GitHub
           <AiFillGithub className="github-logo" />
