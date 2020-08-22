@@ -1,15 +1,17 @@
-package com.group10.issuemaker;
+package com.group10.issuemaker.label;
 
+import com.group10.issuemaker.issue.IssueRequest;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class LabelDAO {
@@ -28,16 +30,21 @@ public class LabelDAO {
     }
 
     public List<Label> findRelatedLabels(Long issueId) {
-        String sql = "select * from label L\n" +
-                "join issue_label X \n" +
-                "where X.issue_id = ? AND X.label_id = L.label_id";
+        String sql = "select * from label L join issue_label X where X.issue_id = ? AND X.label_id = L.label_id";
         return jdbcTemplate.query(sql, new Object[]{issueId}, BeanPropertyRowMapper.newInstance(Label.class));
     }
 
-    public List<Label> findRelatedLabels2(Long issueId) {
-        String sql = "SELECT * from label l JOIN issue_label i where l.label_id = i.label_id AND i.issue_id = :issue_id";
-        SqlParameterSource namedParameters = new MapSqlParameterSource("issue_id", issueId);
-        return namedParameterJdbcTemplate.queryForList(sql, namedParameters, Label.class);
+    public List<Label> getLabelsWithUsedLabels(Long issueId) {
+        List<Label> labels = findLabels();
+        List<Label> usedLabels = findRelatedLabels(issueId);
+        List<Long> idList = usedLabels.stream().map(Label::getLabel_id).collect(Collectors.toList());
+
+        for (Label l : labels) {
+            if (idList.contains(l.getLabel_id())) {
+                l.setBChecked(true);
+            }
+        }
+        return labels;
     }
 
     public void createLabel(String textColor, String backColor, String description, String name) {
@@ -50,8 +57,10 @@ public class LabelDAO {
     }
 
     public void deleteLabel(Long labelId) {
-        String sql = "DELETE FROM LABEL WHERE LABEL_ID = ?";
-        jdbcTemplate.update(sql, labelId);
+        String sql1 = "DELETE FROM ISSUE_LABEL WHERE LABEL_ID = ?";
+        String sql2 = "DELETE FROM LABEL WHERE LABEL_ID = ?";
+        jdbcTemplate.update(sql1, labelId);
+        jdbcTemplate.update(sql2, labelId);
     }
 
     public void editLabel(Long labelId, String labelName, String description, String textColor, String backGroundColor) {

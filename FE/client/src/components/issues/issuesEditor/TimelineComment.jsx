@@ -28,7 +28,7 @@ const TimelineCommentBox = styled.div`
     border: 1px solid #d1d5da;
     border-bottom-style: dashed;
   }
-  .title_input {
+  .input-area {
     display: block;
     padding: 8px;
     font-size: 16px;

@@ -1,42 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import styled from "styled-components";
 import { MdSettings } from "react-icons/md";
 
-import ColorPickerItem from "./ColorPickerItem";
-import PikerModal from "@components/issues/PickerModal";
+import PickerModal from "@components/issues/PickerModal";
 
-import { useSelector } from "react-redux";
+const GithubPicker = ({ pickerName, pickerType, pickerList, onClickModalItem, ListItemComponent, ModalItemComponent }) => {
+  const toggleContainer = useRef();
+  const [bOpen, setbOpen] = useState(false);
+  const [chosenList, setChoseList] = useState([]);
 
-const GithubPicker = ({ pickerName }) => {
-  const { labels } = useSelector((state) => state.labels);
-  const [anchorPickerList, setAnchorPickerList] = useState(false);
-  const [chosenItems, setChosenItems] = useState([]);
+  const setChosenList = () => {
+    const filterChosenList = pickerList.filter((el) => el.bCheck === true);
+    setChoseList(filterChosenList);
+  };
 
-  const test_list = labels.map((el) => <ColorPickerItem backgroundColor={el.backgroundColor} labelName={el.labelName} description={el.description} />);
+  const modalList = pickerList.map((el) => <ModalItemComponent {...el} onClickModalItem={onClickModalItem} />);
 
-  const onClickPickerHeader = () => setAnchorPickerList(!anchorPickerList);
+  const onClickPicker = () => setbOpen(!bOpen);
+  const onClickOutside = (event) => {
+    if (bOpen && !toggleContainer.current.contains(event.target)) {
+      setbOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("click", onClickOutside);
+    return () => {
+      window.removeEventListener("click", onClickOutside);
+    };
+  });
+
+  useEffect(() => {
+    setChosenList();
+  }, [pickerList]);
 
   return (
-    <GithubPickerWrap>
-      <PickerHeader onClick={onClickPickerHeader}>
+    <GithubPickerWrap ref={toggleContainer}>
+      <PickerHeader onClick={onClickPicker}>
         <div>{pickerName}</div>
         <MdSettings />
       </PickerHeader>
-      {anchorPickerList && <PikerModal title="Apply this to pull request" pickerModalList={test_list} />}
-      <PickerItem>bug</PickerItem>
+      {bOpen && <PickerModal title={pickerName} pickerType={pickerType} modalItemList={modalList} />}
+      {chosenList.map((el) => {
+        return <ListItemComponent {...el} />;
+      })}
     </GithubPickerWrap>
   );
 };
 
 const GithubPickerWrap = styled.div`
-  margin-top: 20px;
   width: 221px;
-  /* or 100% */
   font-size: 13px;
   font-weight: bold;
   color: #586069;
   position: relative;
+  margin-bottom: 20px;
 `;
 
 const PickerHeader = styled.div`

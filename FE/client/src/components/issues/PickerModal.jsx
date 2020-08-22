@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-const PickerModal = ({ title, pickerModalList }) => {
+const PickerModal = ({ title, modalItemList }) => {
   return (
     <PickerModalWrap>
       <PickerModalHeader>{title}</PickerModalHeader>
       <PickerModalInputBase>
         <input type="text" />
       </PickerModalInputBase>
-      {pickerModalList}
+      {modalItemList}
     </PickerModalWrap>
   );
 };
@@ -29,6 +29,7 @@ const PickerModalHeader = styled.div`
   border-bottom: 1px solid #e1e4e8;
   padding: 8px 10px;
   font-weight: 600;
+  font-size: 13px;
 `;
 
 const PickerModalInputBase = styled.div`

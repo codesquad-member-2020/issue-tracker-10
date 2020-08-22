@@ -1,19 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import GithubPiker_ from "./GithubPicker_";
-
-import GithubPicker from "./githubPicker/GithubPicker";
 
 const IssuesEditor = ({ children }) => {
   return (
     <IssuesEditorWrap>
-      <IssuesEditorInner>
-        {children}
-        <PickerWrap>
-          <GithubPiker_ />
-          <GithubPicker pickerName="Labels" />
-        </PickerWrap>
-      </IssuesEditorInner>
+      <IssuesEditorInner>{children}</IssuesEditorInner>
     </IssuesEditorWrap>
   );
 };
