@@ -1,8 +1,9 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { TableHeaderButton } from "@style/CustomStyle";
+import { getInitMilestones } from "@modules/milestones";
 
 import Table from "@components/table/Table";
 import TableHeader from "@components/table/TableHeader";
@@ -14,7 +15,8 @@ import InfoMessage from "@components/infoMessage/InfoMessage";
 import { MILESTONE_TEXT, MILESTONE_TITLE, MILESTONE_CONTENT } from "./milestoneConstant";
 
 const Milestone = () => {
-  const { milestonesList } = useSelector(({ milestones }) => milestones);
+  const dispatch = useDispatch();
+  const { bLoading, milestonesList } = useSelector(({ milestones }) => milestones);
 
   const rightSideComponent = (
     <Link to="/milestone/create">
@@ -25,11 +27,17 @@ const Milestone = () => {
 
   let openMilestonesCount = 0;
   const _milestonesList = milestonesList.map((milestones) => {
-    if (!milestones.bOpen) return;
+    if (!milestones.opened) return;
     openMilestonesCount++;
-    return <MilestoneItem key={milestones.id} {...{ milestones }} />;
+    return <MilestoneItem key={milestones.milestone_id} {...{ milestones }} />;
   });
   const closedMilestonesCount = _milestonesList.length - openMilestonesCount;
+
+  useEffect(() => {
+    dispatch(getInitMilestones());
+  }, [dispatch]);
+
+  if (bLoading) return <div>Loading...</div>;
 
   return (
     <>

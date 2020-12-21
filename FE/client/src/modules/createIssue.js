@@ -1,3 +1,4 @@
+import { URL } from '@constants/url';
 import user_image from "@assets/images/user-sample-image.jpg";
 
 const INIT_CREATE_ISSUES = "createIssue/INIT_CREATE_ISSUES";
@@ -7,7 +8,7 @@ const UPDATE_CHECKED_ASSIGNEES = "createIssue/UPDATE_CHECKED_ASSIGNEES";
 const UPDATE_CHECKED_MILESTONES = "createIssue/UPDATE_CHECKED_MILESTONES";
 
 export const getInitCreateIssues = () => async (dispatch) => {
-  const response = await fetch();
+  const response = await fetch(URL.ISSUE_PICKER_INFO_API);
   const json = await response.json();
   dispatch(initCreateIssues(json));
 };
@@ -26,6 +27,7 @@ export const changeLabelBCheck = (labelId, pickerType) => {
 const initCreateIssues = (data) => ({ type: INIT_CREATE_ISSUES, payload: data });
 
 const initialState = {
+  pickerData: null,
   assignees: [
     { id: 1, bCheck: false, username: "choichoigang", user_image: user_image },
     { id: 2, bCheck: false, username: "taek", user_image: user_image },
@@ -45,6 +47,11 @@ const filteringLabelBCheck = (labelId, state) => state.map((el) => (el.id === la
 
 const createIssueReducer = (state = initialState, action) => {
   switch (action.type) {
+    case INIT_CREATE_ISSUES:
+      return {
+        ...state,
+        pickerData: action.payload.data,
+      }
     case UPDATE_CHECKED_LABELS:
       return { ...state, labels: filteringLabelBCheck(action.payload, state.labels) };
     case UPDATE_CHECKED_ASSIGNEES:
